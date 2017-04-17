@@ -1,0 +1,318 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/05/c-9-function.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+不知你在之前的章節中做練習時，電腦是否莫名其妙地說你寫錯呢？<br />
+舉個例子<br />
+還記得<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-6-array.html">第6章</a>的練習題嗎？<br />
+題目是這樣的：<br />
+「輸入一個整數n，然後輸入n個數字<br />
+最後把這n個數字的順序顛倒，然後輸出」<br />
+當你學完陣列之後，馬上就興高采烈地寫下了程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+然後，電腦就說你寫錯了<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-cdW9Bgk40mc/Vz2euznKtBI/AAAAAAAADwI/1f6urNYzpIAMn3CB4dOAgidsdiuWlVZ-QCLcB/s1600/10-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="205" src="https://1.bp.blogspot.com/-cdW9Bgk40mc/Vz2euznKtBI/AAAAAAAADwI/1f6urNYzpIAMn3CB4dOAgidsdiuWlVZ-QCLcB/s320/10-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">然後，電腦就說你寫錯了XD</td></tr>
+</tbody></table>
+哦～原來我前面已經宣告了一個名字為「i」的變數了，不能再宣告一個名字一模一樣 (同樣是「i」) 的變數<br />
+p.s. 雖然之前的章節完全沒有提到，這個命名不能重複的規則請讀者務必了解，仔細想想應該就會發現這個規則合情合理，否則最後會分不清楚「i」到底是指哪一個變數<br />
+<br />
+如果你還是搞不懂發生了甚麼事，將上面的程式碼和<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-6-array.html">第6章</a>提供的程式碼解答比對一下，看看有甚麼差別吧～<br />
+<br />
+現階段，這種問題是很好解決的<br />
+以目前的知識，可以想到的方法有2種：<br />
+<!--more--><br />
+1. 重複利用「i」這個變數 (也就是<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-6-array.html">第6章</a>採用的方法)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+2. 用不同的名稱宣告一個新的變數 (例如將新變數取名為「j」)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">int</span> j<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>j<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>j<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        j<span style="color: navy;">=</span>j<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<br />
+你可能覺得這樣沒有問題<br />
+但是，當你的程式稍微複雜一點的時候<br />
+你會很容易搞不清楚，對於特定的一個變數，現在到底有沒有在「使用中」 (假如你使用了方法1.)<br />
+或者記不住每一個變數的用途 (假如你使用了方法2.)<br />
+<br />
+難道我們就是沒辦法「用相同的名稱宣告一個新的變數」嗎？<br />
+<br />
+可以的！<br />
+我們只要設定好每一個變數的「作用範圍 (Scope)」(或者說「有效範圍」)<br />
+也就是說，對於每一個變數，我們可以設定程式碼的哪幾行可以使用它<br />
+<br />
+方法是使用「大括號」框出「作用範圍」<br />
+這樣一來，在這個「大括號」裡面宣告的變數，都<b>不能</b>在「大括號外面」使用<br />
+<br />
+事實上，連「if」和「while」的大括號，都有這個功能<br />
+廣泛地講，<b>只要出現「大括號」，都會發揮同樣的作用</b><br />
+<b><br />
+</b> 這樣說你可能還沒有畫面，我們來看看要怎麼利用這個特性來解決上面的問題：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+可以看到，我們宣告了兩個名稱相同的變數「i」，但是是在不同的大括號裡面宣告，因此它們互不影響<br />
+<br />
+另外，在這兩個大括號外面也<b>無法使用</b>這兩個「i」<br />
+甚麼意思呢？<br />
+我們來做個測試：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+可以發現，在新加的那一行「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>」發生錯誤了！<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-nvw4mhx-2XI/Vz2yx5HcWsI/AAAAAAAADwY/rfB63g0WE6E2PbhY7ZJmBWe-kojMeNjYQCLcB/s1600/10-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="205" src="https://2.bp.blogspot.com/-nvw4mhx-2XI/Vz2yx5HcWsI/AAAAAAAADwY/rfB63g0WE6E2PbhY7ZJmBWe-kojMeNjYQCLcB/s320/10-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">電腦說你這行寫錯了</td></tr>
+</tbody></table>
+這是因為，我們新加的那一行程式碼「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>」的位置，並不在任何一個「名字叫做『i』的變數」的「作用範圍」之內<br />
+因此，對於「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>」來說，你根本沒有宣告過「i」這個變數！<br />
+<br />
+當然，你可以在「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>」前面補宣告「i」，讓電腦可以順利讀完你的程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">int</span> i<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+再次提醒，這個程式碼中的3個「i」，它們的作用範圍都是不同的，因此是<b>互不影響</b>的<br />
+也就是說，當你修改其中一個「i」的數值，另一個「i」的數值是<b>保持不變</b>的<br />
+所以，你應該把這3個「i」當作<b>不同的變數</b>，只是名稱相同而已<br />
+<br />
+那麼，如果作用範圍「重疊」了<br />
+怎麼辦？<br />
+例如，我把程式碼修改成這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">int</span> i<span style="color: teal;">;</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+可以發現，「第3個『i』(『<span style="color: blue;">int</span>&nbsp;i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>』那一行)&nbsp;的作用範圍」包含在「第2個『i』(『<span style="color: blue;">int</span>&nbsp;i<span style="color: teal;">;</span>』那一行)&nbsp;的作用範圍」裡面！<br />
+那麼，對於<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+這段程式碼<br />
+它用到的會是哪一個「i」呢？<br />
+<br />
+答案是「第3個『i』」<br />
+<br />
+這是C++的隱藏規則 <span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(非潛規則，見註5)</a></span><br />
+當多個相同名稱的變數的作用範圍重疊的時候，會以「最後被宣告」的那一個變數為優先 (也就是「作用範圍最小」的那個變數)<br />
+<br />
+仔細想想，其實規則這樣定可以帶來很多方便<br />
+不過，我還是強烈建議，<b>盡量不要讓「作用範圍重疊」的情況發生</b><br />
+因為這種情況常常會造成別種不必要的麻煩，也就是「<b>無法使用</b>外面相同名稱的變數」<br />
+<br />
+不知道你目前覺得本章教的知識有沒有用<br />
+但是，我相信<br />
+<span style="font-size: x-large;"><b>你總有一天會想要用到它</b></span><br />
+<br />
+<br />
+對了，還記得我們提過「for迴圈」嗎？<br />
+來介紹一下吧～<br />
+我們可能常常要用迴圈做到 (或類似) 下面這件事：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">10</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"i=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span> 
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"i=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>
+            i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+注意到<br />
+我們需要用大括號把「<span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">?</span><span style="color: teal;">;</span>」和「while迴圈」框起來，限制變數「i」的作用範圍，才能在兩個不同迴圈使用相同名稱&nbsp;(都是「i」) 的變數<br />
+這可以用「for迴圈」來精簡成這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"i=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>i<span style="color: #000040;">--</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"i=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+哇塞，太讚了吧！連限制作用範圍的大括號都可以省了！<br />
+看得出來，你很快就會愛上它！<span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(註12)</a></span><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-11-structure.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：李旺陽學長<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

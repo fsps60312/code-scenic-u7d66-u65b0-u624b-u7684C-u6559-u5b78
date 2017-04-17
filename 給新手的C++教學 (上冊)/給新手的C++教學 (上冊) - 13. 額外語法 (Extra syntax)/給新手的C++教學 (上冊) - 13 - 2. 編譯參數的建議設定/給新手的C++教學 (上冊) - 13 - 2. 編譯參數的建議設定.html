@@ -1,0 +1,76 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-1.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+你在寫程式的時候，是否曾經犯過白癡錯誤呢？<br />
+有些錯誤是人可以很輕易識別的，但是卻恰好符合C++的語法而不會讓電腦察覺異狀<br />
+例如：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a,b<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d%d"</span>,<span style="color: #000040;">&amp;</span>a,<span style="color: #000040;">&amp;</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">+</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+我知道你要做出小數加法，但是程式可以正常執行卻輸出錯誤答案 (不知道的趕快去試試看！輸入「0.1 0.1」，保證輸出不是「0.2」)<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-81JC-FDzQcA/V8Pr2j9TFNI/AAAAAAAAGK0/gj-ukxfYzVoubFGyzIb3L_7wnyiwYVFowCLcB/s1600/13-2-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="172" src="https://4.bp.blogspot.com/-81JC-FDzQcA/V8Pr2j9TFNI/AAAAAAAAGK0/gj-ukxfYzVoubFGyzIb3L_7wnyiwYVFowCLcB/s320/13-2-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">怎麼會這樣？Orz</td></tr>
+</tbody></table>
+<br />
+又偏偏錯誤在寫程式當下很難被察覺，可能直到整個幾十行甚至幾百行的程式碼寫完之後，才發現程式執行起來不對勁 (你發現哪裡寫錯了嗎？XD)<br />
+這樣一來要回去檢查整個程式碼就是非常麻煩的一件事<br />
+偷偷告訴你，這種白癡錯誤其實可以偷懶叫學過C++的電腦幫你找哦～<br />
+保證萬無一失！<br />
+<br />
+方法如下：<br />
+<!--more--><br />
+<br />
+1. 打開「工具 (Tools)」，然後選擇「編譯器選項 (Compile Options...)」<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-b_XoVkFjhvQ/V8Py3XD4R8I/AAAAAAAAGLE/mZ7zrFKmkREbDB-r_0rJ60z5gVrVb9HjQCLcB/s1600/13-2-2.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="187" src="https://4.bp.blogspot.com/-b_XoVkFjhvQ/V8Py3XD4R8I/AAAAAAAAGLE/mZ7zrFKmkREbDB-r_0rJ60z5gVrVb9HjQCLcB/s320/13-2-2.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">進入編譯器選項</td></tr>
+</tbody></table>
+<br />
+2. 在「一般 (General)」標籤裡面，把「呼叫編譯器時加入以下的命令 (Add the following commands when calling the compiler)」勾起來 (如果原本沒打勾的話)，然後在上面那個文字框裡面輸入「-Wall -Wextra -Wshadow -Wconversion -std=c++11」，按「確定 (<u>O</u>K)」按鈕<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-J34ghwNuBwc/V8Py7BPQBrI/AAAAAAAAGLI/RrVQXdGx180vlTd75jh2Jf_Yfn6bY46pACLcB/s1600/13-2-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="185" src="https://3.bp.blogspot.com/-J34ghwNuBwc/V8Py7BPQBrI/AAAAAAAAGLI/RrVQXdGx180vlTd75jh2Jf_Yfn6bY46pACLcB/s320/13-2-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入「<span style="font-size: small; text-align: start;">-Wall -Wextra -Wshadow -Wconversion -std=c++11</span><span style="font-size: 12.8px;">」後按「OK」</span></td></tr>
+</tbody></table>
+<br />
+3. 設定完成了！現在嘗試再按一次「F11」看看<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-QPyvykXTIK0/V8PzB8UeasI/AAAAAAAAGLQ/_7yrLROr9GQmS0BTxuS1exLqalgEVTCrgCLcB/s1600/13-2-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="154" src="https://1.bp.blogspot.com/-QPyvykXTIK0/V8PzB8UeasI/AAAAAAAAGLQ/_7yrLROr9GQmS0BTxuS1exLqalgEVTCrgCLcB/s320/13-2-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">按下「F11」後程式還是正常執行了，但有沒有注意到多了幾行橘色的字？</td></tr>
+</tbody></table>
+<br />
+哈！電腦抓到錯誤了！<br />
+那些橘色的字就是電腦認為你犯了哪些白癡錯誤<br />
+在橘色的字上點兩下，就會把該錯誤對應的那一行用紅色標出來，你就只要檢查那一行哪裡出錯就好了！<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-KPnVcLr2MoE/V8P0oi_Mp7I/AAAAAAAAGLw/vmMyeZ9knU4qtpMz4YlHQ7DhF6mHo2SjwCLcB/s1600/13-2-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="154" src="https://3.bp.blogspot.com/-KPnVcLr2MoE/V8P0oi_Mp7I/AAAAAAAAGLw/vmMyeZ9knU4qtpMz4YlHQ7DhF6mHo2SjwCLcB/s320/13-2-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">恩，聽說這一行有白癡錯誤......<br />
+啊，「float」要用「%f<span style="font-size: 12.8px;">」來輸入和輸出</span><span style="font-size: 12.8px;">啦！！！</span></td></tr>
+</tbody></table>
+於是問題就被輕鬆完美的解決～(?)<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-62axNG9Tv0Y/V8P1fGWys8I/AAAAAAAAGL0/z_8ERf8rxzIk-1d822f5vtIr-s8Xq74CACLcB/s1600/13-2-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="157" src="https://2.bp.blogspot.com/-62axNG9Tv0Y/V8P1fGWys8I/AAAAAAAAGL0/z_8ERf8rxzIk-1d822f5vtIr-s8Xq74CACLcB/s320/13-2-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">耶！</td></tr>
+</tbody></table>
+專業上我們稱「橘色字」這個東西叫做「警告 (Warning)」<br />
+誠摯建議，就算您的程式碼在測試下似乎可以發揮正常的功能，也要盡量達成「零警告」的目標<br />
+這是很重要的，有警告意味著程式碼可能潛藏著已知錯誤，這些已知錯誤可能在特殊情況下才會造成問題，因此通常很難用肉眼或稍微的測試就檢查出來<br />
+當然，「零警告」並不代表您的程式碼保證100%正確，只代表您已經剔除95%的常見白癡錯誤<br />
+如遇不知道怎麼消除警告的程式碼，歡迎在本文下面留言發問～<br />
+<br />
+順帶一提，設定完編譯參數的同時也讓您可以盡情使用<a href="http://codingsimplifylife.blogspot.tw/2016/10/c-13-25-cc11.html">C++11更方便的新語法</a>！<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-3.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

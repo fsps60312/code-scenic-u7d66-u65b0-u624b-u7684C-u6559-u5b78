@@ -1,0 +1,218 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-4-process-control.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+有時候，你希望某部分的程式碼重複執行3次<br />
+利用前四章所學，你可能會選擇把程式碼複製成3倍<br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script><br />
+但是，如果你希望這部分的程式碼執行500次呢？<br />
+如果你可以很有有耐心的進行「複製、貼上」的動作，這可能還不成問題<br />
+如果你希望這部分的程式碼是永遠的重複執行下去，直到我們手動把程式關掉呢？<br />
+亦或者你可以做到「輸入一個數字，這個數字是多少，程式就會重複執行多少次」嗎？<br />
+<br />
+別擔心，以上的問題可以用一個很輕鬆的方法一次搞定！<br />
+換句話說，我們又有新朋友要認識啦～<br />
+<br />
+它就是「while (當......的時候)」<br />
+用法如下：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">while</span><span style="color: green;">(</span>繼續重複執行的條件<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    需要被重複執行的程式碼
+<span style="color: green;">}</span></pre>
+<br />
+因此，就算你不是高斯，你也可以輕鬆地寫出一個程式來計算「1+2+3+......+100」的結果！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> answer<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>a<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">100</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        answer<span style="color: navy;">=</span>answer<span style="color: #000040;">+</span>a<span style="color: teal;">;</span>
+        a<span style="color: navy;">=</span>a<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,answer<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-XTniMHKNeOo/Vyf_Ct6o9qI/AAAAAAAADOo/WcIagbMMwJsdlFtUyaXx8yhmK9DURHw2ACLcB/s1600/5-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="216" src="https://2.bp.blogspot.com/-XTniMHKNeOo/Vyf_Ct6o9qI/AAAAAAAADOo/WcIagbMMwJsdlFtUyaXx8yhmK9DURHw2ACLcB/s320/5-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">程式輸出「5050」了！</td></tr>
+</tbody></table>
+你可能會對「=」的用途感到陌生 (雖然說之前有用過「int a=1;」之類的東西)<br />
+千萬別和「==」搞混了<br />
+「=」的作用是把左邊變數的值「設定成」右邊的數字<br />
+「==」是「判斷」左邊的數字和右邊的數字有沒有相等<br />
+雖然奇怪，但是習慣了就好，以後會很常用到的 ^_^<br />
+<br />
+這種會被重複執行的程式碼，我們稱作「迴圈 (loop)」<br />
+還有另一種迴圈叫做「for」，雖然說「while」迴圈已經可以實現「for」迴圈的<b>所有功能</b><br />
+但是「for」迴圈的獨特寫法，讓我們能夠更容易了解這個迴圈執行的事情<br />
+之後的進階章節將介紹這種神奇迴圈的用法 (但還是建議先照著順序讀完本教學)<br />
+<br />
+當while中「繼續重複執行的條件」永遠成立時，程式就會永遠的重複執行下去直到天荒地老<br />
+這種情況我們稱之為「無窮迴圈 (infinite loop)」<br />
+當然，這不會太常用到，畢竟我們通常會希望程式會自己判斷甚麼時候要自己結束，而不是依賴使用者自己去按右上角的「X」按鈕來關閉程式<br />
+當你學會了怎麼製作「表單 (Form)」後，你可能會發現，當你的程式進入「無窮迴圈」時，有時候會導致程式「停止回應」(雖然說導致程式「停止回應」的原因不一定是如此)<br />
+因為這時程式已經不會再理會使用者的操作，而是專注於重複執行某一段程式碼<br />
+使用「多線程 (multithreading)」技術可以避免程式因此停止回應，但這已經遠遠超出本教學的範圍<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-k5voS5whKh8/VygFEZRFKRI/AAAAAAAADO4/IEbdMjO7YX08bPLsEu81vCILrNpuiTW3QCLcB/s1600/5-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="213" src="https://1.bp.blogspot.com/-k5voS5whKh8/VygFEZRFKRI/AAAAAAAADO4/IEbdMjO7YX08bPLsEu81vCILrNpuiTW3QCLcB/s320/5-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">「表單<span style="font-size: 12.8px;">」</span><span style="font-size: 12.8px;">就是外觀有設計過的程式，而不是單純的「輸入和輸出文字」</span></td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-9UwiY8R6dQE/VygI40FLzDI/AAAAAAAADPQ/-1JAeuLEVg0sKiQHQUtj_lzRPGBkUo4ugCLcB/s1600/5-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="211" src="https://1.bp.blogspot.com/-9UwiY8R6dQE/VygI40FLzDI/AAAAAAAADPQ/-1JAeuLEVg0sKiQHQUtj_lzRPGBkUo4ugCLcB/s320/5-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">相對於「表單」，這種看起來只有黑色背景、上面只會顯示文字的程式，我們稱作「終端機 (Terminal)」<br />
+這種程式比較容易製作，也就是我們現在使用C++寫的程式<br />
+當然，<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-form.html">用C++也可以寫出「表單」</a></td></tr>
+</tbody></table>
+<br />
+以下程式碼可以讓你體驗一下「無窮迴圈」：<br />
+<!--more--><br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>a<span style="color: navy;">==</span>b<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"永遠的執行下去<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-xbwsv_IAago/VygHEMZQ3DI/AAAAAAAADPE/rK9M_6kc6-MBn5OzHmi__rZPD7kCskcTwCLcB/s1600/5-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="182" src="https://1.bp.blogspot.com/-xbwsv_IAago/VygHEMZQ3DI/AAAAAAAADPE/rK9M_6kc6-MBn5OzHmi__rZPD7kCskcTwCLcB/s320/5-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">程式會永遠的執行下去，永不停止</td></tr>
+</tbody></table>
+當while中「繼續重複執行的條件」一開始就不成立時，迴圈內的程式碼就不會被執行 (這樣也是一種迴圈)<br />
+這種事是有可能發生的，因為有時候我們會希望在某個條件下，程式碼會被執行0次<br />
+例如以下題目中「n=0」時的情況：<br />
+輸入一個整數n (不能是負數)，請輸出「1+2+3+......+(n-2)+(n-1)+n」的結果<br />
+也就是輸出$\sum_{k=1}^{n}k$<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> answer<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>a<span style="color: navy;">&lt;=</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        answer<span style="color: navy;">=</span>answer<span style="color: #000040;">+</span>a<span style="color: teal;">;</span>
+        a<span style="color: navy;">=</span>a<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,answer<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+現在，綜合五章所有知識，該來點有挑戰性的了<br />
+請你利用程式實現：輸入一個整數n，請找出n的所有因數，並把所有因數輸出，一個因數輸出一行<br />
+趕快動手試試看吧！<br />
+<br />
+你挑戰成功了嗎？<br />
+<br />
+參考解答：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> factor<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>factor<span style="color: navy;">&lt;=</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>n<span style="color: #000040;">%</span>factor<span style="color: navy;">==</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,factor<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        factor<span style="color: navy;">=</span>factor<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+另外，你有辦法自己寫一個程式，「找出1000以內的所有質數」嗎？<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>n<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">1000</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> is_prime_number<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>a<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>n<span style="color: #000040;">%</span>a<span style="color: navy;">==</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                is_prime_number<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+                <span style="color: blue;">break</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            a<span style="color: navy;">=</span>a<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>is_prime_number<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,n<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        n<span style="color: navy;">=</span>n<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-ru_K9cBTL8A/Vynjwb4Ji7I/AAAAAAAADSQ/HzgYLAw0aTYJoE_fi9C-xTIOjiVgJNSbwCLcB/s1600/5-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="247" src="https://2.bp.blogspot.com/-ru_K9cBTL8A/Vynjwb4Ji7I/AAAAAAAADSQ/HzgYLAw0aTYJoE_fi9C-xTIOjiVgJNSbwCLcB/s320/5-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">好多質數XD</td></tr>
+</tbody></table>
+<br />
+細心的讀者可能會注意到一個不尋常的地方：「break」是甚麼？<br />
+其實它的功用很簡單，就是「立即跳出迴圈」<br />
+你可能會懷疑：break明明就寫在if裡面啊，哪來的迴圈？<br />
+但是break很聰明，它會找到離自己最近的那個迴圈，並跳出那「一個」迴圈 (注意，一次只能跳出「一個」迴圈哦)<br />
+在找質數的這個例子，我們只要一確定n不是質數 (找到n的一個因數)，迴圈就可以不用繼續執行了<br />
+因此可以直接使用「break」跳出迴圈<br />
+例如以下程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>a<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">10</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: #0000dd;">4</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">break</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        a<span style="color: navy;">=</span>a<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-Fqaoo5Fchsg/VynkKw5uhWI/AAAAAAAADSU/uMA_A3Jo1H0QPJxHsv4pz7OhVFX2AKKGACLcB/s1600/5-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="227" src="https://4.bp.blogspot.com/-Fqaoo5Fchsg/VynkKw5uhWI/AAAAAAAADSU/uMA_A3Jo1H0QPJxHsv4pz7OhVFX2AKKGACLcB/s320/5-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">是「4」耶！</td></tr>
+</tbody></table>
+<br />
+會輸出「4」<br />
+<br />
+是不是很想自己玩玩看呢？<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-6-array.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

@@ -1,0 +1,248 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/10/cpp-for-beginner-article-of-future.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+C++看起來已經是一個很完整、功能強大的程式語言了<br />
+但事實上，世界各地的專家們仍然致力於改善C++，讓原本已經很強的C++的功能更加強大！<br />
+因此，C++也是有版本的哦～<br />
+別擔心，您在較舊版本C++使用的語法，在新版C++也能無縫接軌的使用！<br />
+<br />
+<b><span style="color: red;">注意：請先依據</span></b><a href="http://codingsimplifylife.blogspot.tw/2016/08/c-13-2.html"><b><span style="color: blue;"><u>這篇</u></span></b></a><b><span style="color: red;">設定好編譯參數，才能使用本頁所教的語法</span></b><br />
+<br />
+請注意，此篇語法有些適合搭配STL (Standard Library 標準函式庫) 使用，STL的介紹和用法將在下冊講到<br />
+<br />
+<span style="font-size: large;"><b>「auto」的用法:</b></span><br />
+<br />
+先備知識：1~12章的某些基本語法<br />
+功能：可以讓電腦在宣告變數的時候自動判斷該變數的型別<br />
+<br />
+簡單舉例：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">double</span> a<span style="color: navy;">=</span><span style="color: purple;">8.3</span><span style="color: teal;">;</span>
+    <span style="color: #666666;">//double b=a;</span>
+    <span style="color: blue;">auto</span> b<span style="color: navy;">=</span>a<span style="color: teal;">;</span><span style="color: #666666;">//這一行和上面那一行被註解掉的程式碼是等價的 </span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"a=%f, b=%f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-og2Dt6yIzNE/WA13XQc5IvI/AAAAAAAAGzQ/hXX6OX2ocW4v3dqeDbKnMuyXfxq1TJ2QQCLcB/s1600/13-25-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="174" src="https://2.bp.blogspot.com/-og2Dt6yIzNE/WA13XQc5IvI/AAAAAAAAGzQ/hXX6OX2ocW4v3dqeDbKnMuyXfxq1TJ2QQCLcB/s320/13-25-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+<br />
+再舉一個例子：<br />
+<br />
+<!--more--><br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">struct</span> DateOfKSHSFairs
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> month,day<span style="color: teal;">;</span>
+<span style="color: green;">}</span><span style="color: teal;">;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    DateOfKSHSFairs day1<span style="color: teal;">;</span>
+    day1.<span style="color: #007788;">month</span><span style="color: navy;">=</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+    day1.<span style="color: #007788;">day</span><span style="color: navy;">=</span><span style="color: #0000dd;">28</span><span style="color: teal;">;</span>
+    <span style="color: #666666;">//DateOfKSHSFairs day2=day1;</span>
+    <span style="color: blue;">auto</span> day2<span style="color: navy;">=</span>day1<span style="color: teal;">;</span><span style="color: #666666;">//這一行和上面那一行被註解掉的程式碼是等價的 </span>
+    day2.<span style="color: #007788;">day</span><span style="color: navy;">=</span><span style="color: #0000dd;">29</span><span style="color: teal;">;</span> 
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"高雄市立高雄高級中學園遊會<span style="color: #000099; font-weight: bold;">\n</span>day1=%d月%d日, day2=%d月%d日<span style="color: #000099; font-weight: bold;">\n</span>"</span>,day1.<span style="color: #007788;">month</span>,day1.<span style="color: #007788;">day</span>,day2.<span style="color: #007788;">month</span>,day2.<span style="color: #007788;">day</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-MEslUm3fl8k/WA13wk5W6YI/AAAAAAAAGzU/niR-nmPmHp8SummhA_VJsMD5t2yBRylEgCLcB/s1600/13-25-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="157" src="https://4.bp.blogspot.com/-MEslUm3fl8k/WA13wk5W6YI/AAAAAAAAGzU/niR-nmPmHp8SummhA_VJsMD5t2yBRylEgCLcB/s320/13-25-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+<br />
+如果還是看不懂怎麼用，歡迎發問～<br />
+<br />
+<b><span style="font-size: large;">「for迴圈」的另類用法：</span></b><br />
+<br />
+先備知識：1~12章的某些基本語法<br />
+功能：大幅簡化枚舉陣列或STL容器 (vector、set、map......等等) 的元素的迴圈<br />
+<br />
+簡單舉例：<br />
+<br />
+陣列版本：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> s<span style="color: green;">[</span><span style="color: #0000dd;">6</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: green;">{</span><span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">2</span>,<span style="color: #0000dd;">4</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">0</span>,<span style="color: #0000dd;">5</span><span style="color: green;">}</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> element<span style="color: teal;">:</span>s<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,element<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-uVfR8xZ_iX8/WA1_mJlntbI/AAAAAAAAGzo/sWPg5WWA-vEUNkptHWCbpJ-m64PIBifUQCLcB/s1600/13-25-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="158" src="https://3.bp.blogspot.com/-uVfR8xZ_iX8/WA1_mJlntbI/AAAAAAAAGzo/sWPg5WWA-vEUNkptHWCbpJ-m64PIBifUQCLcB/s320/13-25-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+vector版本：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: #339900;">#include&lt;vector&gt;</span>
+<span style="color: blue;">using</span> <span style="color: blue;">namespace</span> std<span style="color: teal;">;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    vector<span style="color: navy;">&lt;</span><span style="color: blue;">int</span><span style="color: navy;">&gt;</span>s<span style="color: teal;">;</span>
+    s.<span style="color: #007788;">push_back</span><span style="color: green;">(</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">push_back</span><span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">push_back</span><span style="color: green;">(</span><span style="color: #0000dd;">4</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">push_back</span><span style="color: green;">(</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">push_back</span><span style="color: green;">(</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">push_back</span><span style="color: green;">(</span><span style="color: #0000dd;">5</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> element<span style="color: teal;">:</span>s<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,element<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-sBoauoUeAEc/WA2AHiW_SvI/AAAAAAAAGzs/mTwE32dYdYIUBLRwWiP0xzDmVFrDjj6qwCLcB/s1600/13-25-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="154" src="https://2.bp.blogspot.com/-sBoauoUeAEc/WA2AHiW_SvI/AAAAAAAAGzs/mTwE32dYdYIUBLRwWiP0xzDmVFrDjj6qwCLcB/s320/13-25-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+set版本：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: #339900;">#include&lt;set&gt;</span>
+<span style="color: blue;">using</span> <span style="color: blue;">namespace</span> std<span style="color: teal;">;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    set<span style="color: navy;">&lt;</span><span style="color: blue;">int</span><span style="color: navy;">&gt;</span>s<span style="color: teal;">;</span>
+    s.<span style="color: #007788;">insert</span><span style="color: green;">(</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">insert</span><span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">insert</span><span style="color: green;">(</span><span style="color: #0000dd;">4</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">insert</span><span style="color: green;">(</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">insert</span><span style="color: green;">(</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    s.<span style="color: #007788;">insert</span><span style="color: green;">(</span><span style="color: #0000dd;">5</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> element<span style="color: teal;">:</span>s<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,element<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-ulj759SaCHk/WA2AsWOXGYI/AAAAAAAAGz4/nVj4nb9D37QTROQGDKfRKxYU_nyDXdpbACEw/s1600/13-25-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="154" src="https://2.bp.blogspot.com/-ulj759SaCHk/WA2AsWOXGYI/AAAAAAAAGz4/nVj4nb9D37QTROQGDKfRKxYU_nyDXdpbACEw/s320/13-25-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+map版本：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: #339900;">#include&lt;map&gt;</span>
+<span style="color: blue;">using</span> <span style="color: blue;">namespace</span> std<span style="color: teal;">;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    map<span style="color: navy;">&lt;</span><span style="color: blue;">char</span>,<span style="color: blue;">int</span><span style="color: navy;">&gt;</span>s<span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'B'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'0'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'5'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'9'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">8</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'0'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'2'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">4</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'0'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'8'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    s<span style="color: green;">[</span><span style="color: red;">'3'</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: #666666;">//for(pair&lt;char,int&gt; element:s)</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">auto</span> element<span style="color: teal;">:</span>s<span style="color: green;">)</span><span style="color: #666666;">//這一行和上面那一行被註解掉的程式碼是等價的</span>
+    <span style="color: red; font-style: italic;">/*看到auto了嗎?
+      電腦將會自動把auto替換為pair&lt;char,int&gt;
+      當你不知道element要用甚麼型別時特別好用*/</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"key=%c, value=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,element.<span style="color: #007788;">first</span>,element.<span style="color: #007788;">second</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-d5etEqOgMtU/WA2Djfh5ChI/AAAAAAAAG0E/V31xliptD3EmG0yODfgZMr8FV1eiWTiNACLcB/s1600/13-25-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="145" src="https://2.bp.blogspot.com/-d5etEqOgMtU/WA2Djfh5ChI/AAAAAAAAG0E/V31xliptD3EmG0yODfgZMr8FV1eiWTiNACLcB/s320/13-25-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+如果還是看不懂怎麼用，歡迎發問～<br />
+<br />
+<span style="font-size: large;"><b>「匿名函式 (又稱</b><b>Lambda、</b><b>匿名運算式)」的用法：</b></span><br />
+<br />
+先備知識：1~12章的某些基本語法<br />
+功能：可以在程式執行到一半的時候創造函式<br />
+<br />
+簡單舉例：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">auto</span> Level<span style="color: navy;">=</span><span style="color: green;">[</span><span style="color: green;">]</span><span style="color: green;">(</span><span style="color: blue;">int</span> a<span style="color: green;">)</span><span style="color: #000040;">-</span><span style="color: navy;">&gt;</span><span style="color: blue;">int</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> answer<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;=</span>a<span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>answer<span style="color: navy;">=</span>answer<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        <span style="color: blue;">return</span> answer<span style="color: teal;">;</span>
+    <span style="color: green;">}</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> x<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>x<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">6</span><span style="color: teal;">;</span>x<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d! = %d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,x,Level<span style="color: green;">(</span>x<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-_NqKI0VzxCk/WBBTciUhAHI/AAAAAAAAG18/xJKGzgSRJxo2xdHBLQqjgPa19qKO0ZZzACLcB/s1600/13-25-7.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="165" src="https://2.bp.blogspot.com/-_NqKI0VzxCk/WBBTciUhAHI/AAAAAAAAG18/xJKGzgSRJxo2xdHBLQqjgPa19qKO0ZZzACLcB/s320/13-25-7.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+這樣寫可以在不用幫函式取名 (注意到程式碼中找不到「Level」) 的條件下達成一模一樣的效果，這就是為甚麼這種東西被稱為「匿名函式」(沒有名字的函式) 的原因：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> x<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>x<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">6</span><span style="color: teal;">;</span>x<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d! = %d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,x,<span style="color: green;">[</span><span style="color: green;">]</span><span style="color: green;">(</span><span style="color: blue;">int</span> a<span style="color: green;">)</span><span style="color: #000040;">-</span><span style="color: navy;">&gt;</span><span style="color: blue;">int</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">int</span> answer<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+            <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;=</span>a<span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>answer<span style="color: navy;">=</span>answer<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+            <span style="color: blue;">return</span> answer<span style="color: teal;">;</span>
+        <span style="color: green;">}</span><span style="color: green;">(</span>x<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-P6sByH7XAWc/WBBUYrzEZXI/AAAAAAAAG2E/PAW-XjbKqO0mvurBOM6KZGPO5Kj-McemACEw/s1600/13-25-8.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="172" src="https://3.bp.blogspot.com/-P6sByH7XAWc/WBBUYrzEZXI/AAAAAAAAG2E/PAW-XjbKqO0mvurBOM6KZGPO5Kj-McemACEw/s320/13-25-8.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">執行結果</td></tr>
+</tbody></table>
+<br />
+這是以上兩個範例中匿名函式的本體：<br />
+<br />
+<span style="color: green;">[</span><span style="color: green;">]</span><span style="color: green;">(</span><span style="color: blue;">int</span> a<span style="color: green;">)</span><span style="color: #000040;">-</span><span style="color: navy;">&gt;</span><span style="color: blue;">int</span><br />
+<span style="color: green;">{</span><br />
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">int</span> answer<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span><br />
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;=</span>a<span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>answer<span style="color: navy;">=</span>answer<span style="color: #000040;">*</span>i<span style="color: teal;">;</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">return</span> answer<span style="color: teal;">;</span><br />
+<span style="color: green;">}</span><span style="color: teal;"></span><b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br />
+<br />
+「中括號[]」寫出來放著就好<br />
+「小括號()」裡面放入引數 (<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-9-function.html">甚麼是引數?</a>)<br />
+「箭頭-&gt;」後面接回傳值 (<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-9-function.html">甚麼是回傳值?</a>) 的型別<br />
+「大括號{}」裡面放入函式的程式碼<br />
+<br />
+就這樣<br />
+小中大括號都用到了耶！好記吧～XD<br />
+<br />
+<div style="text-align: center;">
+<span style="font-size: large;"><b>-----The End-----</b></span></div>
+<br />
+關於C++11的好用語法就先介紹到這裡<br />
+如果還想要繼續更深入的研究，可以參考<a href="https://zh.wikipedia.org/zh-tw/C%2B%2B11">維基百科</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/10/c-13-25-cc11.html"><span style="color: blue;">下一頁 (這是最後一頁)</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

@@ -1,0 +1,252 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-8-charactor-string.html"><span style="color: blue;">上一章</span></a><br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script><br />
+依照慣例，在本章依然要給你一個題目，然後你就會發覺需要學習某種新技能，才能有效率的寫出可以解決問題的程式碼 (?)<br />
+<br />
+給你一個正整數$n$，請求出第$n$個卡特蘭數<br />
+提示：<br />
+第$n$個卡特蘭數$=C^{2n}_{n}-C^{2n}_{n+1}$<br />
+其中$C^{a}_{b}=\frac{a!}{b!(a-b)!}$<br />
+其中「$x!$」念作「$x$階層」，$x!=1*2*3*...*x=\prod_{k=1}^{x}k$<br />
+<br />
+當然，$n$不能太大，否則會發生溢位 (overflow) 的情況 (<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html">甚麼是溢位？</a>)<br />
+所以$n$的範圍會在$1\sim 6$內<br />
+<br />
+卡特蘭數列：1、2、5、14、42、132、......<br />
+<br />
+你的程式答對前6項了嗎？<br />
+<br />
+參考程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,c<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        a<span style="color: navy;">=</span>a<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        b<span style="color: navy;">=</span>b<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: #000040;">-</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        c<span style="color: navy;">=</span>c<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">int</span> first<span style="color: navy;">=</span>a<span style="color: #000040;">/</span><span style="color: green;">(</span>b<span style="color: #000040;">*</span>c<span style="color: green;">)</span><span style="color: teal;">;</span>
+    a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,c<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        a<span style="color: navy;">=</span>a<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        b<span style="color: navy;">=</span>b<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: #000040;">-</span><span style="color: green;">(</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        c<span style="color: navy;">=</span>c<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">int</span> second<span style="color: navy;">=</span>a<span style="color: #000040;">/</span><span style="color: green;">(</span>b<span style="color: #000040;">*</span>c<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,first<span style="color: #000040;">-</span>second<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+程式碼中，變數a、b、c分別表示$C^{a}_{b}$中的$a!$、$b!$、$(a-b)!$<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-XNB3WrL-RVY/VzsA14s1eMI/AAAAAAAADrE/yxm7zbgFyfYZ_wD8calAdjJCzvU46Pw9gCLcB/s1600/9-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="173" src="https://1.bp.blogspot.com/-XNB3WrL-RVY/VzsA14s1eMI/AAAAAAAADrE/yxm7zbgFyfYZ_wD8calAdjJCzvU46Pw9gCLcB/s320/9-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">當輸入$n=6$時，程式輸出第6個卡特蘭數「132」了！</td></tr>
+</tbody></table>
+你可能會覺得：程式碼好冗長呀～<br />
+然後心裡想說：等一下一定會教一個更簡單的方法<br />
+咦？XD<br />
+<br />
+沒錯！<br />
+接下來，本章會教你，怎麼利用「函式 (Function)」來化簡你的程式碼！<br />
+<br />
+<!--more--><br />
+<br />
+你在算數學題目時，有用過「函數」嗎？<br />
+當我們遇到類似$y=x^3+3x+32$之類的方程式<br />
+我們可以直接令$f(x)=x^3+3x+32$<br />
+這樣一來，要表示「當$x=a$的時候，$y$的值」，我們就可以直接帥氣的使用「$f(a)$」來代替「$a^3+3a+32$」了<br />
+你看你看～「寫出『$f(a)$』」比「寫出『$a^3+3a+32$』」還要方便省力多了！<br />
+可以想像，聰明的運用「函數」可以大幅簡化你的計算過程！<br />
+<br />
+當然，程式方面，也可以使用一樣的方式來簡化你的程式碼，真是太棒了！<br />
+(其實，程式的「函式」就是數學的「函數」，英文名稱都是「Function」)<br />
+趕快來看看怎麼用吧～<br />
+假設你想把函式的名稱取作「function_name」，它可以根據一個指定的int變數「a」，算出一個答案<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">int</span> function_name<span style="color: green;">(</span><span style="color: blue;">int</span> a<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    你的程式碼
+    <span style="color: blue;">return</span> 算出來的答案<span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+這樣一來，如果把上述的數學題目轉換成程式題目：<br />
+令$f(x)=x^3+3x+32$，輸入$a$，請輸出$f(a)$<br />
+你的程式碼可以這樣寫：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> f<span style="color: green;">(</span><span style="color: blue;">int</span> x<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> x<span style="color: #000040;">*</span>x<span style="color: #000040;">*</span>x<span style="color: #000040;">+</span><span style="color: #0000dd;">3</span><span style="color: #000040;">*</span>x<span style="color: #000040;">+</span><span style="color: #0000dd;">32</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,f<span style="color: green;">(</span>a<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+使用「函式」的動作，我們稱作「呼叫 (Call)」<br />
+當一個函式需要額外的資訊來進行運算，我們會需要傳遞資訊 (例如「f<span style="color: green;">(</span>a<span style="color: green;">)</span>」中的「a」) 給這個函式，這些被傳遞的資訊，我們稱作「引數 (Argument)」<br />
+函式算出來的東西我們稱作「回傳值 (Return value)」，也就是程式碼中「<span style="color: blue;">return</span>」後面接的東西<br />
+執行含有「<span style="color: blue;">return</span>」的程式碼的動作，我們稱作「回傳 (Return)」。這時候，這個函式會立即整個結束執行，並將「回傳值」傳遞給呼叫這個函式的地方 (例如「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,f<span style="color: green;">(</span>a<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>」中的「f<span style="color: green;">(</span>a<span style="color: green;">)</span>」)<br />
+<br />
+相信你已經知道要怎麼利用「函式」來化簡卡特蘭數的程式碼了<br />
+聰明的你應該知道<br />
+我們的程式碼會需要反覆執行類似下面這個動作：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+<span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span>n<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    a<span style="color: navy;">=</span>a<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+    i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+然後把算出來的a拿來做其他事 </pre>
+<br />
+也就是：對於一個指定的正整數$n$，算出$n!$的值<br />
+<br />
+那麼，何不乾脆寫成一個函式？<br />
+我們來把「算出$n!$的函式」命名作「Level」吧！<br />
+<br />
+於是，我們就可以把程式碼改寫成這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> Level<span style="color: green;">(</span><span style="color: blue;">int</span> n<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        a<span style="color: navy;">=</span>a<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> a<span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> first<span style="color: navy;">=</span>Level<span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>Level<span style="color: green;">(</span>n<span style="color: green;">)</span><span style="color: #000040;">*</span>Level<span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: #000040;">-</span>n<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> second<span style="color: navy;">=</span>Level<span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>Level<span style="color: green;">(</span>n<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: #000040;">*</span>Level<span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n<span style="color: #000040;">-</span><span style="color: green;">(</span>n<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,first<span style="color: #000040;">-</span>second<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+哇賽，程式碼真的變簡單很多耶！<br />
+我們甚至省略了宣告a、b、c三個變數的過程！(分別表示$C^{a}_{b}$中的$a!$、$b!$、$(a-b)!$)<br />
+趕快來寫寫看吧～<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-Z4whXuP1rnA/VzsOc3IAYOI/AAAAAAAADrg/r-XIMc-VIDIz5kukNJI5XuW362jYDBRtwCLcB/s1600/9-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="170" src="https://4.bp.blogspot.com/-Z4whXuP1rnA/VzsOc3IAYOI/AAAAAAAADrg/r-XIMc-VIDIz5kukNJI5XuW362jYDBRtwCLcB/s320/9-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">當輸入$n=6$時，程式依然是正確地輸出「132」！</td></tr>
+</tbody></table>
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+如果你夠挑剔，你可能還會覺得「每次都要把$a!$、$b!$、$(a-b)!$拿去算出$C^{a}_{b}$」好麻煩呀<br />
+能不能弄一個函式專門用來算「$C^{a}_{b}$」呢？<br />
+當然可以！<br />
+我來示範給你看：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> Level<span style="color: green;">(</span><span style="color: blue;">int</span> n<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        a<span style="color: navy;">=</span>a<span style="color: #000040;">*</span>i<span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> a<span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> C<span style="color: green;">(</span><span style="color: blue;">int</span> a,<span style="color: blue;">int</span> b<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> Level<span style="color: green;">(</span>a<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>Level<span style="color: green;">(</span>b<span style="color: green;">)</span><span style="color: #000040;">*</span>Level<span style="color: green;">(</span>a<span style="color: #000040;">-</span>b<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,C<span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n,n<span style="color: green;">)</span><span style="color: #000040;">-</span>C<span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: #000040;">*</span>n,n<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+你也來練習看看吧！<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-jPV9y2iLdvs/VzsOwfN3mXI/AAAAAAAADrk/KWCv7vbAFFIRHBbRGgy38jmHAad660Z0QCLcB/s1600/9-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="169" src="https://4.bp.blogspot.com/-jPV9y2iLdvs/VzsOwfN3mXI/AAAAAAAADrk/KWCv7vbAFFIRHBbRGgy38jmHAad660Z0QCLcB/s320/9-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><span style="font-size: 12.8px;">當輸入$n=6$時，程式仍然是正確地輸出「132」！</span></td></tr>
+</tbody></table>
+你可能會發現：「咦？從原古時代就出現的『<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>』和函式長得好像呀」<br />
+沒錯，「main」本身就是一個函式！<br />
+這個函式的功能就和我們自己創造的函式一模一樣<br />
+那麼，這個「main函式」甚麼時候會被用到呢？<br />
+就是程式開始執行的時候<br />
+<br />
+電腦第一件事就是找出名稱為「main」的函式，並開始執行這個函式的內容<br />
+因此，程式碼中不能沒有名稱為「main」的函式，否則電腦會說你的程式碼寫錯了 (不信嗎？把「main函式」改成「mian函式」再按鍵盤上的「F11」看看)<br />
+<br />
+那麼「main函式」會回傳一個「0」，代表甚麼意思呢？<br />
+為甚麼電腦總是會需要main函式回傳一個數字「0」呢？<br />
+其實，別無他意，回傳值為0代表「程式正常執行完畢」<br />
+當電腦發現某個程式的「main函式回傳值」不是0的時後<br />
+代表這個程式執行到一半就發生錯誤了！<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-xJMFMcpf86c/VzsVCSpaL8I/AAAAAAAADr4/PtsaTUEnNS4iGmXH40xae1rpv8Tx_NNUgCLcB/s1600/9-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="173" src="https://3.bp.blogspot.com/-xJMFMcpf86c/VzsVCSpaL8I/AAAAAAAADr4/PtsaTUEnNS4iGmXH40xae1rpv8Tx_NNUgCLcB/s320/9-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">我們讓程式執行「除以零」的動作，程式就出錯了</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-rzPKDKLBmNg/VzsVXO17bdI/AAAAAAAADr8/uKygjHdy22ML4IZSf78IoLIlcUOcOD7PQCLcB/s1600/9-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="172" src="https://1.bp.blogspot.com/-rzPKDKLBmNg/VzsVXO17bdI/AAAAAAAADr8/uKygjHdy22ML4IZSf78IoLIlcUOcOD7PQCLcB/s320/9-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">程式出錯的方式有很多種，每一種錯誤都會導致程式回傳特定的非零數字<br />
+當我們點選「關閉程式」之後，可以看到程式的回傳值 (僅限用Dev-C++寫出來的終端機程式)<br />
+例如這個「除以零」的錯誤會得到回傳值「3221225620」</td></tr>
+</tbody></table>
+<br />
+會不會覺得程式越來越好玩了呢？<br />
+有沒有寫了一堆程式碼超長的程式呢？<br />
+趕快去利用「函式」來化簡它吧！<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-10-scope.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：多多學弟<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

@@ -1,0 +1,104 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-4.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+當您讀到「<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-6-array.html">陣列</a>」這個單元時，大可將「宣告一個大小為n的陣列」理解成「讓電腦幫你一次宣告n個變數」<br />
+但是，事實真的是如此嗎？<br />
+<br />
+當您宣告一個變數的時候，電腦會挪出一塊記憶體給你用，啊然後咧？<br />
+這就像您想要網購某個東西，在購物網站上點了「購買」按鈕、付了錢，然後就以為沒事了(?)<br />
+不對啊，你總要知道要去哪裡取貨吧！<br />
+因此，程式向電腦「訂購」了記憶體之後，電腦就要告訴程式「取貨地址」－－也就是「記憶體編號」，或稱「指標」<br />
+<br />
+當程式執行到「<span style="color: blue;">int</span> a<span style="color: teal;">;</span>」這一行，程式會向電腦訂購32位元記憶體，然後電腦會告訴程式這32位元記憶體的「指標」。程式會小心翼翼地把這個「指標」記好，這樣才能隨時去使用它訂購的32位元記憶體<br />
+<br />
+然而，有一件殘酷的事實是：<br />
+「記住指標」這個動作會讓程式需要額外的static記憶體 (<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-6.html">之後會學到甚麼是static記憶體</a>)<br />
+<br />
+那這樣的話，把「宣告一個大小為$n$的陣列」理解成「讓電腦幫你一次宣告$n$個變數」會有甚麼問題嗎？<br />
+注意到，與其「訂購$32$位元記憶體$n$次，並記住$n$個指標」，還有另一種更有效率的方式：<br />
+直接一次性地訂購$32n$位元記憶體 (恩對一條街被買下來了(?))，然後依照「門牌號碼」分配給每個變數各$32$位元記憶體<br />
+<br />
+差別在哪？這時程式只需要記住1個指標 (而非$n$個)，也就是那「$32n$位元記憶體」的指標<br />
+當程式要取得第$i$ ($1\leq i\leq n$) 個變數的指標時，只要將第1個變數的指標加上$32(i-1)$位元就好了<br />
+<br />
+怎麼證明電腦真的在做這件事？<br />
+信不信，陣列的名稱可以直接當指標來用XD (?!)<br />
+當然，小莫還要示範給你看！<br />
+<a href="https://www.blogger.com/null" name="more"></a><br />
+<!--more--><br />
+<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span><span style="color: #0000dd;">10</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    a<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,<span style="color: #000040;">*</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    a<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">4</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,<span style="color: #000040;">*</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;">&nbsp;<a href="https://4.bp.blogspot.com/-0HrzRMdKgNw/V9YPP6AbC4I/AAAAAAAAGZU/ThJzRsh9cQUVOqTARj9HuVtDV_NPGuTVACLcB/s1600/13-5-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="205" src="https://4.bp.blogspot.com/-0HrzRMdKgNw/V9YPP6AbC4I/AAAAAAAAGZU/ThJzRsh9cQUVOqTARj9HuVtDV_NPGuTVACLcB/s320/13-5-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">改變「a[0]」，「a指標」指到的記憶體所儲存的數值也跟著改變</td></tr>
+</tbody></table>
+如果還不熟悉指標的用法，可以參考之前的<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-12-pointer.html">指標章節</a><br />
+<br />
+陣列真的是指標耶！而且真的是陣列第一個元素的指標！<br />
+<br />
+那麼，「陣列」等不等於「指標」呢？<br />
+為了確認這點，除了要確認「陣列就是指標」，我們還需要確認是不是「指標就是陣列」<br />
+<br />
+要怎麼確認指標是不是陣列呢？<br />
+我們可以取「a陣列」的第一個元素的指標，看看這個指標能不能當作「a陣列」來用就好啦<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span><span style="color: #0000dd;">10</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> <span style="color: #000040;">*</span>b<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    b<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    b<span style="color: green;">[</span><span style="color: #0000dd;">9</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">[</span><span style="color: #0000dd;">9</span><span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    b<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    b<span style="color: green;">[</span><span style="color: #0000dd;">9</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">4</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">[</span><span style="color: #0000dd;">9</span><span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-TKfhWiO-ifs/V9ZMG3cdyqI/AAAAAAAAGZk/Yn8UD8wkmTABCagNpHD1l3TMr9izXXCDQCLcB/s1600/13-5-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="179" src="https://3.bp.blogspot.com/-TKfhWiO-ifs/V9ZMG3cdyqI/AAAAAAAAGZk/Yn8UD8wkmTABCagNpHD1l3TMr9izXXCDQCLcB/s320/13-5-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">把b當作陣列來用，改變b的第i項，a的第i項也跟著改變</td></tr>
+</tbody></table>
+我們取a陣列的第1個元素「a[0]」，取它的指標儲存成「b」<br />
+可以發現，當我們硬把「b」當作陣列來用的時候，不僅沒有出事，「b」的行為也完全和「a」一模一樣！<br />
+<br />
+所以，「陣列」=「指標」，是嗎？<br />
+當然～<br />
+很意外吧XD<br />
+<br />
+例外狀況：<br />
+<ol>
+<li>我們不能從指標來得知陣列的長度，但是從陣列的名字就可以 (可以用sizeof(a)/sizeof(a[0]))</li>
+<li>二維或更多維的陣列無法用指標表示</li>
+</ol>
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-6.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：匿名網友<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

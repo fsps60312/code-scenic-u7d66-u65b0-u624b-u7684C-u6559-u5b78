@@ -1,0 +1,268 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-3.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+您是否有想過要固定輸出數字的寬度呢？<br />
+當您想要讓輸出的格式類似表格，行行之間的數字要對齊，就會想要這樣做<br />
+這時候該怎麼辦呢？<br />
+用代表「Tab」的「\t」來排版吧！<br />
+可是數字太長會讓「\t」跳到下一個位置，反而加大行行數字間的差距甚至造成混淆......<br />
+先想辦法算出數字有幾個位數，再決定每個數字前面各要補幾個空格？<br />
+功能完美！可是似乎有點麻煩......<br />
+<br />
+哈哈，相信您已經猜到了－－本章將教您如何簡單的設定輸出格式！<br />
+本方法僅限「scanf」和「printf」的使用者哦～<br />
+<strike>如果您是使用「cin」和「cout」，小莫真的不知道怎麼辦呢......XD</strike><br />
+<br />
+類似表格的東西喔......就拿九九乘法表來當例子吧！<br />
+首先，我們先把輸出九九乘法表9*9個數字的程式碼寫出來～<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> row<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>row<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>row<span style="color: navy;">=</span>row<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> column<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>column<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>column<span style="color: navy;">=</span>column<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>column<span style="color: navy;">&gt;</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">" "</span><span style="color: green;">)</span><span style="color: teal;">;</span><span style="color: #666666;">//除了第一個數字之外，其餘的數字前面都要有一個空格</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,row<span style="color: #000040;">*</span>column<span style="color: green;">)</span><span style="color: teal;">;</span> 
+        <span style="color: green;">}</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-d_-2rkzJuQg/V8iNDF5aPeI/AAAAAAAAGMY/4quIE9nTAhEr3ejaqHVlVp4tfhEnPzk3wCLcB/s1600/13-4-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="148" src="https://1.bp.blogspot.com/-d_-2rkzJuQg/V8iNDF5aPeI/AAAAAAAAGMY/4quIE9nTAhEr3ejaqHVlVp4tfhEnPzk3wCLcB/s320/13-4-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">九九乘法表～寫錯了也沒關係，可以直接貼程式碼哦</td></tr>
+</tbody></table>
+我們來把每個數字的寬度都固定成2吧～<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> row<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>row<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>row<span style="color: navy;">=</span>row<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> column<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>column<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>column<span style="color: navy;">=</span>column<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>column<span style="color: navy;">&gt;</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">" "</span><span style="color: green;">)</span><span style="color: teal;">;</span><span style="color: #666666;">//除了第一個數字之外，其餘數字的前面都要有一個空格</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%2d"</span>,row<span style="color: #000040;">*</span>column<span style="color: green;">)</span><span style="color: teal;">;</span> 
+        <span style="color: green;">}</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-KoNqx0Aaiig/V8iN7IsUMTI/AAAAAAAAGMk/E2KBLW0FcXEdeOwT-VIXIyNHAYID7-UvQCLcB/s1600/13-4-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="147" src="https://4.bp.blogspot.com/-KoNqx0Aaiig/V8iN7IsUMTI/AAAAAAAAGMk/E2KBLW0FcXEdeOwT-VIXIyNHAYID7-UvQCLcB/s320/13-4-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">耶～所有數字的寬度都固定成2了</td></tr>
+</tbody></table>
+<div>
+耶～所有數字的寬度都固定成2了 \(^o^)/</div>
+<div>
+等等，為甚麼？程式碼看起來沒差呀</div>
+<div>
+其實真的沒差多少，我們只是把輸出數字的「%d」改成「%2d」而已 (在「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,row<span style="color: #000040;">*</span>column<span style="color: green;">)</span><span style="color: teal;">;</span>」那裡)</div>
+<div>
+就這麼簡單！</div>
+當然，如果想要把數字的寬度固定成3，把「%2d」改成「%3d」即可<br />
+<br />
+您可能會想問，可以用一個「變數」來指定數字的寬度嗎？<br />
+沒問題！<br />
+<!--more--><br /><br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> width<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> row<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>row<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>row<span style="color: navy;">=</span>row<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> column<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>column<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>column<span style="color: navy;">=</span>column<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>column<span style="color: navy;">&gt;</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">" "</span><span style="color: green;">)</span><span style="color: teal;">;</span><span style="color: #666666;">//除了第一個數字之外，其餘的數字前面都要有一個空格</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%*d"</span>,width,row<span style="color: #000040;">*</span>column<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+注意看「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%*d"</span>,width,row<span style="color: #000040;">*</span>column<span style="color: green;">)</span><span style="color: teal;">;</span>」那裡，原本的「%2d」改成了「%*d」，這時的「*」就成了變數，因此我們還需要在「printf」裡面再加上一個變數「width」來讓電腦知道「*」要填甚麼數字<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-S1wsr3LbtVA/V8iSJJ2s42I/AAAAAAAAGMw/yAkV47GLYgoLI_2xuiy3_HNeHvw2tZ6tQCLcB/s1600/13-4-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="153" src="https://1.bp.blogspot.com/-S1wsr3LbtVA/V8iSJJ2s42I/AAAAAAAAGMw/yAkV47GLYgoLI_2xuiy3_HNeHvw2tZ6tQCLcB/s320/13-4-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">成功用變數把寬度指定成2了！你能用變數把寬度指定成4嗎？</td></tr>
+</tbody></table>
+如果想要在數字前面「補0」(而不是加空白) 成固定寬度呢？<br />
+當您的輸出格式是「時間」的話就可能會需要這個功能<br />
+例如，現在時間是9點12分3秒，我們通常會寫成「09:12:03」而不是「9:12:3」(好像球賽比數OAO)<br />
+在表示寬度的「2」前面加一個「0」就好了！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> hour<span style="color: navy;">=</span><span style="color: #0000dd;">9</span>,minute<span style="color: navy;">=</span><span style="color: #0000dd;">12</span>,second<span style="color: navy;">=</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%02d:%02d:%02d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,hour,minute,second<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-9qeKAQZ4NPw/V8iU1YXgcOI/AAAAAAAAGM8/pb0vxw7A2kUtz4PIlE1BIglRlDV692FdQCLcB/s1600/13-4-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="142" src="https://4.bp.blogspot.com/-9qeKAQZ4NPw/V8iU1YXgcOI/AAAAAAAAGM8/pb0vxw7A2kUtz4PIlE1BIglRlDV692FdQCLcB/s320/13-4-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">耶，漂亮的時間格式～等等，上學遲到了</td></tr>
+</tbody></table>
+好啦，如果您是「變數控」(意指很喜歡很喜歡變數的人)，程式碼要這樣寫也可以：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> hour<span style="color: navy;">=</span><span style="color: #0000dd;">9</span>,minute<span style="color: navy;">=</span><span style="color: #0000dd;">12</span>,second<span style="color: navy;">=</span><span style="color: #0000dd;">3</span>,width<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%0*d:%0*d:%0*d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,hour,width,minute,width,second<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-bvwcgVVAJ5o/V8iWro1bVRI/AAAAAAAAGNE/8EeW7mXnFEQCG49fPX5FyZOgpRRjwGKyQCLcB/s1600/13-4-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="147" src="https://4.bp.blogspot.com/-bvwcgVVAJ5o/V8iWro1bVRI/AAAAAAAAGNE/8EeW7mXnFEQCG49fPX5FyZOgpRRjwGKyQCLcB/s320/13-4-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">變數很棒呀～XD</td></tr>
+</tbody></table>
+到目前為止，我們好像只有談到「整數」的輸出格式耶<br />
+那，「浮點數」呢？<br />
+廢話不多說，我們先「依樣畫葫蘆」試試看！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">double</span> a<span style="color: navy;">=</span><span style="color: purple;">1.3</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> width<span style="color: navy;">=</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%010f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-eKcS9UpSSyk/V8iai7dbloI/AAAAAAAAGNU/zM-umQSjbiwIhuwvI93bZ2lJiyiwPDhcQCLcB/s1600/13-4-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="156" src="https://3.bp.blogspot.com/-eKcS9UpSSyk/V8iai7dbloI/AAAAAAAAGNU/zM-umQSjbiwIhuwvI93bZ2lJiyiwPDhcQCLcB/s320/13-4-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">呵呵，看我的「舉一反三」</td></tr>
+</tbody></table>
+哈，輕輕鬆鬆搞定浮點數～(?)<br />
+甚麼？你說想要指定輸出小數點後面幾位數？<br />
+那就小數點「.」後面加「幾位數」就好啦～<br />
+例如，想要輸出小數點後2位數就把「%f」改成「%.2f」<br />
+抑或者你想要測試「double」的能耐，要它輸出小數點後「20」位，也沒有問題！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">double</span> a<span style="color: navy;">=</span><span style="color: purple;">1.3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%.2f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%.20f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-mKrToTaIaYQ/V8ic2fGFR2I/AAAAAAAAGNg/Rbv5W3dekXMw0mwmS-5wOhevtWzcqm2tACLcB/s1600/13-4-8.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="155" src="https://2.bp.blogspot.com/-mKrToTaIaYQ/V8ic2fGFR2I/AAAAAAAAGNg/Rbv5W3dekXMw0mwmS-5wOhevtWzcqm2tACLcB/s320/13-4-8.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">隨意地控制小數位數。哈哈，double秀下限了XD</td></tr>
+</tbody></table>
+你覺得不整齊？想要在指定小數位數的前提下控制數字的寬度？<br />
+那要在前面補0嗎？還是空白就好？要用變數嗎？變數要指定寬度還是小數位數？還是都要？<br />
+算了，通通展示給你看：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">double</span> a<span style="color: navy;">=</span><span style="color: purple;">1.3</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> width<span style="color: navy;">=</span><span style="color: #0000dd;">25</span>,digit<span style="color: navy;">=</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25.2f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25.20f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025.2f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025.20f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*.10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,digit,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*.10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,digit,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-RRoGw3Oy6S8/V8ijKXXlPsI/AAAAAAAAGOE/shFmJVvdyWMzESkYKYPbH-C_BMj47UbLwCLcB/s1600/13-4-11.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="164" src="https://1.bp.blogspot.com/-RRoGw3Oy6S8/V8ijKXXlPsI/AAAAAAAAGOE/shFmJVvdyWMzESkYKYPbH-C_BMj47UbLwCLcB/s320/13-4-11.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">數字寬度通通都25哦～</td></tr>
+</tbody></table>
+不喜歡數字有一堆0？<br />
+不早說，那就用「科學記號」來表示就好啦～<br />
+把「%f」改成「%e」，趕快去試試看！<br />
+請注意，「%e」只適用「float」和「double」，不適用任何的「整數型別」哦～<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">double</span> a<span style="color: navy;">=</span><span style="color: purple;">240000000000.0</span>,b<span style="color: navy;">=</span><span style="color: purple;">0.000000000024</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%e %e<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-GmeM3mqQ05c/V8iguGibWII/AAAAAAAAGNs/k67phRMpE7kwo2ZXqv1jsheNKLgyvRxFgCLcB/s1600/13-4-9.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="144" src="https://4.bp.blogspot.com/-GmeM3mqQ05c/V8iguGibWII/AAAAAAAAGNs/k67phRMpE7kwo2ZXqv1jsheNKLgyvRxFgCLcB/s320/13-4-9.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">科學記號有時也是不錯的選擇！</td></tr>
+</tbody></table>
+蛤，你還想要指定科學記號表示法的寬度、小數位數、要不要補0、要不要用變數？<br />
+啊啊對了，如果想要數字「靠左對齊」，把寬度改成「負數」就好了<br />
+沒關係，小莫用排列組合的技巧通通列出來給你看！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> width<span style="color: navy;">=</span><span style="color: #0000dd;">25</span>,digit<span style="color: navy;">=</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">123456</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%d---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25d---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*d---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%-25d---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*d---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,<span style="color: #000040;">-</span>width,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025d---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*d---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">double</span> b<span style="color: navy;">=</span><span style="color: purple;">123.456</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%-25f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,<span style="color: #000040;">-</span>width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%.10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25.10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*.10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025.10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*.10f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*.*f---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%-25e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,<span style="color: #000040;">-</span>width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%.10e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%.*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25.10e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%25.*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*.10e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%*.*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025.10e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%025.*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*.10e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"---%0*.*e---<span style="color: #000099; font-weight: bold;">\n</span>"</span>,width,digit,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-pKX4Ftsy5Ik/V8inWyikLuI/AAAAAAAAGOQ/4wdkstlfSaU6amD-S6a9PmFEzl5jtq3SwCLcB/s1600/13-4-12.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="156" src="https://3.bp.blogspot.com/-pKX4Ftsy5Ik/V8inWyikLuI/AAAAAAAAGOQ/4wdkstlfSaU6amD-S6a9PmFEzl5jtq3SwCLcB/s320/13-4-12.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸出格式有好多選擇\(^o^)/</td></tr>
+</tbody></table>
+<div>
+呃......希望沒有遺漏</div>
+<div>
+糟了，好像玩起來了耶XD</div>
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-5.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

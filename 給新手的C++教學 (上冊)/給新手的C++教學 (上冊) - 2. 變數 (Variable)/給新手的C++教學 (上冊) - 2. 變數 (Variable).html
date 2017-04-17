@@ -1,0 +1,124 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+利用<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">上一章</span></a>學到的東西，我們已經有能力可以在螢幕上顯示任何文字了！<br />
+但是，這樣的程式還無法和人互動<br />
+<br />
+我們的程式要怎麼和人互動呢？<br />
+方法是人輸入一些文字然後按下鍵盤上的Enter鍵，把這些文字輸入給程式<br />
+然後程式就可以依照輸入的東西來作出對應的回應了 (這裡的「回應」指的是在螢幕上顯示東西)<br />
+<br />
+這裡先來向大家解釋甚麼是「輸入 (Input)」和「輸出 (Output)」<br />
+它們可以當動詞也可以當名詞，在以後的文章看到時，可能需要自行判斷一下<br />
+當動詞時，「輸入」代表將一段文字傳給程式，「輸出」代表程式將一段文字顯示在螢幕上<br />
+當名詞時，「輸入」代表傳給程式的一段文字，「輸出」代表程式在螢幕上顯示的一段文字<br />
+懂了嗎？^_^<br />
+(p.s.其實輸入輸出的意義不僅僅是這樣，但在以後的教學中，它們就<b>只會</b>是這個意思)<br />
+<br />
+不過，要做到「程式依照輸入的東西來作出對應的回應」，就代表<br />
+你的程式必須<b>記住</b>你輸入了甚麼東西<br />
+<br />
+我們要怎麼實現讓程式擁有記憶呢？<br />
+方法就是把資訊以「變數 (Variable)」的形式儲存起來<br />
+<br />
+變數要怎麼使用呢？<br />
+在C++裡面，變數有很多種類型，我們稱作「型別 (Type)」<br />
+有哪些型別呢？<br />
+我想想喔，有short、int、long long、bool、char、float、double、......，甚至在新版的C++ (C++11) 又新增了一些型別<br />
+不過，大部分都不會用到 (或很少用到)<br />
+事實上，你只要學好int、char、float這三種型別，就足夠應付所有功能了！<br />
+其他的型別就只是int、char、float這三種型別的「功能增強版」或「功能削弱版」(?)<br />
+<br />
+「int」是「整數&nbsp;(Integer)」，這種型別的變數是用來儲存「一個整數」的<br />
+「char」是「字元 (Charactor)」，這種型別的變數是用來儲存「一個字」的<br />
+「float」是「浮點數 (Floating-point number)」，別被它的名字嚇到，其實「float」做的事情就和「int」一樣，只是「float」可以允許「小數」的存在，缺點是你必須接受些微的計算誤差。現階段，這個誤差你可以不用考慮它<br />
+<br />
+介紹完了，那要怎麼使用呢？<br />
+來看個範例<br />
+我們希望輸入一個整數，然後程式就會輸出一個跟你輸入的數值相同的整數 (例如：輸入「12」或「012」，會得到輸出「12」)<br />
+也就是『輸入一個「int」，輸出一個「int」』<br />
+程式碼在這裡：<br />
+<!--more--><br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Your input is %d, I remember it!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+像<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">上一章</span></a>一樣，在「Dev-C++」裡面照著打出跟上面一樣的程式碼，然後按下鍵盤上的「F11鍵」，就可以玩玩看了！<br />
+<br />
+這裡我們看到了一個陌生的名字：scanf<br />
+還記得printf嗎？或許你沒有印象，但事實上，在<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">上一章</span></a>我們已經偷偷地使用了<br />
+<br />
+「printf」是用來「輸出」的，而這裡看到的新朋友「scanf」，是用來「輸入」的<br />
+可以發現，scanf之後的兩個小括號包起來的部分，和printf一樣，都有兩個「"」框起來的東西<br />
+事實上，因為都是對文字作處理，之後你會慢慢發現，其實「scanf」和「printf」是很像的東西<br />
+那麼，「%d」是甚麼呢？<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">上一章</span></a>有隱約的表示，「\」是一種特殊符號，當程式碼中 (僅限兩個「"」框起來的地方) 出現「\」這個符號時，電腦會把「\」和下一個字合在一起，代表某種具有特殊意義的......東西 (?)<br />
+同樣的，「%」也是一種特殊符號 &nbsp;(同樣僅限兩個「"」框起來的地方)，電腦在閱讀 (還記得<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">上一章</span></a>我們把程式碼比喻為文章嗎？) 到「%」這個符號時，也會自動把「%」和下一個字 (有時候是兩個或多個) 合在一起，代表某種「變數」顯示在螢幕上的樣子<br />
+<br />
+在這裡，我來向大家介紹，對於每一種型別的變數，對應到「%」後面接甚麼東西 (亂接的話電腦會看不懂喔XD)<br />
+「int」&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;對應到「%d」<br />
+「char」&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 對應到「%c」<br />
+「float」&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 對應到「%f」<br />
+<br />
+剩下的型別，我也一一介紹，要看不看隨便你<br />
+「long long」對應到「%lld」<br />
+「double」&nbsp;&nbsp;&nbsp; 對應到「%lf」(輸入用「%lf」，但輸出要用「%f」)<br />
+「char*」&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 對應到「%s」(以後會提到)<br />
+<br />
+試著實現char版本和float版本的程式看看吧～<br />
+<br />
+輸入一個char，輸出一個char：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Your input is %c, I remember it!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+<br />
+輸入一個float，輸出一個float：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%f"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Your input is %f, I remember it!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+<br />
+另外，你甚至可以「輸入三個int，輸出三個int」喔！<br />
+程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a,b,c<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d%d%d"</span>,<span style="color: #000040;">&amp;</span>a,<span style="color: #000040;">&amp;</span>b,<span style="color: #000040;">&amp;</span>c<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Your inputs are %d, %d, and %d, I remember them!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a,b,c<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+試著亂調a、b、c這三個變數在程式碼中的順序，看看會發生甚麼事吧！(有三個位置，任君亂調(?) )<br />
+<br />
+你還能修改出其他東西嗎？<br />
+把任意幾行程式碼複製一遍或多遍，你的程式會變成怎麼樣的行為呢？<br />
+把任意兩行或多行程式碼交換，會有甚麼差別嗎？<br />
+「%」後面如果接其他的東西，會有甚麼神奇的事發生呢？(咦？XD)<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：李旺陽學長<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

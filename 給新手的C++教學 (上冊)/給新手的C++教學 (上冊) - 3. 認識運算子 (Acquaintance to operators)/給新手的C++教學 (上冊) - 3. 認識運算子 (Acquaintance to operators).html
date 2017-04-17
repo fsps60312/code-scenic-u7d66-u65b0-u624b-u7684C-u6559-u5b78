@@ -1,0 +1,240 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+利用先前學到的概念，我們已經有能力可以讓程式跟人互動了！<br />
+不過，這樣似乎還缺了甚麼？<br />
+我們的程式目前好像只能模仿我們的輸入<br />
+<br />
+如果我們的程式除了記憶力之外，還可以擁有強大的<b>運算能力</b>，把計算結果輸出給我們，那該有多好啊～<br />
+這樣，就可以真正的利用程式來幫助我們計算了！<br />
+<br />
+要讓我們的程式開竅，我們可以使用「運算子 (Operator)」<br />
+<br />
+運算子是甚麼呢？<br />
+千萬別被它的名稱嚇到了，其實「運算子」就只是「加減乘除」而已XD<br />
+比較需要注意的是，<b>「乘法」的符號是「*」，「除法」的符號是「/」</b><br />
+(WTF原來這麼簡單?!)<br />
+<br />
+還記的你在寫數學題目時會用到的算式嗎？<br />
+舉個例子：1+2的答案是？<br />
+你一定知道答案是3<br />
+信不信，電腦在學會「C++」之後 (電腦學會C++？請見<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">第一章</span></a>)，也知道答案是3！<br />
+不信嗎？我們來做個小測試：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">+</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+不用說你也知道要做甚麼吧？<br />
+趕快在Dev-C++裡面把這份程式碼打出來，然後按下鍵盤上的「F11鍵」查看程式執行結果吧！<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-WbepTOOtktw/VyNWnbkPHqI/AAAAAAAADHw/nw5LSGFnPGw9eCXLpimrjyo1xANzfIWWACLcB/s1600/3-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="178" src="https://4.bp.blogspot.com/-WbepTOOtktw/VyNWnbkPHqI/AAAAAAAADHw/nw5LSGFnPGw9eCXLpimrjyo1xANzfIWWACLcB/s320/3-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">程式輸出3了！<br />
+(可能有細心的讀者發現，我把Dev-C++的背景改成黑色了，這只是個人習慣，因為我覺得黑色背景比較好看XD)</td></tr>
+</tbody></table>
+<br />
+在打出這份程式碼的過程中，聰明的你可能會注意到<br />
+<a href="https://www.blogger.com/null" name="more"></a>原本的寫法<br />
+<span style="color: blue;">int</span>&nbsp;a,b<span style="color: teal;">;</span><br />
+變成了<br />
+<span style="color: blue;">int</span>&nbsp;a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span><br />
+意思就是，我們定義型別為int的兩個變數，a和b (不懂？複習一下<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html"><span style="color: blue;">第二章</span></a>吧)<br />
+然後把a設定成1，b設定成2<br />
+這種「將剛被定義出來的變數設定數值」的動作<br />
+我們稱之為「初始化 (Initialization)」(這個看起來很難的字眼，其實真的就是這麼簡單XD)<br />
+如果你有使用過Windows XP作業系統，你可能在登入畫面看過這個字眼<br />
+沒錯，這時候「Windows&nbsp;XP」這個巨大的程式，正在設定它裡面每個變數的數值<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-Y25MTo__GAU/VyNU4iy0_2I/AAAAAAAADHk/T_3-LPaOIXEfp9h_TgyarGdBSyz7FRKDACLcB/s1600/3-3.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="239" src="https://4.bp.blogspot.com/-Y25MTo__GAU/VyNU4iy0_2I/AAAAAAAADHk/T_3-LPaOIXEfp9h_TgyarGdBSyz7FRKDACLcB/s320/3-3.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">這是Windows XP的登入畫面，有時候會顯示「正在初始化...」</td></tr>
+</tbody></table>
+回到正題<br />
+程式輸出3了！電腦果然厲害！<br />
+那麼該來考考電腦了<br />
+現在，請你問問看電腦<br />
+2+3<br />
+567+789<br />
+273*7122<br />
+91/13<br />
+87411-24005<br />
+105-324<br />
+分別是多少呢？<br />
+<br />
+答案是<br />
+2+3=5<br />
+567+789=1356<br />
+273*7122=1944306<br />
+91/13=7<br />
+87411-24005=63406<br />
+105-324=-219<br />
+你的電腦答對了嗎？<br />
+現在，請你嘗試問電腦更難、更刁鑽的問題<br />
+甚麼情況下電腦會答錯呢？<br />
+<br />
+電腦真的有可能會算錯喔<br />
+舉兩個例子：<br />
+100000*100000<br />
+5/3<br />
+<br />
+如果你覺得驚訝，代表你是個正常人<br />
+<br />
+100000*100000的答案是「10000000000」<br />
+但是電腦卻回答了「1410065408」<br />
+5/3的答案是「1.6666666666......」<br />
+但是電腦卻回答了「1」<br />
+Why?<br />
+我們來回顧一下程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">100000</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">100000</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">*</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+<br />
+以及<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">5</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">/</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+<br />
+可以發現，我們的程式是用兩個int去進行計算的<br />
+數學上，整數的加減乘法具有封閉性<br />
+也就是兩個整數相加、相減、相乘後的結果還是一個整數<br />
+程式上也一樣，「int」的運算也具有封閉性，不過封閉性更強了，連「除法」也具有封閉性！<br />
+事實上，你對兩個int進行任何運算，結果一定還是一個int！<br />
+<br />
+int無法處理小數，所以「1.6666666666......」就捨去小數部分，變成了「1」，合情合理<br />
+(如果結果是「-1.6666666666......」，以int的型別儲存後就會變成「-1」) <span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(註10)</a></span><br />
+<br />
+至於「1410065408」，這就揭露了int的另外一個秘密了<br />
+<br />
+事實上，你電腦的記憶體再怎麼多，還是有限的，因此不可能儲存很大很大的數字<br />
+對於int這種類型的變數，電腦會撥出大小為「32個位元」的記憶體去儲存它 <span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(註1)</a></span><br />
+甚麼是位元？<br />
+就是0或1，電腦中最基本的儲存和運算單位<br />
+<br />
+也就是說，int其實就是一個「最多32位數的二進位數字」<br />
+哪有？我們看到的int怎麼看都是一個十進位數字啊<br />
+那是因為電腦學會了C++，所以知道要怎麼把這個二進位數字轉換成十進位數字，輸出給我們看<br />
+那「負數」怎麼辦呢？<br />
+電腦學會了C++，很聰明的解決了這個問題<br />
+方法就是把32個位元的其中一個位元拿掉，這個位元就不用來表示二進位數字的其中一個位數了<br />
+電腦拿這個位元來表示這個數字的正負號<br />
+如果這個位元是0，表示這個數字是正數<br />
+如果這個位元是1，表示這個數字是負數<br />
+<div>
+很聰明吧！</div>
+<br />
+所以，剩下的「31個位元」所能表示的數字範圍就是「$0\sim 2^{31}-1$」(表示正數時) 或「$-2^{31}\sim -1$」(表示負數時) 了 (每個位元有2種情況 (0或1)，因此31個位元可以有$2^{31}$種組合，這牽涉到一點數學排列組合的知識)<br />
+也就是「$0\sim 2147483647$」或「$-2147483648\sim -1$」<span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(註3)</a></span><br />
+因此，int的最小值是「-2147483648」，最大值是「2147483647」<br />
+<br />
+也因此，如果int的計算結果超出了「-2147483648～2147483647」的範圍，電腦就會因為撥出來給int變數的記憶體不夠而算錯喔～<br />
+這種情況，我們稱作「溢位 (Overflow)」，這是我們寫程式的人需要注意的，因為它會導致錯誤的計算結果<br />
+<br />
+上面我們有提到，int無法處理小數，因此5/3的答案是「1」<br />
+不知聰明的你有沒有想到<br />
+那我們乾脆就用可以處理小數的「float」來計算就好啦！<br />
+<br />
+廢話不多說，馬上來試試看！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">5</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">/</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+<br />
+要注意的是，float也滿足加減乘除的封閉性，因此計算出來的東西也是一個float，要用「%f」來輸出，而不是int的「%d」<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-4ZckYxRun-E/VyNHzcT2kgI/AAAAAAAADHU/sgoVGkbZg3grL1aJGAIQ5qL5epA1_5M8QCLcB/s1600/3-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="187" src="https://3.bp.blogspot.com/-4ZckYxRun-E/VyNHzcT2kgI/AAAAAAAADHU/sgoVGkbZg3grL1aJGAIQ5qL5epA1_5M8QCLcB/s320/3-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">用「float」計算5/3的結果</td></tr>
+</tbody></table>
+耶！果然有小數了！<br />
+等等，為甚麼最後一位是7？<br />
+剛剛有提到，電腦的記憶體是有限的，因此不可能儲存很大很大的數字，當然也不可能儲存很多很多的小數<br />
+float是用「科學記號」的方式儲存的，換句話說，「24005」會被當作「$2.4005*10^{4}$」來看待 <span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(事實上不是如此，請見「註2」)</a></span><br />
+其中，「2.4005」和「4」是分開儲存的，和int一樣會被轉成二進位數字，儲存在電腦撥出來給它的記憶體中&nbsp;<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html" style="font-size: x-small;">(事實上不是如此，請見「註2」)</a><br />
+這兩個數字當然也有其範圍極限<br />
+<br />
+還記得<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html"><span style="color: blue;">第二章</span></a>提到的誤差問題嗎？<br />
+就是這樣來的喔～<br />
+<br />
+綜合起來<br />
+float的範圍約落在「$-10^{38}\sim -10^{-38}$」、「0」、「$10^{-38}\sim 10^{38}$」<br />
+誤差約「0.00001% (也就是$10^{-7}$)」<br />
+這裡看不懂沒關係，你只要知道float有誤差就好 ^_^ <span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(float非主流，見註6)</a></span><br />
+<br />
+最後，再跟大家報告一個好消息<br />
+數學上，我們習慣「先乘除，後加減」<br />
+因此「$5\times 6+9\div 3$」的答案是「$5\times 6+9\div 3=(5\times 6)+(9\div 3)=30+3=33$」<br />
+而不是「$5\times 6+9\div 3=30+9\div 3=39\div 3=13$」喔<br />
+程式上，「先乘除，後加減」的規則也是成立的！<br />
+而且，還可以使用括號喔！<br />
+<br />
+以下提供兩個例子，讓你深入了解C++程式的奧妙！<br />
+「先乘除，後加減」<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">5</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">6</span>,c<span style="color: navy;">=</span><span style="color: #0000dd;">9</span>,d<span style="color: navy;">=</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">*</span>b<span style="color: #000040;">+</span>c<span style="color: #000040;">/</span>d<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-rCeWvhpAuU4/VyNbp-2zKcI/AAAAAAAADIA/yhNBHzSw4KwoEMfNTwIi0p9pxRWCQ3nuwCLcB/s1600/3-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="175" src="https://1.bp.blogspot.com/-rCeWvhpAuU4/VyNbp-2zKcI/AAAAAAAADIA/yhNBHzSw4KwoEMfNTwIi0p9pxRWCQ3nuwCLcB/s320/3-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">「先乘除，後加減<span style="font-size: 12.8px;">」，因此程式輸出「33」</span></td></tr>
+</tbody></table>
+<br />
+「有括號，要先算」<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">5</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">6</span>,c<span style="color: navy;">=</span><span style="color: #0000dd;">9</span>,d<span style="color: navy;">=</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">*</span><span style="color: green;">(</span>b<span style="color: #000040;">+</span>c<span style="color: green;">)</span><span style="color: #000040;">/</span>d<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+&nbsp;</pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-U2Mn4N8SYi8/VyNbtkjC4dI/AAAAAAAADIE/uko0uBOEtKIzFH2z0LPbtgIknrNsFcvaQCLcB/s1600/3-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="169" src="https://1.bp.blogspot.com/-U2Mn4N8SYi8/VyNbtkjC4dI/AAAAAAAADIE/uko0uBOEtKIzFH2z0LPbtgIknrNsFcvaQCLcB/s320/3-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">「有括號，要先算」，因此程式輸出「25」</td></tr>
+</tbody></table>
+<br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>現在，換你了！<br />
+你玩出了甚麼東西呢？<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-4-process-control.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：pr3pony、李旺陽學長、WillyPillow<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

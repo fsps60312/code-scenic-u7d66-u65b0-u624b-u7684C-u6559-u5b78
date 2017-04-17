@@ -1,0 +1,115 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html"><span style="color: blue;">上一章 (這是第一章)</span></a><br />
+<br />
+我們口中的「寫程式」，到底是甚麼意思呢？<br />
+就是把程式碼寫出來<br />
+<br />
+程式碼就像文章一樣 (這裡的例子是英文文章)，都是由許多的英文字母、空白和標點符號組成的<br />
+每篇文章都有各自想表達的意義，每份程式碼也都有各自想表達的邏輯<br />
+作家利用文章來向大眾表達內心的想法，程式設計師則利用程式碼來向電腦表達邏輯<br />
+<br />
+電腦要怎麼知道你想說甚麼？<br />
+我們必須學會「英文」這個語言，才能讀懂文章的意思<br />
+電腦當然也不例外<br />
+電腦必須學會「C++」這個語言，才能讀懂程式碼的意思<br />
+<br />
+要怎麼讓電腦學會「C++」？<br />
+我們在學校接受教育，學會閱讀英文文章<br />
+電腦則是藉由安裝新功能，學會閱讀C++程式碼<br />
+<br />
+簡單來說就是<br />
+開始寫程式之前，你的電腦最好先安裝好特定的軟體<br />
+不然你的電腦會看不懂你寫出來的程式碼<br />
+這類讓電腦看懂程式碼的軟體稱作「編譯器」<br />
+C++的編譯器就是GCC<br />
+<br />
+作家在撰寫文章時需要好寫的筆、好用的橡皮擦、好寫的紙<br />
+程式設計師在撰寫程式碼時需要好用的編輯器<br />
+甚麼是編輯器？<br />
+<br />
+<!--more-->其實你的電腦裡已經有內建的編輯器了<br />
+打開「開始→所有程式→附屬應用程式」，裡面的「記事本」就是一種編輯器 (如下圖)<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-1Xa9rXAeFcU/VyCWEKXXkAI/AAAAAAAADEs/921MTo8-3XEEtQB-_8LDZJVg49p0VtR6ACLcB/s1600/1-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="320" src="https://3.bp.blogspot.com/-1Xa9rXAeFcU/VyCWEKXXkAI/AAAAAAAADEs/921MTo8-3XEEtQB-_8LDZJVg49p0VtR6ACLcB/s320/1-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">這是「記事本」，是一種編輯器</td></tr>
+</tbody></table>
+<br />
+你也可以用「記事本」來寫程式，不過在寫程式這方面，記事本並不是最方便的編輯器<br />
+這裡我推薦用來寫程式的編輯器是<a href="https://sourceforge.net/projects/orwelldevcpp/files/latest/download">Dev-C++</a><br />
+可能很多人會推薦另一款編輯器<a href="https://sourceforge.net/projects/codeblocks/files/Binaries/16.01/Windows/codeblocks-16.01mingw-setup.exe/download">Code::Blocks</a><br />
+用這個也可以，功能更強大<br />
+不過小莫覺得Code::Blocks就是因為功能太多、太複雜<br />
+甚至連小莫自己也不是全部的功能都會設定<br />
+因此<b>不建議新手使用</b><br />
+而且自動完成太多東西，有時候會讓新手們缺乏練習並養成一些不太好的習慣<br />
+所以，用<a href="https://sourceforge.net/projects/orwelldevcpp/files/latest/download">Dev-C++</a>啦～<br />
+<br />
+<b><span style="font-size: x-large;">重要！Dev-C++的已知問題！</span></b><br />
+2017/3/20更新：經好心同學回報，Dev-C++會有<a href="http://blog.ez2learn.com/2011/07/08/%E4%BD%A0%E6%B2%92%E9%81%87%E9%81%8E%E7%9A%84%E7%B7%A8%E8%AD%AF%E5%99%A8%E9%AC%BC%E6%89%93%E7%89%86%EF%BC%8C%E8%A8%B1%E5%8A%9F%E8%93%8B%E5%95%8F%E9%A1%8C/">許功蓋問題</a>，因此程式碼中最好<b>不要使用中文字(</b><b>本教學的程式碼出現中文字是<span style="color: red;">錯誤</span>的示範，都沒有發生問題純粹僥倖)</b>，若真要使用中文字，建議先參考<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E4%BA%94%E7%A2%BC#.E8.A1.9D.E7.A2.BC.E5.95.8F.E9.A1.8C">維基百科中對於此問題的介紹與解決方法</a>(不過解法好像還滿簡單的XD)<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-GbTag_hEYE4/VyCXgzq7S6I/AAAAAAAADE4/3MyTE0vR5gYP2X4F5wun9P5Ya4KK71RgwCLcB/s1600/1-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="210" src="https://4.bp.blogspot.com/-GbTag_hEYE4/VyCXgzq7S6I/AAAAAAAADE4/3MyTE0vR5gYP2X4F5wun9P5Ya4KK71RgwCLcB/s320/1-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">這是「Dev-C++」，是寫程式專用的編輯器之一</td></tr>
+</tbody></table>
+<br />
+更棒的是，安裝「Dev-C++」的過程中會順便自動幫你安裝好編譯器 (GCC)！<br />
+<a href="https://sourceforge.net/projects/orwelldevcpp/files/latest/download"><span style="font-size: x-large;"><b>「Dev-C++」的下載連結在這裡</b></span></a><br />
+安裝過程很簡單，一直點「同意」、「下一步」、「安裝」之類的按鈕即可，如果你沒有按到「上一步」，應該就可以安裝成功<br />
+安裝程式沒有綑綁軟體，很乾淨，不用擔心安裝到不必要的東西<br />
+<br />
+打開Dev-C++，同時按下鍵盤上的「Ctrl鍵」和「N鍵」，你會在Dev-C++裡面打開一個新的空白頁面<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://4.bp.blogspot.com/-hoLlcElYkCw/VyCagGLViJI/AAAAAAAADFE/044csgU1CFoLZawY71-IUBC-vedp9sc0ACLcB/s1600/1-4.PNG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="210" src="https://4.bp.blogspot.com/-hoLlcElYkCw/VyCagGLViJI/AAAAAAAADFE/044csgU1CFoLZawY71-IUBC-vedp9sc0ACLcB/s320/1-4.PNG" width="320" /></a></div>
+<br />
+以下給你一張圖片，請你照著打出圖片中的文字：<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-dmmuQHi2pfY/VyCa95vtvXI/AAAAAAAADFI/8nb6TtLYZNc8uV-n_yAI0K56A8-t5xeewCLcB/s1600/1-5.PNG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="211" src="https://1.bp.blogspot.com/-dmmuQHi2pfY/VyCa95vtvXI/AAAAAAAADFI/8nb6TtLYZNc8uV-n_yAI0K56A8-t5xeewCLcB/s320/1-5.PNG" width="320" /></a></div>
+<br />
+你可能會發現有些字變成綠色，有些變成粗體，有些變成紅色，有些變成藍色，有些變成紫色<br />
+先不用管它<br />
+以後在寫程式時，你會發現這些顏色都有其特殊的意義<br />
+<br />
+照著打完了嗎？<br />
+按下鍵盤上的「F11鍵」，它會叫你存檔<br />
+隨便存在一個你喜歡的地方就好<br />
+點選「存檔」<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://2.bp.blogspot.com/-PTOocE00xvU/VyCbhfPCv0I/AAAAAAAADFQ/p9sBzAbl5poX_v3CzXDxRRA4-Nieen4gQCLcB/s1600/1-6.PNG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="209" src="https://2.bp.blogspot.com/-PTOocE00xvU/VyCbhfPCv0I/AAAAAAAADFQ/p9sBzAbl5poX_v3CzXDxRRA4-Nieen4gQCLcB/s320/1-6.PNG" width="320" /></a></div>
+<br />
+你發現了甚麼呢？<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-Kop-W_yzu4c/VyCcLLtjj2I/AAAAAAAADFY/rwEkspCUX2QbnLdEEBS1fnuwEcACDqsnACLcB/s1600/1-7.PNG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="182" src="https://1.bp.blogspot.com/-Kop-W_yzu4c/VyCcLLtjj2I/AAAAAAAADFY/rwEkspCUX2QbnLdEEBS1fnuwEcACDqsnACLcB/s320/1-7.PNG" width="320" /></a></div>
+<br />
+剛剛叫你照著打的文字就是程式碼<br />
+現在讓我來解釋這個程式碼的用途吧～<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+<span style="color: #0000dd;">    </span><span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello world!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: blue;">    </span><span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+</pre>
+<br />
+<span style="color: #339900;">#include&lt;cstdio&gt;</span>　　　　　：先照抄不用管<br />
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>　　　　　　　　：先照抄不用管<br />
+<span style="color: green;">{</span>　　　　　　　　　　　　：先照抄不用管<br />
+<span style="color: #0000dd;"></span><span style="color: #0000dd;">&nbsp; &nbsp; printf</span><span style="color: green;">(</span><span style="color: red;">"Hello world!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>　：「Hello world!」那部分就是在螢幕上顯示「Hello world!」，「\n」是合在一起看的，稱作「換行符號」，類似平常打字會用到的「Enter」<span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(註11)</a></span>，其他的就先照抄不用管<br />
+<span style="color: blue;"></span><span style="color: blue;">&nbsp; &nbsp; return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>　　　　　　　　：先照抄不用管<br />
+<span style="color: green;">}</span>　　　　　　　　　　　　：先照抄不用管<br />
+<br />
+好多「先照抄不用管」喔<br />
+不是我偷懶啦，是因為就算現在告訴你在幹嘛，現階段也完全不需要去修改這些部分，我們一樣可以玩很多事情<br />
+沒錯，我們需要關心的就只有兩個「"」框起來的部分，也就是<span style="color: red;">"Hello world!</span><span style="color: #000099; font-weight: bold;">\n</span><span style="color: red;">"</span><br />
+現在嘗試亂改這個部分 (但是那兩個「"」一定要留著)，然後按下鍵盤上的「F11鍵」查看程式執行結果吧<br />
+甚麼情況下電腦會說你寫錯呢？「\」這個符號又有甚麼特殊的功用呢？<br />
+在兩個「"」框起來的部分加入「\a」、「\b」、「\c」、「\d」、......，試試看會顯示甚麼東西吧 (有些是沒有作用的)<br />
+偷偷告訴你，「\」的後面也可以接特殊符號喔，例如「\"」、「\\」(?)<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：奕均的留言、蘇多門、葛家聿<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

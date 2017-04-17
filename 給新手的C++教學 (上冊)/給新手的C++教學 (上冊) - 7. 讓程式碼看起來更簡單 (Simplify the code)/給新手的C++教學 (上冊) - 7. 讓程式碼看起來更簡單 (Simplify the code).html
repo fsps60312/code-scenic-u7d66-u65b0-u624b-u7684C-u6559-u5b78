@@ -1,0 +1,304 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-6-array.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+上一章有提到，利用前6章所學，已經可以完全掌控電腦了<br />
+<br />
+現在，我想問你，能否寫出一個程式，完成以下任務呢？<br />
+輸入一個字元，請判斷這個字元是不是「小寫母音字母 (a、e、i、o、u)」，是的話輸出「Yes」，否則輸出「No」(甚麼是字元？複習一下<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html">第2章</a>吧～)<br />
+<br />
+題外話：<br />
+怎麼表示「一個字元 (charactor)，代表小寫字母『a』」呢？<br />
+不知道沒關係，因為之前的章節沒有提到XD<br />
+答案是「'a'」(用兩個「'」框住你想表達的字元)<br />
+這個表示法雖然是隨手提及，但是<b>非常重要</b>，之後的教學只要看到兩個「'」框起來的東西，你都要把它當作「一個字元」來看待<br />
+<br />
+參考解答：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'a'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">else</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'e'</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'i'</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span>
+            <span style="color: green;">{</span>
+                <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'o'</span><span style="color: green;">)</span>
+                <span style="color: green;">{</span>
+                    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: green;">}</span>
+                <span style="color: blue;">else</span>
+                <span style="color: green;">{</span>
+                    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'u'</span><span style="color: green;">)</span>
+                    <span style="color: green;">{</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                    <span style="color: green;">}</span>
+                    <span style="color: blue;">else</span>
+                    <span style="color: green;">{</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                    <span style="color: green;">}</span>
+                <span style="color: green;">}</span>
+            <span style="color: green;">}</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+你可能會發現：程式好冗長啊<br />
+有沒有簡單一點的寫法呢？<br />
+會這樣問，答案當然是「有」啊<br />
+<br />
+可以發現，有很多的大括號 (「{」和「}」) 包起來的部分都只有一行程式碼 (「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>」或「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>」)<br />
+在這種情況下，大括號其實是可以省略的<br />
+<br />
+所以，程式碼也可以這樣寫，完全不影響程式的功能：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'a'</span><span style="color: green;">)</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'e'</span><span style="color: green;">)</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'i'</span><span style="color: green;">)</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: blue;">else</span>
+            <span style="color: green;">{</span>
+                <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'o'</span><span style="color: green;">)</span>
+                    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: blue;">else</span>
+                <span style="color: green;">{</span>
+                    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'u'</span><span style="color: green;">)</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                    <span style="color: blue;">else</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: green;">}</span>
+            <span style="color: green;">}</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+另外，一個「if」和一個「else」是配對起來的，不可分離<br />
+因此，我們甚至也可以省略將它們包起來的大括號！<br />
+廣泛的說，如果大括號裡面包起來的程式碼是不可分離的<br />
+那麼這個大括號就可以省略<br />
+<br />
+這樣一來，程式碼又可以簡化成以下這樣了：<br />
+<br />
+<!--more--><br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'a'</span><span style="color: green;">)</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'e'</span><span style="color: green;">)</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">else</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'i'</span><span style="color: green;">)</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: blue;">else</span>
+                <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'o'</span><span style="color: green;">)</span>
+                    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: blue;">else</span>
+                    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'u'</span><span style="color: green;">)</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                    <span style="color: blue;">else</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+還可以更簡單嗎？當然可以！<br />
+對電腦來說，C++程式碼中，若有連續的一個或多個空白 (' ')、Tab ('\t') 或換行 (’\n’) 的字元出現，效果就等於一個空白！<br />
+<br />
+那你可能就會問：這樣不就可以把所有的程式碼通通寫在同一行了嗎？<br />
+的確是的！<br />
+不過，「#」這個符號開頭的程式碼 (如：<span style="color: #339900;">#include&lt;cstdio&gt;</span>) 比較特殊，它們和我們目前關心的部分格格不入，「永遠」不能寫在同一行<br />
+<br />
+就算如此，我們還是可以把剩下的通通寫成一行：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span> <span style="color: green;">{</span> <span style="color: blue;">char</span> a<span style="color: teal;">;</span> <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'a'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span> <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'e'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span> <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'i'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span> <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'o'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span> <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'u'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span> <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span> <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span> <span style="color: green;">}</span></pre>
+<br />
+這樣的程式還是可以正常執行的，功能也完全正常，很神奇吧！<br />
+但是，身為程式設計師，你真的覺得這樣寫比較好嗎？<br />
+一般人大概都會覺得「眼花撩亂」吧XD<br />
+<br />
+如何把程式碼寫到清晰易懂，也是一門很重要的課題<br />
+要把程式碼寫到清晰易懂，有很多種方法<br />
+像這種利用「C++接受多餘空白、Tab、換行的特性」來整理程式碼的方式，我們稱為「排版 (Formatting)」<br />
+這是其中一種方法，也是最重要的方法<br />
+其他方式就看個人習慣<br />
+<br />
+例如上面這個例子，我習慣寫成這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+         <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'a'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'e'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'i'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'o'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'u'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span>            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+或這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'a'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'e'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'i'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'o'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'u'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+你也可以有自己的風格，只要可以讓程式碼看起來舒服就好<br />
+<br />
+另外，像這種很多情況下都要做同一件事的 (<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>)，我們可以把它們寫在同一個「if」裡面<br />
+詳細方式請參考以下程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: red;">'a'</span><span style="color: #000040;">||</span>a<span style="color: navy;">==</span><span style="color: red;">'e'</span><span style="color: #000040;">||</span>a<span style="color: navy;">==</span><span style="color: red;">'i'</span><span style="color: #000040;">||</span>a<span style="color: navy;">==</span><span style="color: red;">'o'</span><span style="color: #000040;">||</span>a<span style="color: navy;">==</span><span style="color: red;">'u'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+其中你會看到新朋友「||」，它代表「或者」的意思<br />
+把每個條件中間用「||」連接起來<br />
+這樣一來，只要其中一個條件成立，「if」裡面的程式碼就會被執行<br />
+否則就會執行「else」裡面的程式碼 (如果「else」存在的話)<br />
+<br />
+不知道有沒有人是像下面這樣的邏輯寫出這個題目呢？<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'a'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'e'</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'i'</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'o'</span><span style="color: green;">)</span>
+                <span style="color: green;">{</span>
+                    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'u'</span><span style="color: green;">)</span>
+                    <span style="color: green;">{</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                    <span style="color: green;">}</span>
+                    <span style="color: blue;">else</span>
+                    <span style="color: green;">{</span>
+                        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                    <span style="color: green;">}</span>
+                <span style="color: green;">}</span>
+                <span style="color: blue;">else</span>
+                <span style="color: green;">{</span>
+                    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: green;">}</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">else</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+「如果每一個母音都和它不相等，就輸出『No』，否則輸出『Yes』」<br />
+這樣也是可以的<br />
+你甚至該為自己感到高興，因為你想到了跟別人不一樣的方法！<br />
+<br />
+仔細分析一下程式碼<br />
+很多情況下也都要做同一件事 (<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>)，我們能不能也只用一個「if」就解決呢？<br />
+之前的例子是「只要其中一個條件成立就好」，我們用「||」連接<br />
+而這個例子是「所有的條件都要成立才行」，我們就用「&amp;&amp;」連接<br />
+<br />
+因此，以上的程式碼可以改成下面這樣，程式的邏輯依然沒有任何改變：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> a<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'a'</span><span style="color: #000040;">&amp;&amp;</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'e'</span><span style="color: #000040;">&amp;&amp;</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'i'</span><span style="color: #000040;">&amp;&amp;</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'o'</span><span style="color: #000040;">&amp;&amp;</span>a<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'u'</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+「&amp;&amp;」代表「而且」的意思<br />
+把每個條件中間用「&amp;&amp;」連接起來<br />
+這樣一來，所有的條件「都要」成立，「if」裡面的程式碼「才會」被執行<br />
+否則就會執行「else」裡面的程式碼 (如果「else」存在的話)<br />
+<br />
+前後比較一下，你是不是發現程式碼變得簡單許多呢？<br />
+<br />
+還記得「判斷閏年」那題嗎？(請見<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-4-process-control.html">第4章</a>)<br />
+你有辦法把它改成「只需要一個『if』」的版本嗎？<br />
+<br />
+參考解答：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> year<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>year<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>year<span style="color: #000040;">%</span><span style="color: purple;">4</span><span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: #000040;">||</span><span style="color: green;">(</span>year<span style="color: #000040;">%</span><span style="color: purple;">100</span><span style="color: navy;">==</span><span style="color: #0000dd;">0</span><span style="color: #000040;">&amp;&amp;</span>year<span style="color: #000040;">%</span><span style="color: purple;">400</span><span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"不是閏年<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"是閏年<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+你說你不知道「||」和「&amp;&amp;」也可以使用小括號？<br />
+拜託，這不是很「trivial」嗎？<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-8-charactor-string.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

@@ -1,0 +1,1167 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-11-structure.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+這一章，我們將更深入地探討電腦的運作原理<br />
+進而更完善的掌控電腦的記憶體<br />
+<br />
+你會發現，你將會有能力控制更多平常想不到的東西！<br />
+<br />
+你有想過嗎？<br />
+當我們宣告一個變數的時候，電腦會撥出一些記憶體來讓程式儲存變數的資訊<br />
+但是，電腦的記憶體是有限的，總不可能每一塊記憶體都只有使用一次吧？<br />
+這樣的話每一台電腦的記憶體大概都只夠用10分鐘了XD<br />
+因此，允許記憶體被重複使用的機制是必要的<br />
+<br />
+為了讓記憶體能夠被重複使用，我們必須確認用過的記憶體中，哪些現在還在使用中、哪些已經使用完畢了<br />
+那麼，我們的程式當然只能使用那些已經使用完畢的記憶體，否則修改到其他程式正在使用的記憶體，進而導致其他程式出錯<br />
+<br />
+觀念簡單，但是要有效率地做到這件事 (避免每次找記憶體前都要老老實實的把每一塊記憶體都確認一遍)，需要許多先進的演算法知識，而且程式碼寫起來非常的麻煩<br />
+<br />
+放心，這件事連我都不知道怎麼做<br />
+所謂「站在巨人的肩膀上」，這種事情不用再由我們自己處理了！<br />
+在先人的努力之下，「C++」這個偉大的程式語言，已經讓電腦可以只依據簡單的幾行程式碼，就可以執行許多複雜卻需要經常執行的工作<br />
+換句話說<br />
+我們在撰寫C++程式碼的時候，只需要告訴電腦「需要使用多少記憶體」和「哪些記憶體已經使用完畢」就好了！<br />
+<br />
+我們在宣告變數的時候，就等於是告訴電腦「恩，我需要這麼多記憶體來儲存這一個變數的資訊」，然後電腦就會把你要的記憶體給你<br />
+<br />
+但是，我們有告訴過電腦「哪些記憶體已經使用完畢」嗎？<br />
+有的！<br />
+<br />
+還記得在<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-10-scope.html">第十章</a>的時候，我們有提到「每一個變數都有它自己的作用範圍」嗎？<br />
+那麼，當正在執行的程式碼位於一個變數的作用範圍外，這個變數所使用的記憶體該怎麼辦呢？<br />
+這時我們不會需要用這個變數來儲存任何資訊<br />
+也就是，這個變數目前不需要使用記憶體來儲存資訊<br />
+<br />
+電腦學過C++，想當然會利用這個「作用範圍外記憶體就不需要了」的特性<br />
+不管是甚麼變數，只要程式執行到它的「作用範圍」之外<br />
+電腦就會「自動」把這個變數使用的記憶體當作「使用完畢」<br />
+也就是說，現在，這塊記憶體可能是閒置的，或者被其他的程式拿去使用了<br />
+如果我們再去修改這塊記憶體，會造成不可預知的錯誤<br />
+當然，你還沒開始學習本章的內容，不會知道怎麼在作用範圍外修改這塊記憶體<br />
+<br />
+在作用範圍外修改記憶體？<br />
+有需要嗎？<br />
+是的，有時候會很需要，請看本章範例<br />
+感覺很危險？<br />
+是的，使用不當會造成其他程式的錯誤，甚至讓整台電腦當機，必須將電腦插頭拔掉再重新開機<br />
+<br />
+因此，在學習本章前，請務必<b>將重要資料存檔</b>，以避免造成不必要的損失<br />
+<br />
+<b><span style="font-size: x-large;">嘿嘿嘿～</span></b><br />
+<b><span style="font-size: x-large;">現在</span></b><br />
+<b><span style="font-size: x-large;">我們開始吧XD</span></b><br />
+<br />
+<!--more--><br />
+<br />
+你知道怎麼「交換兩個變數的資訊」嗎？<br />
+我們就來試試看吧～<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">3</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">7</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"交換前a=%d, b=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> t<span style="color: navy;">=</span>a<span style="color: teal;">;</span>
+    a<span style="color: navy;">=</span>b<span style="color: teal;">;</span>
+    b<span style="color: navy;">=</span>t<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"交換後a=%d, b=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-a_2iIR0KJBk/V016nsi2NaI/AAAAAAAAEHg/FI6Gx6WvfK82Jl8VPP_I0DMltM4LkKbQQCLcB/s1600/12-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="152" src="https://1.bp.blogspot.com/-a_2iIR0KJBk/V016nsi2NaI/AAAAAAAAEHg/FI6Gx6WvfK82Jl8VPP_I0DMltM4LkKbQQCLcB/s320/12-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">我們宣告的兩個變數a、b，它們的資訊被交換了！<br />
+(為了方便理解，建議將變數「c<span style="font-size: 12.8px;">」</span><span style="font-size: 12.8px;">改名為「t</span><span style="font-size: 12.8px;">」</span><span style="font-size: 12.8px;">)</span></td></tr>
+</tbody></table>
+你玩過猜球遊戲嗎？<br />
+魔術師會把三個相同的杯子蓋起來，並把一顆球藏進中間那個杯子<br />
+然後用迅雷不及掩耳的速度多次快速隨機交換其中兩個杯子<br />
+最後要你猜球會在哪個杯子<br />
+↓猜球遊戲↓ (警告：影片有聲音)<br />
+<div class="separator" style="clear: both; text-align: center;">
+<object class="BLOG_video_class" contentid="ecf25ec2cce25716" height="266" id="BLOG_video-ecf25ec2cce25716" width="320"></object></div>
+現在，請你寫一個程式來模擬這個過程<br />
+一開始魔術師有三個杯子，球在中間那個杯子裡面<br />
+接著會有$n$次交換的動作<br />
+請你找出最後球在哪個杯子<br />
+<br />
+輸入格式：<br />
+首先會有一個整數$n$，代表有幾次操作<br />
+接下來會有$n$個數字，代表每一次操作的種類<br />
+$1$代表交換左邊和中間的杯子<br />
+$2$代表交換左邊和右邊的杯子<br />
+$3$代表交換中間和右邊的杯子<br />
+<br />
+輸出格式：<br />
+輸出「左邊」、「中間」或「右邊」，代表球最後會在哪一個杯子裡面<br />
+<br />
+例如：<br />
+輸入「5 3 2 1 2 3」，會輸出「右邊」<br />
+輸入「6 2 3 1 1 3 1」，會輸出「左邊」<br />
+輸入「7 1 1 1 3 2 2 1<span style="font-family: 細明體;"></span>」，會輸出「中間」<br />
+<br />
+趕快自己做做看吧～<br />
+<br />
+提示：可以利用剛剛學的「交換兩個變數的資訊」的技巧<br />
+<br />
+範例程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">0</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,c<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> type<span style="color: teal;">;</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>type<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">int</span> t<span style="color: navy;">=</span>a<span style="color: teal;">;</span>
+            a<span style="color: navy;">=</span>b<span style="color: teal;">;</span>
+            b<span style="color: navy;">=</span>t<span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">int</span> t<span style="color: navy;">=</span>a<span style="color: teal;">;</span>
+            a<span style="color: navy;">=</span>c<span style="color: teal;">;</span>
+            c<span style="color: navy;">=</span>t<span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">3</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">int</span> t<span style="color: navy;">=</span>b<span style="color: teal;">;</span>
+            b<span style="color: navy;">=</span>c<span style="color: teal;">;</span>
+            c<span style="color: navy;">=</span>t<span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"你輸入錯誤了XD"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"左邊<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>b<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"中間<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>c<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"右邊<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"怎麼可能？一定是程式寫錯了Orz<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-YZyPLj2p0eE/V06NQQdflaI/AAAAAAAAEIk/Dsbag3HjWwwHlbvaGjbsOO7c0n7JVyxBQCLcB/s1600/12-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="181" src="https://3.bp.blogspot.com/-YZyPLj2p0eE/V06NQQdflaI/AAAAAAAAEIk/Dsbag3HjWwwHlbvaGjbsOO7c0n7JVyxBQCLcB/s320/12-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「5 3 2 1 2 3<span style="font-size: 12.8px;">」，程式正確的輸出「右邊</span><span style="font-size: 12.8px;">」</span></td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-HWwdOGjmNGI/V06NuDQ_FsI/AAAAAAAAEIo/L8r-phkSLioPA-lYolasOG-Ogp94pgATwCLcB/s1600/12-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="170" src="https://1.bp.blogspot.com/-HWwdOGjmNGI/V06NuDQ_FsI/AAAAAAAAEIo/L8r-phkSLioPA-lYolasOG-Ogp94pgATwCLcB/s320/12-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「6 2 3 1 1 3 1」，程式正確的輸出「左邊」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-dvpUjQFeLG0/V06OQRQVvXI/AAAAAAAAEI0/FNyhHqX5ezs8fuuMy28sq8X1qWs6yo8sQCLcB/s1600/12-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="181" src="https://2.bp.blogspot.com/-dvpUjQFeLG0/V06OQRQVvXI/AAAAAAAAEI0/FNyhHqX5ezs8fuuMy28sq8X1qWs6yo8sQCLcB/s320/12-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「7 1 1 1 3 2 2 1」，程式正確的輸出「中間」</td></tr>
+</tbody></table>
+<br />
+你可能會發現，程式碼好冗長啊～<br />
+我們的程式碼重複做了三遍「交換兩個變數的資訊」的動作<br />
+就寫成一個函式吧～<br />
+對了，如果一個函式不需要回傳任何東西，應該用「void (無值)」這個型別：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">void</span> Exchange<span style="color: green;">(</span><span style="color: blue;">int</span> x,<span style="color: blue;">int</span> y<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> t<span style="color: navy;">=</span>x<span style="color: teal;">;</span>
+    x<span style="color: navy;">=</span>y<span style="color: teal;">;</span>
+    y<span style="color: navy;">=</span>t<span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">0</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,c<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> type<span style="color: teal;">;</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>type<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            Exchange<span style="color: green;">(</span>a,b<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            Exchange<span style="color: green;">(</span>a,c<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">3</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            Exchange<span style="color: green;">(</span>b,c<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"你輸入錯誤了XD"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"左邊<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>b<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"中間<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>c<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"右邊<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"怎麼可能？一定是程式寫錯了Orz<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+好吧，我承認程式碼還是41行<br />
+不過，至少程式碼的邏輯清楚多了，對吧？<br />
+測試一下，確定程式輸出的結果是正確的！<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-H8v6T4s9YnM/V06PhpSZYCI/AAAAAAAAEJE/-Vc6lQa_7JwYiRCD2oDly6gRy26ewjoVACLcB/s1600/12-7.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="178" src="https://4.bp.blogspot.com/-H8v6T4s9YnM/V06PhpSZYCI/AAAAAAAAEJE/-Vc6lQa_7JwYiRCD2oDly6gRy26ewjoVACLcB/s320/12-7.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「5 3 2 1 2 3」，程式<b><span style="color: red;">錯誤</span></b>的輸出「中間」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-zjTtiWey5Q4/V06P1v4AGZI/AAAAAAAAEJI/WPkl6cE9K5YJbVszxb4zcEN-7LOpsnBJgCLcB/s1600/12-8.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="179" src="https://1.bp.blogspot.com/-zjTtiWey5Q4/V06P1v4AGZI/AAAAAAAAEJI/WPkl6cE9K5YJbVszxb4zcEN-7LOpsnBJgCLcB/s320/12-8.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「6 2 3 1 1 3 1」，程式<b><span style="color: red;">錯誤</span></b>的輸出「中間」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-dCCk8LH96uM/V06QEc1bjtI/AAAAAAAAEJM/rYecOY6E5csX70kHKn2uqZcbtu0xsTEOACLcB/s1600/12-9.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="177" src="https://3.bp.blogspot.com/-dCCk8LH96uM/V06QEc1bjtI/AAAAAAAAEJM/rYecOY6E5csX70kHKn2uqZcbtu0xsTEOACLcB/s320/12-9.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「7 1 1 1 3 2 2 1」，程式正確的輸出「中間」</td></tr>
+</tbody></table>
+<br />
+等等，怎麼三種情況都輸出「中間」？<br />
+根本形同沒有交換過嘛！<br />
+<br />
+仔細想想，當我們執行「Exchange<span style="color: green;">(</span>a,b<span style="color: green;">)</span><span style="color: teal;">;</span>」的時候<br />
+實際上效果會等同於以下四行程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">int</span> x<span style="color: navy;">=</span>a,y<span style="color: navy;">=</span>b<span style="color: teal;">;</span>
+<span style="color: blue;">int</span> t<span style="color: navy;">=</span>x<span style="color: teal;">;</span>
+x<span style="color: navy;">=</span>y<span style="color: teal;">;</span>
+y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
+<br />
+雖然剛開始$x=a$、$y=b$<br />
+可是當我們交換了$x$和$y$之後，原本真正想要交換的$a$和$b$根本不受影響啊！<br />
+我們交換了$x$和$y$後，$a$和$b$還是不變，形同做白工<br />
+<br />
+  <div id="animation1"></div>
+  <script type="text/javascript">
+   (function(){
+    var instructions=
+    [
+     [[ 1,0],[],"\u8acb\u6309\u300c>\u300d\u958b\u59cb\u6a21\u64ec\u57f7\u884c\u7a0b\u5f0f"],
+     [[10,1],[["a",true,"1"],["b",true,"2"]],"\u5ba3\u544a\u8b8a\u6578a=1\uff0cb=2"],
+     [[11,1],[],"\u547c\u53eb\u51fd\u5f0fExchange(a,b)"],
+     [[ 2,1,true],[["x",true,"1"],["y",true,"2"]],"\u5ba3\u544a\u8b8a\u6578x=a\uff0cy=b"],
+     [[ 4,3],[["x","2"],["y","1"]],"x\u548cy\u7684\u6578\u503c\u88ab\u4ea4\u63db\u4e86\u3002\u6ce8\u610fa\u548cb\u90fd\u6c92\u6709\u88ab\u52d5\u5230\uff0c\u56e0\u6b64\u9019\u500bExchange\u51fd\u5f0f\u4e26\u4e0d\u80fd\u4ea4\u63dba\u548cb\u7684\u6578\u503c"],
+     [[12,1,false],[["a",false],["b",false],["x",false],["y",false]],"main\u51fd\u5f0f\u56de\u50b30\uff0c\u7a0b\u5f0f\u6b63\u5e38\u7d50\u675f"]
+    ];
+    var code=
+    [
+     "1.  #include<cstdio>",
+     "2.  void Exchange(int x,int y)",
+     "3.  {",
+     "4.      int t=x;",
+     "5.      x=y;",
+     "6.      y=t;",
+     "7.  }",
+     "8.  int main()",
+     "9.  {",
+     "10.     int a=1,b=2;",
+     "11.     Exchange(a,b);",
+     "12.     return 0;",
+     "13. }"
+    ];
+    var variableNames=
+    [
+     "a",
+     "b",
+     "x",
+     "y"
+    ];
+    var codeHeight=15;
+    var codeWidth=200;
+    var variableHeight=20;
+    var variableWidth=60;
+    var titleHeight=20;
+    var bottomHeight=50;
+    var buttonRatio=0.7;
+    var borderWidth=7;
+    var variables={};
+    var codeLines=[];
+    var contentHeight=Math.max(codeHeight*code.length,variableHeight*variableNames.length);
+    var contentWidth=codeWidth+variableWidth+borderWidth*3;
+    function Clone(obj)
+    {
+        if (null == obj || "object" != typeof obj) return obj;
+        if (obj instanceof Date)
+     {
+            var copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+        if (obj instanceof Array)
+     {
+            var copy = [];
+            var i = 0;
+            var len = obj.length;
+            for (; i < len; ++i) copy[i] = Clone(obj[i]);
+            return copy;
+        }
+        if (obj instanceof Object)
+     {
+            var copy = {};
+            for (var attr in obj) if (obj.hasOwnProperty(attr)) copy[attr] = Clone(obj[attr]);
+            return copy;
+        }
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    }
+    var states=[];
+    {
+     var state=["codePointerPosition",{},"",[]];
+     for(var i=0;i<variableNames.length;i++)
+     {
+      state[1][variableNames[i]]=["hide",""];
+     }
+     for(var i=0;i<code.length;i++)
+     {
+      state[3].push(false);
+     }
+     var stack=[];
+     for(var i=0;i<instructions.length;i++)
+     {
+      var inst=instructions[i];
+      state[0]=inst[0];
+      for(var j=0;j<inst[1].length;j++)
+      {
+       var name=inst[1][j][0];
+       if(!name in state[1])throw new Error("can't find "+name);
+       var vari=state[1][name];
+       for(var k=1;k<inst[1][j].length;k++)
+       {
+        var v=inst[1][j][k];
+        if(typeof(v)==="boolean")
+        {
+         if(v)vari[0]="show";
+         else vari[0]="hide";
+        }
+        else if(typeof(v)==="string")
+        {
+         vari[1]=v;
+        }
+        else throw new Error("error: not boolean nor string: "+v);
+       }
+      }
+      state[2]=inst[2];
+      if(state[0].length>=3)
+      {
+       if(typeof(state[0][2])!=="boolean")throw new Error("error: must be boolean: "+state[0][2]);
+       if(state[0][2])
+       {
+        var last=instructions[i-1][0].slice(0,2);
+        for(var j=0;j<last[1];j++)state[3][last[0]-1+j]=true;
+        stack.push(last); console.log(stack.toString()+" "+last);
+       }
+       else
+       {
+        if(stack.length===0)throw new Error("error: stack can't be empty: "+stack);
+        var last=stack[stack.length-1];
+        for(var j=0;j<last[1];j++)state[3][last[0]-1+j]=false;
+        stack.splice(-1,1);
+       }
+      }
+      states.push(Clone(state));
+     }
+     if(stack.length!==0)throw new Error("error: stack must be empty after execution: "+stack);
+    }
+    var newElement=function(id,type)
+    {
+     if(typeof(type)==="undefined")type="div";
+     var answer=document.createElement(type);
+     if(typeof(id)==="string")answer.id=id;
+     answer.style.display="block";
+     answer.style.position="absolute";
+     return answer;
+    };
+    var setInnerHTML=function(e,text)
+    {
+     e.innerHTML=function(t)
+     {
+      var a="";
+      for(var i=0;i<t.length;i++)
+      {
+       if(t[i]===' ')a+="&nbsp;";
+       else a+=new Option(t[i].toString()).innerHTML;
+      }
+      return a;
+     }(text);
+    };
+    var stage=document.getElementById("animation1");
+    {
+     //stage.style.display="block";
+     stage.style.position="relative";
+     stage.style.width=contentWidth.toString()+"px";
+     stage.style.height=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth+bottomHeight+borderWidth).toString()+"px";
+     stage.style.backgroundColor="rgb(255,255,128)";
+    }
+    {
+     var t=newElement();
+     t.style.fontFamily="微軟正黑體";
+     t.style.fontSize=Math.floor(titleHeight*0.8).toString()+"px";
+     t.style.textAlign="center";
+     t.style.backgroundColor="rgb(255,255,192)";
+     t.style.top=borderWidth.toString()+"px";
+     t.style.left=borderWidth.toString()+"px";
+     t.style.width=codeWidth.toString()+"px";
+     t.style.height=titleHeight.toString()+"px";
+     setInnerHTML(t,"\u7a0b\u5f0f\u78bc");
+     stage.appendChild(t);
+    }
+    {
+     var t=newElement();
+     t.style.fontFamily="微軟正黑體";
+     t.style.fontSize=Math.floor(titleHeight*0.8).toString()+"px";
+     t.style.textAlign="center";
+     t.style.backgroundColor="rgb(255,255,192)";
+     t.style.top=borderWidth.toString()+"px";
+     t.style.left=(borderWidth+codeWidth+borderWidth).toString()+"px";
+     t.style.width=variableWidth.toString()+"px";
+     t.style.height=titleHeight.toString()+"px";
+     setInnerHTML(t,"\u8b8a\u6578");
+     stage.appendChild(t);
+    }
+    var codeBlock=newElement("codeBlock");
+    function newCodePointer()
+    {
+     var answer=newElement("codePointer");
+     answer.style.left="0px";
+     answer.style.width=codeWidth.toString()+"px";
+     answer.style.height=codeHeight.toString()+"px";
+     answer.style.backgroundColor="rgb(192,192,192)";
+     answer.style.transition="height 0.5s ease-out 0s, top 0.5s ease-out 0s;";
+     codeBlock.appendChild(answer);
+     answer.setPosition=function(y,h)
+     {
+      answer.style.top=(y*codeHeight).toString()+"px";
+      answer.style.height=(h*codeHeight).toString()+"px";
+     }
+     answer.setPosition(0,1);
+     return answer;
+    }
+    var codePointer=newCodePointer();
+    {
+     codeBlock.style.top=(borderWidth+titleHeight+borderWidth).toString()+"px";
+     codeBlock.style.left=borderWidth.toString()+"px";
+     codeBlock.style.width=codeWidth.toString()+"px";
+     codeBlock.style.height=contentHeight.toString()+"px";
+     codeBlock.style.backgroundColor="rgb(255,255,192)";
+     var lineNumber=0;
+     var appendNewLine=function(text)
+     {
+      var line=newCodePointer();
+      line.style.backgroundColor="rgb(230,230,192)";
+      line.style.transition="opacity 0.5s ease-out 0s";
+      line.setPosition(lineNumber,1);
+      codeLines.push(line);
+      var answer=newElement("line"+lineNumber.toString());
+      setInnerHTML(answer,text);
+      answer.style.top=(lineNumber*codeHeight).toString()+"px";
+      answer.style.fontFamily="Consolas";
+      //answer.style.fontWeight="900";
+      answer.style.fontSize=Math.floor(codeHeight*0.8).toString()+"px";
+      codeBlock.appendChild(answer);
+      lineNumber++;
+     };
+     for(var i=0;i<code.length;i++)
+     {
+      appendNewLine(code[i]);
+     }
+     stage.appendChild(codeBlock);
+    }
+    var variableBlock=newElement("variableBlock");
+    {
+     variableBlock.style.top=(borderWidth+titleHeight+borderWidth).toString()+"px";
+     variableBlock.style.left=(borderWidth+codeWidth+borderWidth).toString()+"px";
+     variableBlock.style.width=variableWidth.toString()+"px";
+     variableBlock.style.height=contentHeight.toString()+"px";
+     variableBlock.style.backgroundColor="rgb(255,255,192)";
+     var newVariable=function(id)
+     {
+      var answer=newElement(id);
+      answer.style.left="0px";
+      answer.style.width=variableWidth.toString()+"px";
+      answer.style.height=variableHeight.toString()+"px";
+      answer.style.backgroundColor="rgb(224,256,192)";
+      answer.style.fontFamily="Consolas";
+      answer.style.fontSize=Math.floor(variableHeight*0.8).toString()+"px";
+      answer.style.transition="left 0.5s ease-out 0s, opacity 0.5s ease-out 0s;";
+      answer.name=id;
+      answer.setValue=function(v)
+      {
+       answer.innerHTML=answer.name+" = "+v;
+      };
+      answer.hide=function()
+      {
+       answer.style.opacity=0;
+       answer.style.left="20px";
+      };
+      answer.show=function()
+      {
+       answer.style.opacity=1;
+       answer.style.left="0px";
+      };
+      return answer;
+     };
+     for(var i=0;i<variableNames.length;i++)
+     {
+      var v=newVariable(variableNames[i]);
+      v.style.top=(i*variableHeight).toString()+"px";
+      v.setValue("");
+      v.hide();
+      variableBlock.appendChild(v);
+      variables[variableNames[i]]=v;
+     }
+     stage.appendChild(variableBlock);
+    }
+    var textBlock=newElement("textBlock");
+    {
+     textBlock.style.top=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth).toString()+"px";
+     textBlock.style.left=borderWidth.toString()+"px";
+     textBlock.style.width=(contentWidth-borderWidth*3-bottomHeight*buttonRatio*2).toString()+"px";
+     textBlock.style.height=bottomHeight.toString()+"px";
+     textBlock.style.backgroundColor="rgb(256,256,192)";
+     textBlock.style.fontSize=Math.floor(bottomHeight*0.25).toString()+"px";
+     textBlock.style.fontFamily="微軟正黑體";
+     textBlock.innerHTML="正在初始化...";
+     stage.appendChild(textBlock);
+    }
+    var buttonNext=newElement("next","button");
+    {
+     buttonNext.style.top=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth).toString()+"px";
+     buttonNext.style.left=(contentWidth-borderWidth-bottomHeight*buttonRatio).toString()+"px";
+     buttonNext.style.width=(bottomHeight*buttonRatio).toString()+"px";
+     buttonNext.style.height=bottomHeight.toString()+"px";
+     buttonNext.style.fontSize=Math.floor(bottomHeight*0.8).toString()+"px";
+     buttonNext.style.fontFamily="Consolas";
+     buttonNext.innerHTML=">";
+     stage.appendChild(buttonNext);
+    };
+    var buttonPrev=newElement("previous","button");
+    {
+     buttonPrev.style.top=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth).toString()+"px";
+     buttonPrev.style.left=(contentWidth-borderWidth-bottomHeight*buttonRatio*2).toString()+"px";
+     buttonPrev.style.width=(bottomHeight*buttonRatio).toString()+"px";
+     buttonPrev.style.height=bottomHeight.toString()+"px";
+     buttonPrev.style.fontSize=Math.floor(bottomHeight*0.8).toString()+"px";
+     buttonPrev.style.fontFamily="Consolas";
+     buttonPrev.innerHTML="<";
+     stage.appendChild(buttonPrev);
+    };
+    var index=0;
+    var setIndex=function(i)
+    {
+     index=i;
+     buttonPrev.disabled=(index===0);
+     buttonNext.disabled=(index===states.length-1);
+     var state=states[i];
+     codePointer.setPosition(state[0][0]-1,state[0][1]);
+     for(v in state[1])
+     {
+      if(state[1][v][0]==="show")variables[v].show();
+      else if(state[1][v][0]==="hide")variables[v].hide();
+      else throw new Error("error: "+v);
+      variables[v].setValue(state[1][v][1]);
+     }
+     setInnerHTML(textBlock,state[2]);
+     for(var i=0;i<code.length;i++)
+     {
+      codeLines[i].style.opacity=(state[3][i]?1:0);
+     }
+    };
+    setIndex(0);
+    var buttonPrevClick=function(event)
+    {
+     index--;
+     setIndex(index);
+    }
+    var buttonNextClick=function(event)
+    {
+     index++;
+     setIndex(index);
+    }
+    buttonPrev.addEventListener("click",buttonPrevClick,false);
+    buttonNext.addEventListener("click",buttonNextClick,false);
+   }());
+  </script><br />
+難道這種東西就不能寫成一個函式嗎？<br />
+當然可以！<br />
+<br />
+注意到，「函式」其實是在$a$和$b$的「作用範圍」之外的<br />
+(這時候電腦不會把$a$和$b$的記憶體當作「使用完畢」，因為「Exchange<span style="color: green;">(</span>a,b<span style="color: green;">)</span><span style="color: teal;">;</span>」這一行程式碼還是「執行中」的狀態，而且位於$a$和$b$的「作用範圍」裡面)<br />
+因此，我們必須想辦法在「函式的位置」直接修改「$a$和$b$這兩個變數所使用的記憶體」<br />
+<br />
+方法是使用「指標 (Pointer)」<br />
+<br />
+其實呢，我也不知道為甚麼這個東西叫做指標<br />
+反正原理就是把電腦的每一塊記憶體都指定一個編號<br />
+然後程式就可以依照一個編號去找到要存取的那塊記憶體了<br />
+這種「記憶體編號」就是所謂的「指標」<br />
+<br />
+要怎麼取得一個變數的「指標」(就是這個變數使用的記憶體的編號) 呢？<br />
+假設你的變數名稱叫做「a」<br />
+那麼它的指標就是「&amp;a」<br />
+也就是在前面加一個「&amp;」就好了<br />
+簡單吧！<br />
+<br />
+但是請注意，雖然「指標」是一種「編號」，不過它的「型別」並不是我們常用來儲存整數的「int」<br />
+更正確地來講，因為每台電腦的配備都不同，「指標」的儲存方式也會不同！<br />
+對於32位元的電腦來說，一個「指標」是一個「32位元」的整數 (也就是我們熟悉的『int』)<br />
+對於64位元的電腦來說，一個「指標」是一個「64位元」的整數 (也就是使用64位元的記憶體來儲存資料的『進階版int』－－『long long』)<br />
+<br />
+總之，你不能把「指標」當作「int」或「long long」<br />
+那麼，它的型別是甚麼呢？<br />
+<br />
+其實很簡單<br />
+假如你是從一個「int」變數來取得指標，它的型別就是「int*」<br />
+假如你是從一個「float」變數來取得指標，它的型別就是「float*」<br />
+假如你是從一個「char」變數來取得指標，它的型別就是「char*」<br />
+<br />
+舉個例子：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">int</span> a<span style="color: teal;">;</span>
+<span style="color: blue;">int</span><span style="color: #000040;">*</span> b<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>a<span style="color: teal;">;</span></pre>
+<br />
+這樣一來，「b」就是「a的指標」<br />
+<br />
+需要特別注意的是，當你想要「一次宣告多個指標」的時候<br />
+<b>你應該在每個指標名稱前面都加上「*」</b><br />
+我也覺得滿奇怪的，不知道為甚麼這樣規定 <span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(感謝學長補充，見註8)</a></span><br />
+因此，個人不建議上面的寫法，我會習慣寫成以下的形式：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">int</span> a,b,c<span style="color: teal;">;</span>
+<span style="color: blue;">int</span> <span style="color: #000040;">*</span>d<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>a,<span style="color: #000040;">*</span>e<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>b,<span style="color: #000040;">*</span>f<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>c<span style="color: teal;">;</span></pre>
+<br />
+也就是說，把每一個「*」都緊鄰著指標名稱<br />
+這樣一來，「d」就是「a的指標」、「e」就是「b的指標」、「f」就是「c的指標」<br />
+個人認為這樣的程式碼會工整許多，而且還附帶提醒用途 (提醒你宣告指標時，每個指標名稱前面都要有「*」)<br />
+<br />
+好了，我們現在可以想出「交換兩個變數的資訊」的函式的大致架構了：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">void</span> Exchange<span style="color: green;">(</span><span style="color: blue;">int</span> <span style="color: #000040;">*</span>x,<span style="color: blue;">int</span> <span style="color: #000040;">*</span>y<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    想辦法交換「x」和「y」所代表的兩塊記憶體的資訊
+<span style="color: green;">}</span></pre>
+<br />
+然後函式的使用方式就是：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;">Exchange<span style="color: green;">(</span><span style="color: #000040;">&amp;</span>a,<span style="color: #000040;">&amp;</span>b<span style="color: green;">)</span><span style="color: teal;">;</span></pre>
+<br />
+現在，假設你有了「<span style="color: blue;">int</span> <span style="color: #000040;">*</span>b<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>a<span style="color: teal;">;</span>」，要怎麼透過「b」來修改「a的記憶體」呢？<br />
+方法是在「b」前面加上「*」<br />
+<br />
+注意，這和「宣告指標」時「<span style="color: blue;">int</span> <span style="color: #000040;">*</span>b<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>a<span style="color: teal;">;</span>」的作用不同<br />
+在「b」前面加上「*」之後<br />
+你就可以把「*b」直接當作一個「int變數」來存取或修改了！<br />
+<br />
+你看你看～～～<br />
+「*」是不是很像射飛鏢在用的「箭靶」呢？<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-nBgwSRYIir8/V06HcSEhc6I/AAAAAAAAEIM/1LoKbudActQTL4FQgoyyDUweQ-_2k9CRACLcB/s1600/12-2.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="310" src="https://1.bp.blogspot.com/-nBgwSRYIir8/V06HcSEhc6I/AAAAAAAAEIM/1LoKbudActQTL4FQgoyyDUweQ-_2k9CRACLcB/s320/12-2.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">這是「箭靶」，有三支「飛鏢」射中箭靶的中心<br />
+圖片來源：http://img3.redocn.com/20130429/Redocn_2013042413460991.jpg</td></tr>
+</tbody></table>
+<br />
+「指標」就像一支「飛鏢」一樣<br />
+「指標」儲存的資訊 (記憶體編號) 就是這支「飛鏢」指向哪裡<br />
+當你寫下「<span style="color: blue;">int</span> <span style="color: #000040;">*</span>b<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>a<span style="color: teal;">;</span>」的時候，「b」這支「飛鏢」就指向了「a」這個「箭靶」<br />
+當你寫下「*b」的時候，「*b」就代表「b指向的箭靶」了，也就是「a」！<br />
+<br />
+具體使用方式請參考以下程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"修改前a=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> <span style="color: #000040;">*</span>b<span style="color: navy;">=</span><span style="color: #000040;">&amp;</span>a<span style="color: teal;">;</span>
+    <span style="color: #000040;">*</span>b<span style="color: navy;">=</span><span style="color: #0000dd;">4</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"修改後a=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-no_bk7lMZ4I/V06MU2gL_lI/AAAAAAAAEIY/PuOhIpQ6_K4QYDVNxlc6E7Yu74i6tQkwACLcB/s1600/12-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="166" src="https://3.bp.blogspot.com/-no_bk7lMZ4I/V06MU2gL_lI/AAAAAAAAEIY/PuOhIpQ6_K4QYDVNxlc6E7Yu74i6tQkwACLcB/s320/12-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">我們透過「a」的指標「b」，成功修改「a」的數值了！</td></tr>
+</tbody></table>
+所以，我們就在「<span style="color: #000040;">*</span>b<span style="color: navy;">=</span><span style="color: #0000dd;">4</span><span style="color: teal;">;</span>」這一行程式碼中<br />
+把「b指向的箭靶」修改成「4」了！<br />
+<br />
+現在，你知道要怎麼寫出「交換兩個變數的資訊」的函式了嗎？<br />
+<br />
+如果還想不出來，以下提供參考，希望你會恍然大悟 (如果還是想不通，請務必讓我知道)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">void</span> Exchange<span style="color: green;">(</span><span style="color: blue;">int</span> <span style="color: #000040;">*</span>x,<span style="color: blue;">int</span> <span style="color: #000040;">*</span>y<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> t<span style="color: navy;">=</span><span style="color: #000040;">*</span>x<span style="color: teal;">;</span>
+    <span style="color: #000040;">*</span>x<span style="color: navy;">=</span><span style="color: #000040;">*</span>y<span style="color: teal;">;</span>
+    <span style="color: #000040;">*</span>y<span style="color: navy;">=</span>t<span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<br />
+  <div id="animation2"></div>
+  <script type="text/javascript">
+   (function(){
+    var instructions=
+    [
+     [[ 1,0],[],"\u8acb\u6309\u300c>\u300d\u958b\u59cb\u6a21\u64ec\u57f7\u884c\u7a0b\u5f0f"],
+     [[10,1],[["a",true,"1"],["b",true,"2"],["&a",true,"記憶體位址A"],["&b",true,"記憶體位址B"]],"\u5ba3\u544a\u8b8a\u6578a=1\uff0cb=2"],
+     [[11,1],[],"\u547c\u53eb\u51fd\u5f0fExchange(&a,&b)"],
+     [[ 2,1,true],[["x",true,"記憶體位址A"],["y",true,"記憶體位址B"],["*x",true,"1"],["*y",true,"2"]],"\u5ba3\u544a\u8b8a\u6578x=&a\uff0cy=&b\u3002\u6ce8\u610f\u5230*\u53ea\u662f\u5ba3\u544a\u8b8a\u6578\u6642\u4f5c\u4fee\u98fe\u7528\uff0c*x\u4e26\u4e0d\u7b49\u65bc&a\uff0cx\u624d\u7b49\u65bc&a\u3002\u540c\u7406\u53ef\u5957\u7528\u5728y\u3001b"],
+     [[ 4,3],[["&a",true,"記憶體位址A"],["&b",true,"記憶體位址B"],["a","2"],["b","1"],["x",true,"記憶體位址A"],["y",true,"記憶體位址B"],["*x","2"],["*y","1"]],"*x\u548c*y\u7684\u6578\u503c\u88ab\u4ea4\u63db\u4e86\u3002\u6ce8\u610f\u5230\uff0c\u56e0\u70bax\u5c31\u662fa\u7684\u8a18\u61b6\u9ad4\u4f4d\u5740\uff0c\u56e0\u6b64\u4fee\u6539*x\u4e5f\u6703\u4f7f\u5f97a\u4e5f\u4e00\u8d77\u6539\u8b8a\u3002\u4fee\u6539*x\u2192\u4fee\u6539\u8a18\u61b6\u9ad4\u4f4d\u5740A\u7684\u8cc7\u6599\u2192a\u6539\u8b8a\u3002\u540c\u7406\u53ef\u5957\u7528\u5728y\u3001b"],
+     [[12,1,false],[["&a",false],["&b",false],["*x",false],["*y",false],["a",false],["b",false],["x",false],["y",false]],"main\u51fd\u5f0f\u56de\u50b30\uff0c\u7a0b\u5f0f\u6b63\u5e38\u7d50\u675f"]
+    ];
+    var code=
+    [
+     "1.  #include<cstdio>",
+     "2.  void Exchange(int *x,int *y)",
+     "3.  {",
+     "4.      int t=*x;",
+     "5.      *x=*y;",
+     "6.      *y=t;",
+     "7.  }",
+     "8.  int main()",
+     "9.  {",
+     "10.     int a=1,b=2;",
+     "11.     Exchange(&a,&b);",
+     "12.     return 0;",
+     "13. }"
+    ];
+    var variableNames=
+    [
+     "a",
+     "b",
+     "&a",
+     "&b",
+     "x",
+     "y",
+     "*x",
+     "*y",
+    ];
+    var codeHeight=15;
+    var codeWidth=250;
+    var variableHeight=20;
+    var variableWidth=150;
+    var titleHeight=20;
+    var bottomHeight=50;
+    var buttonRatio=0.7;
+    var borderWidth=7;
+    var variables={};
+    var codeLines=[];
+    var contentHeight=Math.max(codeHeight*code.length,variableHeight*variableNames.length);
+    var contentWidth=codeWidth+variableWidth+borderWidth*3;
+    function Clone(obj)
+    {
+        if (null == obj || "object" != typeof obj) return obj;
+        if (obj instanceof Date)
+     {
+            var copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+        if (obj instanceof Array)
+     {
+            var copy = [];
+            var i = 0;
+            var len = obj.length;
+            for (; i < len; ++i) copy[i] = Clone(obj[i]);
+            return copy;
+        }
+        if (obj instanceof Object)
+     {
+            var copy = {};
+            for (var attr in obj) if (obj.hasOwnProperty(attr)) copy[attr] = Clone(obj[attr]);
+            return copy;
+        }
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    }
+    var states=[];
+    {
+     var state=["codePointerPosition",{},"",[]];
+     for(var i=0;i<variableNames.length;i++)
+     {
+      state[1][variableNames[i]]=["hide",""];
+     }
+     for(var i=0;i<code.length;i++)
+     {
+      state[3].push(false);
+     }
+     var stack=[];
+     for(var i=0;i<instructions.length;i++)
+     {
+      var inst=instructions[i];
+      state[0]=inst[0];
+      for(var j=0;j<inst[1].length;j++)
+      {
+       var name=inst[1][j][0];
+       if(!name in state[1])throw new Error("can't find "+name);
+       var vari=state[1][name];
+       for(var k=1;k<inst[1][j].length;k++)
+       {
+        var v=inst[1][j][k];
+        if(typeof(v)==="boolean")
+        {
+         if(v)vari[0]="show";
+         else vari[0]="hide";
+        }
+        else if(typeof(v)==="string")
+        {
+         vari[1]=v;
+        }
+        else throw new Error("error: not boolean nor string: "+v);
+       }
+      }
+      state[2]=inst[2];
+      if(state[0].length>=3)
+      {
+       if(typeof(state[0][2])!=="boolean")throw new Error("error: must be boolean: "+state[0][2]);
+       if(state[0][2])
+       {
+        var last=instructions[i-1][0].slice(0,2);
+        for(var j=0;j<last[1];j++)state[3][last[0]-1+j]=true;
+        stack.push(last); console.log(stack.toString()+" "+last);
+       }
+       else
+       {
+        if(stack.length===0)throw new Error("error: stack can't be empty: "+stack);
+        var last=stack[stack.length-1];
+        for(var j=0;j<last[1];j++)state[3][last[0]-1+j]=false;
+        stack.splice(-1,1);
+       }
+      }
+      states.push(Clone(state));
+     }
+     if(stack.length!==0)throw new Error("error: stack must be empty after execution: "+stack);
+    }
+    var newElement=function(id,type)
+    {
+     if(typeof(type)==="undefined")type="div";
+     var answer=document.createElement(type);
+     if(typeof(id)==="string")answer.id=id;
+     answer.style.display="block";
+     answer.style.position="absolute";
+     return answer;
+    };
+    var setInnerHTML=function(e,text)
+    {
+     e.innerHTML=function(t)
+     {
+      var a="";
+      for(var i=0;i<t.length;i++)
+      {
+       if(t[i]===' ')a+="&nbsp;";
+       else a+=new Option(t[i].toString()).innerHTML;
+      }
+      return a;
+     }(text);
+    };
+    var stage=document.getElementById("animation2");
+    {
+     //stage.style.display="block";
+     stage.style.position="relative";
+     stage.style.width=contentWidth.toString()+"px";
+     stage.style.height=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth+bottomHeight+borderWidth).toString()+"px";
+     stage.style.backgroundColor="rgb(255,255,128)";
+    }
+    {
+     var t=newElement();
+     t.style.fontFamily="微軟正黑體";
+     t.style.fontSize=Math.floor(titleHeight*0.8).toString()+"px";
+     t.style.textAlign="center";
+     t.style.backgroundColor="rgb(255,255,192)";
+     t.style.top=borderWidth.toString()+"px";
+     t.style.left=borderWidth.toString()+"px";
+     t.style.width=codeWidth.toString()+"px";
+     t.style.height=titleHeight.toString()+"px";
+     setInnerHTML(t,"\u7a0b\u5f0f\u78bc");
+     stage.appendChild(t);
+    }
+    {
+     var t=newElement();
+     t.style.fontFamily="微軟正黑體";
+     t.style.fontSize=Math.floor(titleHeight*0.8).toString()+"px";
+     t.style.textAlign="center";
+     t.style.backgroundColor="rgb(255,255,192)";
+     t.style.top=borderWidth.toString()+"px";
+     t.style.left=(borderWidth+codeWidth+borderWidth).toString()+"px";
+     t.style.width=variableWidth.toString()+"px";
+     t.style.height=titleHeight.toString()+"px";
+     setInnerHTML(t,"\u8b8a\u6578");
+     stage.appendChild(t);
+    }
+    var codeBlock=newElement("codeBlock");
+    function newCodePointer()
+    {
+     var answer=newElement("codePointer");
+     answer.style.left="0px";
+     answer.style.width=codeWidth.toString()+"px";
+     answer.style.height=codeHeight.toString()+"px";
+     answer.style.backgroundColor="rgb(192,192,192)";
+     answer.style.transition="height 0.5s ease-out 0s, top 0.5s ease-out 0s;";
+     codeBlock.appendChild(answer);
+     answer.setPosition=function(y,h)
+     {
+      answer.style.top=(y*codeHeight).toString()+"px";
+      answer.style.height=(h*codeHeight).toString()+"px";
+     }
+     answer.setPosition(0,1);
+     return answer;
+    }
+    var codePointer=newCodePointer();
+    {
+     codeBlock.style.top=(borderWidth+titleHeight+borderWidth).toString()+"px";
+     codeBlock.style.left=borderWidth.toString()+"px";
+     codeBlock.style.width=codeWidth.toString()+"px";
+     codeBlock.style.height=contentHeight.toString()+"px";
+     codeBlock.style.backgroundColor="rgb(255,255,192)";
+     var lineNumber=0;
+     var appendNewLine=function(text)
+     {
+      var line=newCodePointer();
+      line.style.backgroundColor="rgb(230,230,192)";
+      line.style.transition="opacity 0.5s ease-out 0s";
+      line.setPosition(lineNumber,1);
+      codeLines.push(line);
+      var answer=newElement("line"+lineNumber.toString());
+      setInnerHTML(answer,text);
+      answer.style.top=(lineNumber*codeHeight).toString()+"px";
+      answer.style.fontFamily="Consolas";
+      //answer.style.fontWeight="900";
+      answer.style.fontSize=Math.floor(codeHeight*0.8).toString()+"px";
+      codeBlock.appendChild(answer);
+      lineNumber++;
+     };
+     for(var i=0;i<code.length;i++)
+     {
+      appendNewLine(code[i]);
+     }
+     stage.appendChild(codeBlock);
+    }
+    var variableBlock=newElement("variableBlock");
+    {
+     variableBlock.style.top=(borderWidth+titleHeight+borderWidth).toString()+"px";
+     variableBlock.style.left=(borderWidth+codeWidth+borderWidth).toString()+"px";
+     variableBlock.style.width=variableWidth.toString()+"px";
+     variableBlock.style.height=contentHeight.toString()+"px";
+     variableBlock.style.backgroundColor="rgb(255,255,192)";
+     var newVariable=function(id)
+     {
+      var answer=newElement(id);
+      answer.style.left="0px";
+      answer.style.width=variableWidth.toString()+"px";
+      answer.style.height=variableHeight.toString()+"px";
+      answer.style.backgroundColor="rgb(224,256,192)";
+      answer.style.fontFamily="Consolas";
+      answer.style.fontSize=Math.floor(variableHeight*0.8).toString()+"px";
+      answer.style.transition="left 0.5s ease-out 0s, opacity 0.5s ease-out 0s;";
+      answer.name=id;
+      answer.setValue=function(v)
+      {
+       answer.innerHTML=answer.name+" = "+v;
+      };
+      answer.hide=function()
+      {
+       answer.style.opacity=0;
+       answer.style.left="20px";
+      };
+      answer.show=function()
+      {
+       answer.style.opacity=1;
+       answer.style.left="0px";
+      };
+      return answer;
+     };
+     for(var i=0;i<variableNames.length;i++)
+     {
+      var v=newVariable(variableNames[i]);
+      v.style.top=(i*variableHeight).toString()+"px";
+      v.setValue("");
+      v.hide();
+      variableBlock.appendChild(v);
+      variables[variableNames[i]]=v;
+     }
+     stage.appendChild(variableBlock);
+    }
+    var textBlock=newElement("textBlock");
+    {
+     textBlock.style.top=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth).toString()+"px";
+     textBlock.style.left=borderWidth.toString()+"px";
+     textBlock.style.width=(contentWidth-borderWidth*3-bottomHeight*buttonRatio*2).toString()+"px";
+     textBlock.style.height=bottomHeight.toString()+"px";
+     textBlock.style.backgroundColor="rgb(256,256,192)";
+     textBlock.style.fontSize=Math.floor(bottomHeight*0.25).toString()+"px";
+     textBlock.style.fontFamily="微軟正黑體";
+     textBlock.innerHTML="正在初始化...";
+     stage.appendChild(textBlock);
+    }
+    var buttonNext=newElement("next","button");
+    {
+     buttonNext.style.top=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth).toString()+"px";
+     buttonNext.style.left=(contentWidth-borderWidth-bottomHeight*buttonRatio).toString()+"px";
+     buttonNext.style.width=(bottomHeight*buttonRatio).toString()+"px";
+     buttonNext.style.height=bottomHeight.toString()+"px";
+     buttonNext.style.fontSize=Math.floor(bottomHeight*0.8).toString()+"px";
+     buttonNext.style.fontFamily="Consolas";
+     buttonNext.innerHTML=">";
+     stage.appendChild(buttonNext);
+    };
+    var buttonPrev=newElement("previous","button");
+    {
+     buttonPrev.style.top=(borderWidth+titleHeight+borderWidth+contentHeight+borderWidth).toString()+"px";
+     buttonPrev.style.left=(contentWidth-borderWidth-bottomHeight*buttonRatio*2).toString()+"px";
+     buttonPrev.style.width=(bottomHeight*buttonRatio).toString()+"px";
+     buttonPrev.style.height=bottomHeight.toString()+"px";
+     buttonPrev.style.fontSize=Math.floor(bottomHeight*0.8).toString()+"px";
+     buttonPrev.style.fontFamily="Consolas";
+     buttonPrev.innerHTML="<";
+     stage.appendChild(buttonPrev);
+    };
+    var index=0;
+    var setIndex=function(i)
+    {
+     index=i;
+     buttonPrev.disabled=(index===0);
+     buttonNext.disabled=(index===states.length-1);
+     var state=states[i];
+     codePointer.setPosition(state[0][0]-1,state[0][1]);
+     for(v in state[1])
+     {
+      if(state[1][v][0]==="show")variables[v].show();
+      else if(state[1][v][0]==="hide")variables[v].hide();
+      else throw new Error("error: "+v);
+      variables[v].setValue(state[1][v][1]);
+     }
+     setInnerHTML(textBlock,state[2]);
+     for(var i=0;i<code.length;i++)
+     {
+      codeLines[i].style.opacity=(state[3][i]?1:0);
+     }
+    };
+    setIndex(0);
+    var buttonPrevClick=function(event)
+    {
+     index--;
+     setIndex(index);
+    }
+    var buttonNextClick=function(event)
+    {
+     index++;
+     setIndex(index);
+    }
+    buttonPrev.addEventListener("click",buttonPrevClick,false);
+    buttonNext.addEventListener("click",buttonNextClick,false);
+   }());
+  </script>
+<br />
+<br />
+現在，我們來嘗試寫一個「函式版」的「猜球遊戲模擬程式」吧！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">void</span> Exchange<span style="color: green;">(</span><span style="color: blue;">int</span> <span style="color: #000040;">*</span>x,<span style="color: blue;">int</span> <span style="color: #000040;">*</span>y<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> t<span style="color: navy;">=</span><span style="color: #000040;">*</span>x<span style="color: teal;">;</span>
+    <span style="color: #000040;">*</span>x<span style="color: navy;">=</span><span style="color: #000040;">*</span>y<span style="color: teal;">;</span>
+    <span style="color: #000040;">*</span>y<span style="color: navy;">=</span>t<span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">0</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">1</span>,c<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> type<span style="color: teal;">;</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>type<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            Exchange<span style="color: green;">(</span><span style="color: #000040;">&amp;</span>a,<span style="color: #000040;">&amp;</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            Exchange<span style="color: green;">(</span><span style="color: #000040;">&amp;</span>a,<span style="color: #000040;">&amp;</span>c<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>type<span style="color: navy;">==</span><span style="color: #0000dd;">3</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            Exchange<span style="color: green;">(</span><span style="color: #000040;">&amp;</span>b,<span style="color: #000040;">&amp;</span>c<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"你輸入錯誤了XD"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"左邊<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>b<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"中間<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span>c<span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"右邊<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">else</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"怎麼可能？一定是程式寫錯了Orz<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+試試看，確認程式的輸出是正確的！<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-JGIz7tXdoig/V06QtE4GoVI/AAAAAAAAEJY/iiw_lUZ-Kig0t86Kms1k9WnE-umE0omowCLcB/s1600/12-10.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="181" src="https://4.bp.blogspot.com/-JGIz7tXdoig/V06QtE4GoVI/AAAAAAAAEJY/iiw_lUZ-Kig0t86Kms1k9WnE-umE0omowCLcB/s320/12-10.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「5 3 2 1 2 3」，程式正確的輸出「右邊」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-nQE3TTr7dEk/V06RGRhbHII/AAAAAAAAEJc/CkGyWFfu3ScpJnJYAZYFrtgra22P8xofwCLcB/s1600/12-11.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="184" src="https://2.bp.blogspot.com/-nQE3TTr7dEk/V06RGRhbHII/AAAAAAAAEJc/CkGyWFfu3ScpJnJYAZYFrtgra22P8xofwCLcB/s320/12-11.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「6 2 3 1 1 3 1」，程式正確的輸出「左邊」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-sIb71iGfANM/V06RYDEBXaI/AAAAAAAAEJk/3YLrpkETyxIHl6XlBc2wjFgh0KAI26nuACLcB/s1600/12-12.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="181" src="https://2.bp.blogspot.com/-sIb71iGfANM/V06RYDEBXaI/AAAAAAAAEJk/3YLrpkETyxIHl6XlBc2wjFgh0KAI26nuACLcB/s320/12-12.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入「7 1 1 1 3 2 2 1」，程式正確的輸出「中間」</td></tr>
+</tbody></table>
+<br />
+耶！完全正確！<br />
+我們成功了！\(^o^)/<br />
+<br />
+最後，來個小提醒<br />
+不管你玩C++玩得多深<br />
+千萬不要寫出類似下面危險的程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> <span style="color: #000040;">*</span>a<span style="color: navy;">=</span><span style="color: green;">(</span><span style="color: blue;">int</span><span style="color: #000040;">*</span><span style="color: green;">)</span><span style="color: #0000dd;">32405</span><span style="color: teal;">;</span>
+    <span style="color: #000040;">*</span>a<span style="color: navy;">=</span><span style="color: #0000dd;">911</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+其中，「<span style="color: green;">(</span><span style="color: blue;">int</span><span style="color: #000040;">*</span><span style="color: green;">)</span>」代表強制用後面的「<span style="color: #0000dd;">32405</span>」產生一個型別為「<span style="color: blue;">int</span><span style="color: #000040;">*</span>」的變數<br />
+誰知道編號為「32405」的記憶體是幹嘛用的啦<br />
+你把這塊記憶體的資料修改成「911」<br />
+可能沒事<br />
+可能「IE」的名字被顯示成「JE」<br />
+可能你正在玩的<a href="https://www.youtube.com/playlist?list=PL0srVz2dbivUrw6S1p2wr8o0wmh0V9EJc">鑽礦遊戲Digging Game 2</a>掛惹<br />
+可能半小時後才出事<br />
+可能整台電腦大當機<br />
+<br />
+好啦，你硬要試試看<br />
+我只能說你很有實驗精神<br />
+但是<br />
+<b>請先將重要資料存檔</b><br />
+<b>並隨時做好「必須將電腦插頭拔掉才能重新開機」的心理準備</b><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: blue;">下一章 (這還不是最後一章)</span></a><br />
+<br />
+感謝：李旺陽學長<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

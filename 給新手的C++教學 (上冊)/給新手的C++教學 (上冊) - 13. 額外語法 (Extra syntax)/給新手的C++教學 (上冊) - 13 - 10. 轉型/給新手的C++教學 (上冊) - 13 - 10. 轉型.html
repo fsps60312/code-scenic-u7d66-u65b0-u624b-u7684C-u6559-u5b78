@@ -1,0 +1,130 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-9.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+<span style="font-size: xx-small;"><b>註: 小莫使用的<a href="http://highlight.hohli.com/">程式碼上色網站</a>掛掉了，因此本頁的程式碼都沒有顏色，等<a href="http://highlight.hohli.com/">該網站</a>恢復之後會再進行程式碼上色的動作，暫時造成不便敬請見諒。若您發現<a href="http://highlight.hohli.com/">該網站</a>已經恢復運作，本頁程式碼卻還沒更新，也歡迎以各種方式提醒小莫哦~ ^_^</b></span><br />
+<br />
+顧名思義，「轉型」就是「轉換型別」<br />
+「將某個小數無條件捨去到整數位」就是「從float『轉型』到int」的一個例子<br />
+因為小數位不見會變成整數 (int) 嘛XD<br />
+<br />
+不過，「轉型」並不是把某個變數a的型別從float「變成」int，而是依據a的值「產生」一個int變數，其值接近型別為float的a (為甚麼說接近? 因為你不可能把一個int變數的值設定成2.4，頂多設定成2或3)<br />
+<br />
+那麼，要怎麼將一個變數「轉型」呢？<br />
+<!--more-->只要在前面加上「(目標型別名稱)」就好了！<br />
+<br />
+以下是將2.4從float轉型成int的例子：<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>#include&lt;cstdio&gt;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>int main()</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>{</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; float a=2.4;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; printf("a=%f\n",a);</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; printf("(int)a=%d\n",(int)a);</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; printf("a=%f\n",a);</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; int b=(int)a;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; printf("b=%d\n",b);</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; return 0;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>}</b></span><br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-JgqFCKcgbJA/WFziY4xVlyI/AAAAAAAAG7k/rq6F0wfEWWUHNH6opOgHikh85ljr9MfqACLcB/s1600/13-10-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="198" src="https://4.bp.blogspot.com/-JgqFCKcgbJA/WFziY4xVlyI/AAAAAAAAG7k/rq6F0wfEWWUHNH6opOgHikh85ljr9MfqACLcB/s320/13-10-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div>
+型別為float的a轉型成int之後值從2.4變成2</div>
+<div>
+然而，將a轉型並不會修改到a本身</div>
+<div>
+而是產生一個值為2的int變數</div>
+<div>
+我們可以自行宣告一個int變數b來把轉型產生的2「接起來」</div>
+<div>
+<div>
+至於為甚麼會有橘色的<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-3.html">警告</a>，在下一頁會做解釋</div>
+</div>
+</td></tr>
+</tbody></table>
+<br />
+注意到，「a」經轉型後還是2.4，也就證明了「轉型」並不會修改到變數本身，而是「產生」出一個指定型別 (在這個例子中是int) 的新變數<br />
+我們可以自行宣告一個int變數b來「接住」轉型產生的新變數的值 (請見程式碼中第8行)<br />
+<br />
+這就是轉型<br />
+<br />
+但轉型可不只這種方式<br />
+依據轉型的方式可將轉型分為「強制轉型」和「隱含轉型」<br />
+剛剛提到的方法屬於「強制轉型」<br />
+<br />
+「隱含轉型」發生在兩個不同型別的變數做運算的時候，例如相加<br />
+不同型別的變數不能直接進行運算，因此電腦會自動先將其中一個變數轉型成和另一個變數相同的型別，再做計算<br />
+例如：<br />
+<br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">#include&lt;cstdio&gt;</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">int main()</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">{</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">&nbsp;&nbsp;&nbsp; int a=3;</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">&nbsp;&nbsp;&nbsp; float b=2.4;</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">&nbsp;&nbsp;&nbsp; float c=a*b;</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">&nbsp;&nbsp;&nbsp; printf("%d * %f = %f\n",a,b,c);</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">&nbsp;&nbsp;&nbsp; return 0;</span></b><br />
+<b><span style="font-family: &quot;Courier New&quot;, Courier, monospace;">}</span></b><br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-2Egy5Z-r0a8/WFzhVkgzQ9I/AAAAAAAAG7Y/LI5W1UcqbYg_sMuTh8Pm4QXxdI712keRQCLcB/s1600/13-10-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="194" src="https://2.bp.blogspot.com/-2Egy5Z-r0a8/WFzhVkgzQ9I/AAAAAAAAG7Y/LI5W1UcqbYg_sMuTh8Pm4QXxdI712keRQCLcB/s320/13-10-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div>
+型別為int的a和型別為float的b相乘的結果是一個型別為float的變數</div>
+<div>
+至於為甚麼會多出第二個警告：[Warning] conversion to 'float' from 'int' may alter its value [-Wconversion]<br />
+這是因為float的精度不夠高，因此從int轉型到float有可能會造成微小的誤差，這就是電腦想表達的意思</div>
+</td></tr>
+</tbody></table>
+<br />
+這和以下程式碼的邏輯是一模一樣的：<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>#include&lt;cstdio&gt;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>int main()</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>{</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; int a=3;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; float b=2.4;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; float c=((float)a)*b;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; printf("%d * %f = %f\n",a,b,c);</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>&nbsp;&nbsp;&nbsp; return 0;</b></span><br />
+<span style="font-family: &quot;Courier New&quot;, Courier, monospace;"><b>}</b></span><br />
+<br />
+也就是，電腦會自動將型別為int的變數a轉型為float之後再和b做運算 (相乘)，因而算出型別為float的答案c ($3*2.4=7.2$)<br />
+<br />
+為甚麼是「把a轉型成float」而不是「把b轉型成int」呢？<br />
+這是C++的規定，規則如下：<br />
+<ol>
+<li>如果是「小數」和「整數」做運算，則將「整數」轉型成「小數」(<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-3.html">整數和小數的定義</a>)</li>
+<span style="font-size: x-small;">
+如：「float」和「int」做運算會將「int」轉型成「float」</span><br /><br />
+<li>對「整數」來說，如果是「有號 (signed)」和「無號&nbsp;(unsigned)」做運算，則將「有號」轉型成「無號」(如果不知道unsigned是啥可以自行上網搜尋，或者不用理會這點XD)</li>
+<span style="font-size: x-small;">
+如：「int」和「unsigned int」做運算會將「int」轉型成「unsigned int」</span><br /><br />
+<li>如果是「範圍大或精度高 (誤差小)」和「範圍小或精度低 (誤差大)」做運算，則將「範圍小或精度低」轉型成「範圍大或精度高」</li>
+<span style="font-size: x-small;">
+如：
+「float」和「double」做運算會將「float」轉型成「double」、「long long」和「int」做運算會將「int」轉型成「long long」</span><br /><br />
+<li>不轉型，因為如果1.、2.、3.都不成立，則兩數型別相同</li>
+</ol>
+<br />
+若懶得記住以上規則，您大可直接使用「強制轉型」的做法來控制所有跨型別運算的轉型方向，沒有問題的！<br />
+<br />
+關於轉型的介紹就到此為止，有任何疑問歡迎在以下留言區提出哦～ ^_^<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/10/cpp-for-beginner-article-of-future.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

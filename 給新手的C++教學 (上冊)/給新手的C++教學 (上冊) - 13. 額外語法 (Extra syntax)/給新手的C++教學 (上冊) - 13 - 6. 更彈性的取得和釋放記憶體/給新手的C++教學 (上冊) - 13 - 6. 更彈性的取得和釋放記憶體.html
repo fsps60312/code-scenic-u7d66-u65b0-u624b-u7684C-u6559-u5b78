@@ -1,0 +1,272 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-5.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+名詞解釋：<br />
+「釋放」記憶體：將某塊記憶體標記為「使用完畢」，讓這塊記憶體之後或讓其他程式可以再被利用<br />
+<br />
+在之前的<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-8-charactor-string.html">字元字串章節</a>，我們使用了一個很大很大 (大小為100萬) 的陣列來儲存「一個名字」<br />
+除非要處理特別多的資料，否則應該是不會需要這麼大的陣列啦XD<br />
+但接下來，您會發現，當陣列太大的時候，會發生問題的<br />
+為了節省版面，這裡以<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-8-charactor-string.html">字元字串章節</a>的最後一份程式碼為例：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-Pzvm7sf3_6s/V9ZmCmkVoVI/AAAAAAAAGZ0/KwwgJSSEa7gksaaM42KtPAAzwMOHbEHOQCLcB/s1600/13-6-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="202" src="https://4.bp.blogspot.com/-Pzvm7sf3_6s/V9ZmCmkVoVI/AAAAAAAAGZ0/KwwgJSSEa7gksaaM42KtPAAzwMOHbEHOQCLcB/s320/13-6-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入名字「Motivation」，會輸出「Hello, Motivation!」</td></tr>
+</tbody></table>
+<br />
+假如哪天你發現某人的名字太長了 (?)，大小100萬的陣列不夠用 (!)，想要宣告大小1000萬的陣列 (......)<br />
+好啊！欣然同意啊XD<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">10000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-pF2d9Y3HCYI/V9ZmkitEbVI/AAAAAAAAGZ4/4d9G_sKF8JoyR_0GsajaSsjj06REy_DdQCLcB/s1600/13-6-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="193" src="https://4.bp.blogspot.com/-pF2d9Y3HCYI/V9ZmkitEbVI/AAAAAAAAGZ4/4d9G_sKF8JoyR_0GsajaSsjj06REy_DdQCLcB/s320/13-6-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">欸欸等等我甚麼是都還沒做耶！</td></tr>
+</tbody></table>
+<br />
+咦？怎麼程式掛了？！<br />
+根本都還沒開始輸入名字呀！<br />
+<!--more--><br />
+<br />
+仔細想想，在輸入名字之前，程式只有執行了一行：<span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">10000001</span><span style="color: green;">]</span><span style="color: teal;">;</span><br />
+而我們剛剛的修改也只是把陣列的長度多加一個0而已<br />
+<br />
+<span style="font-size: large;">What's the problem???</span><br />
+陣列太大導致記憶體不足嗎？<br />
+不對啊，仔細算算，我們才用了「10000001 Bytes = 9765.6 KB = 9.5 MB」的記憶體啊<br />
+相對電腦隨隨便便就有幾GB (1 GB = 1024 MB) 的閒置記憶體，根本一點都不成問題！<br />
+<br />
+其實，問題不在你身上，是電腦程式本身架構的問題！<br />
+一個用C++寫出來的電腦程式使用的記憶體，其實是有分類的<br />
+大概可以分成三類：<br />
+1. static (靜態)<br />
+2. heap (堆積)<br />
+3. stack (堆疊)<br />
+<br />
+<ul>
+<li>
+「static記憶體」的特性是程式執行之前會先配置好哪一塊記憶體要用來幹嘛，之後就不再容許更改，適合儲存從頭到尾都要存在的資料<br />
+例如：程式的邏輯和架構，以後甚至會學到怎麼把一些變數自訂成使用static記憶體
+</li>
+<li>
+「heap記憶體」的特性是可以在程式執行的過程中隨時取得和釋放，專業上我們稱之可以「動態配置」記憶體。不過機制較為複雜，記憶體的取得和釋放也較為耗時<br />
+通常用來儲存巨量的快取資料 (也就是cache，目的在於解決從硬碟讀取太慢的問題)、或者程式執行過程中臨時需要大量存放的資料
+(暫存資料)</li>
+<li>
+「stack記憶體」的特性是會隨著函式的呼叫而使用，在函式內宣告的變數通常會使用stack記憶體。機制簡單，記憶體的取得和釋放很快，但也因為這個機制的缺陷，分配多點記憶體的投資報酬率並不高，電腦並不喜歡提供stack記憶體太多額度 (通常只有4 MB左右)</li>
+</ul>
+那麼，當我們寫下一行「<span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">10000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>」，使用的是哪一種記憶體呢？<br />
+答案是「stack」，也就是被電腦限制使用量的那種<br />
+因此，當我們在函式裡面宣告一個很大很大的陣列，很容易就會造成「stack overflow (堆疊溢出)」的情況，也就是使用的stack記憶體超出電腦提供的額度而讓程式發生錯誤<br />
+<br />
+太不公平了吧！整台電腦4 GB的記憶體我們只能使用4 MB？！<br />
+別忘了，除了「stack記憶體」之外，我們還有「static記憶體」和「heap記憶體」可以使用<br />
+「static記憶體」在使用上有些限制和特色，之後的頁面會介紹<br />
+那麼，要怎麼使用「heap記憶體」呢？<br />
+<br />
+請注意，這會需要熟悉指標的用法，對指標還不熟的同學們，請複習一下<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-12-pointer.html">指標章節</a><br />
+<br />
+在<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-5.html">上一頁</a>，我們得知指標就是陣列<br />
+因此，我們只要和電腦取得某一塊可用heap記憶體的「指標」，就可以用「陣列」的方式使用heap記憶體<br />
+例如，跟電腦要一塊大小為「10000000個char變數」的heap記憶體，並取得其指標的方式如下：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">10000000</span><span style="color: green;">]</span></pre>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+<br />
+<br />
+這整個東西可以當作一個char* (char的指標)，因此我們可以用一個型別為「char*」的變數 (就命名為「name」吧) 來儲存它：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">char</span> <span style="color: #000040;">*</span>name<span style="color: navy;">=</span><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">10000000</span><span style="color: green;">]</span><span style="color: teal;">;</span></pre>
+<br />
+可以發現，現在我們可以直接把「name」當作一個「長度為10000000的char陣列」來用了！<br />
+而且使用的是「heap記憶體」，不用理會那可憐的「4 MB」限制！<br />
+<br />
+好了，現在，您知道要怎麼解決本頁開頭程式掛掉的問題了嗎？<br />
+希望您可以自行解決此問題，但還是提供解答以供參考：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> <span style="color: #000040;">*</span>name<span style="color: navy;">=</span><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">10000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-4hyHy0p7FIY/V9dwq364BlI/AAAAAAAAGaI/WCSPa9Dd01AqpkeUbVfhvld3yzhtHeL8gCLcB/s1600/13-6-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="181" src="https://2.bp.blogspot.com/-4hyHy0p7FIY/V9dwq364BlI/AAAAAAAAGaI/WCSPa9Dd01AqpkeUbVfhvld3yzhtHeL8gCLcB/s320/13-6-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">程式正常執行了耶！</td></tr>
+</tbody></table>
+<br />
+等等，事情沒有這麼簡單！這份程式碼還是有問題的！<br />
+heap記憶體的取得和釋放都很耗時，而且多個指標使用同一塊記憶體是允許的，因此就算程式執行到「name的作用範圍」之外，電腦還是<b>不會自動釋放</b>「name」使用的那塊記憶體<br />
+好處是，如果有另一個char*指標 (假設叫做「a」) 和name使用了同一塊記憶體，那麼就算執行到了name的作用範圍之外，我們還是可以透過「a」(如果還在a的作用範圍內) 來<b>繼續使用</b>name使用的那塊記憶體和裡面儲存的資料<br />
+舉個例子：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> <span style="color: #000040;">*</span>a<span style="color: teal;">;</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">char</span> <span style="color: #000040;">*</span>name<span style="color: navy;">=</span><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">10000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"name: Hello, %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+        a<span style="color: navy;">=</span>name<span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"a:    Hello, %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-gMx0wtml3Y4/V9izhJ7oufI/AAAAAAAAGac/AE1RH3DsNq40mUT9EigXaAqwlnuu9_hTQCLcB/s1600/13-6-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="178" src="https://4.bp.blogspot.com/-gMx0wtml3Y4/V9izhJ7oufI/AAAAAAAAGac/AE1RH3DsNq40mUT9EigXaAqwlnuu9_hTQCLcB/s320/13-6-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div>
+我們將「name指標」的資訊 (記憶體編號) 複製給「a指標」</div>
+<div>
+當程式執行到「name」的作用範圍外時，還是可以透過「a」來取得之前「name」使用的那一塊記憶體的資訊：Motivation</div>
+</td></tr>
+</tbody></table>
+<br />
+電腦並不會自動幫您釋放記憶體，意味著如果您沒有針對這件事做任何處理，程式在全部執行完畢之前，只會無可救藥地消耗越來越多的記憶體 (因為記憶體沒有被釋放就無法被重新利用)，這種情況我們稱之「記憶體泄漏 (memory leak)」<br />
+如果您的程式執行地夠久 (依據您程式的記憶體使用速率而定)，最終一定會將整台電腦的記憶體消耗殆盡<br />
+<div>
+這會是一個很大很大的問題，如果您的作業系統沒有特別去偵測這種情況 (偵測這種東西是不容易的)，會有那麼一個時間點，螢幕畫面突然從此停止不動了！<br />
+到時候，強制將電源線拔掉並重新開機將是您唯一的選項<br />
+<br />
+如何避免這種問題呢？</div>
+<div>
+首先，您必須學會怎麼手動「釋放」您的程式先前跟電腦要的heap記憶體<br />
+方式如下 (以本頁範例中的「name」為例)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #0000dd;">delete</span><span style="color: green;">[</span><span style="color: green;">]</span> name<span style="color: teal;">;</span></pre>
+<br />
+就這麼一行，小動作可以解決大問題！</div>
+<div>
+因此，程式碼應該要這樣寫：</div>
+<div>
+<br /></div>
+<div>
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> <span style="color: #000040;">*</span>name<span style="color: navy;">=</span><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">10000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">delete</span><span style="color: green;">[</span><span style="color: green;">]</span> name<span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+</div>
+<div>
+<br /></div>
+<div>
+什麼，您說想看看加不加delete的差異？<br />
+沒問題！</div>
+<div>
+<br /></div>
+<div>
+這裡提供一個例子：</div>
+<div>
+<br /></div>
+<div>
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;</span><span style="color: #0000dd;">100</span><span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">char</span> <span style="color: #000040;">*</span>name<span style="color: navy;">=</span><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">500000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'M'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'o'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'t'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">3</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'i'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">4</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'v'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">5</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'a'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">6</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'t'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">7</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'i'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">8</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'o'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">9</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'n'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">10</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: teal;">;</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"i = %d, name = %s<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: #0000dd;">delete</span><span style="color: green;">[</span><span style="color: green;">]</span> name<span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+</div>
+<div>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-qBoZgdQwgJo/V9pUnOIWBII/AAAAAAAAGa8/4ocdHJRt-e812qd07gi9cCPTdONU30tqwCLcB/s1600/13-6-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="184" src="https://2.bp.blogspot.com/-qBoZgdQwgJo/V9pUnOIWBII/AAAAAAAAGa8/4ocdHJRt-e812qd07gi9cCPTdONU30tqwCLcB/s320/13-6-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">程式順利執行完畢了</td></tr>
+</tbody></table>
+<br /></div>
+<div>
+可以看到，程式順利地執行完畢了！</div>
+<div>
+現在，請將有delete的那一行程式碼移除，再執行一次程式看看吧～</div>
+<div>
+<br /></div>
+<div>
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;</span><span style="color: #0000dd;">100</span><span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">char</span> <span style="color: #000040;">*</span>name<span style="color: navy;">=</span><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">500000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'M'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'o'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'t'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">3</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'i'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">4</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'v'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">5</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'a'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">6</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'t'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">7</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'i'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">8</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'o'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">9</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'n'</span><span style="color: teal;">;</span>
+        name<span style="color: green;">[</span><span style="color: #0000dd;">10</span><span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: teal;">;</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"i = %d, name = %s<span style="color: #000099; font-weight: bold;">\n</span>"</span>,i,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+</div>
+<div>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-Dh1vrewDVz8/V9pVT4NkJDI/AAAAAAAAGbA/03UGwEJzfLkMwI2xX3b4Q2DMFoejn4A-gCLcB/s1600/13-6-7.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="199" src="https://1.bp.blogspot.com/-Dh1vrewDVz8/V9pVT4NkJDI/AAAAAAAAGbA/03UGwEJzfLkMwI2xX3b4Q2DMFoejn4A-gCLcB/s320/13-6-7.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">這次很幸運，程式被強制終止了XD</td></tr>
+</tbody></table>
+<br /></div>
+<div>
+祝您一路好走，就不送囉～XD</div>
+<div>
+<br /></div>
+<div>
+對了，請記得先把重要資料存檔！！！</div>
+<div>
+<br /></div>
+<div>
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-7.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span></div>

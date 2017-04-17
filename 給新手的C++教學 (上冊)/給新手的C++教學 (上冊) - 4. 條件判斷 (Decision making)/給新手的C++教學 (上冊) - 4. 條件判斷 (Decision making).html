@@ -1,0 +1,149 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+利用前三章提到的知識，我們已經可以寫出自己的計算機了！<br />
+但是，其實我們的程式還可以變得更強！<br />
+在本章，我們將賦予程式「判斷、決策」的能力，讓程式也可以像人一樣思考！<br />
+<br />
+先來講個簡單的例子：<br />
+輸入一個數字，如果這個數字是2的話輸出「Yes」，不是的話輸出「No」<br />
+<br />
+這裡請出我們的新朋友，「if (如果)」<br />
+用法如下：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">if</span><span style="color: green;">(</span>條件<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    條件成立時要執行的程式碼
+<span style="color: green;">}</span></pre>
+<br />
+所以，程式碼可以這樣寫：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>n<span style="color: navy;">==</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>n<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+<span style="color: green;">}</span></pre>
+<br />
+趕快試試看吧！ :)<br />
+<br />
+你可能會發現另外兩個新朋友：「==」和「!=」<br />
+其中<br />
+「==」的作用是判斷左邊是不是「等於」右邊<br />
+「!=」的作用是判斷左邊是不是「不等於」右邊<br />
+類似的用法還有：<br />
+「&lt;」的作用是判斷左邊是不是「小於」右邊<br />
+「&gt;」的作用是判斷左邊是不是「大於」右邊<br />
+「&lt;=」的作用是判斷左邊是不是「小於或等於」右邊<br />
+「&gt;=」的作用是判斷左邊是不是「大於或等於」右邊<br />
+<br />
+你可能還會發現：『「==」成立』不就是『「!=」不成立』嗎？<br />
+只要其中一方成立，另一方就會不成立<br />
+反之亦然<br />
+只要其中一方不成立，另一方就會成立<br />
+<!--more--><br />
+<br />
+因此，「else (否則)」的概念就被引進來了<br />
+用法如下：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">if</span><span style="color: green;">(</span>條件<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    條件「成立」時要執行的程式碼
+<span style="color: green;">}</span>
+<span style="color: blue;">else</span>
+<span style="color: green;">{</span>
+    條件「不成立」時要執行的程式碼
+<span style="color: green;">}</span></pre>
+<br />
+這樣一來，「判斷n有沒有等於2」的程式碼就可以寫得更簡單了：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>n<span style="color: navy;">==</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Yes<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">else</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"No<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+<span style="color: green;">}</span></pre>
+<br />
+你現在可能覺得差不了多少，但是以後你應該就會發現<br />
+這樣的一點邏輯簡化，對於寫出正確無誤的程式碼非常有幫助<br />
+<br />
+再考考你<br />
+給你年分，請你判斷它是不是閏年？<br />
+<br />
+你可能會想：「那我就先看看它是不是4的倍數，如果不是4的倍數的話就不是閏年，如果是4的倍數的話再看看它是不是100的倍數，如果不是100的倍數的話就是閏年，如果是100的倍數的話再看看它是不是400的倍數，如果不是400的倍數的話就不是閏年，否則就是閏年」<br />
+<br />
+我們的程式也可以這樣思考！<br />
+對了，前面忘了說<br />
+其實除了「加減乘除」之外，C++還提供了另外一個運算子：「%」<br />
+就是算出餘數啦<br />
+例如以下這段程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">5</span>,b<span style="color: navy;">=</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: #000040;">%</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+程式會輸出「2」<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-J_kwsHHeRvM/VyWc-IQlmFI/AAAAAAAADMA/1Hfr9fNmyZEZirwSaupnvMQGSaprL7nygCLcB/s1600/4-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="181" src="https://1.bp.blogspot.com/-J_kwsHHeRvM/VyWc-IQlmFI/AAAAAAAADMA/1Hfr9fNmyZEZirwSaupnvMQGSaprL7nygCLcB/s320/4-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">「5%3」的程式輸出「2」了！</td></tr>
+</tbody></table>
+<br />
+因此，依據上面學到的知識，要判斷閏年，程式碼可以這樣寫：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> year<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>year<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>year<span style="color: #000040;">%</span><span style="color: purple;">4</span><span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"不是閏年<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">else</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>year<span style="color: #000040;">%</span><span style="color: purple;">100</span><span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"是閏年<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>year<span style="color: #000040;">%</span><span style="color: purple;">400</span><span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"不是閏年<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"是閏年<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+<span style="color: green;">}</span></pre>
+<br />
+很有趣吧！<br />
+想不想趕快來玩玩看呢？<br />
+例如：心理測驗 (XD?!)<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-5-loop.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

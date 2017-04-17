@@ -1,0 +1,199 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-5-loop.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+不知你有沒有想要實現過以下這件事，卻遇到阻礙呢？<br />
+輸入一個整數n，然後輸入n個數字<br />
+最後把這n個數字的順序顛倒，然後輸出<br />
+<br />
+例如：輸入「4 24 5 105 411」，輸出為「411 105 5 24 」(注意：每個數字後面都有空格，最後一個數字也一樣)<br />
+<br />
+你可能有想過要做類似以下的事情：<br />
+如果n是1就宣告 a，輸入 a，輸出 a&nbsp;(「宣告」是「定義變數」的專業說法)<br />
+如果n是2就宣告 a、b，輸入 a、b，輸出 b、a<br />
+如果n是3就宣告 a、b、c，輸入 a、b、c，輸出 c、b、a<br />
+如果n是4就宣告 a、b、c、d，輸入 a、b、c、d，輸出 d、c、b、a<br />
+......<br />
+然後你就會發現沒完沒了XD<br />
+<br />
+事實上，我們可以直接指定一個整數n，讓電腦一次幫我們宣告n個變數！<span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(並非任何情況都可行，見註7)</a></span><br />
+這就是「陣列 (Array)」的好用之處<br />
+<br />
+用法如下&nbsp;(假設你想宣告n個int變數、陣列的名稱取作「array_name」)：<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">int</span> array_name<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span></pre>
+<br />
+這樣一來電腦就幫你把n個變數命名為array_name[0]、array_name[1]、array_name[2]、......、array_name[n-1]了！<br />
+(心理偷偷的想：耶～小中大括號都用到了耶 \(^o^)/ )<br />
+<br />
+請注意，第1個變數是array_name[0] (而不是array_name[1])，第n個變數是array_name[n-1] (而不是array_name[n])<br />
+不知你在第一次看到本教學時，有沒有注意到有一章叫做「<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html">0. 目錄 (Catagories)</a>」<br />
+這就是暗示了<br />
+中括號 (「[」和「]」) 裡面的數字，我們叫做「索引值 (Index)」<br />
+有別於數學上常見的正整數系統<br />
+陣列的「索引值」是從「0」開始的<br />
+也就是說：<br />
+索引值為0時代表第1個變數<br />
+索引值為1時代表第2個變數<br />
+<div>
+索引值為2時代表第3個變數</div>
+索引值為3時代表第4個變數<br />
+<div>
+索引值為4時代表第5個變數</div>
+<div>
+......</div>
+<div>
+以此類推</div>
+<div>
+至於原因，之後的進階章節會講到 (建議你不要現在就直接看它)，目前你只要記住有這個現象即可<br />
+<div>
+<br />
+因此<br />
+「輸入一個整數n，然後輸入n個數字<br />
+最後把這n個數字的順序顛倒，然後輸出」<br />
+這個問題就迎刃而解了：<br />
+<br />
+<table border="0">
+<tbody>
+<tr><td><pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span>n<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&gt;=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+</td>
+<td><pre class="cpp" style="font-family: monospace;">　
+
+←「i」要從0開始跑，因此先把i設定成0
+←「i」會從0跑到n-1
+
+    (這樣會讓程式照順序輸入a[0]～a[n-1])
+
+
+←「i」要從n-1開始跑，因此先把i設定成n-1
+←「i」會從n-1往回跑到0
+
+    (這樣會讓程式倒序輸出a[n-1]～a[0])
+</pre>
+</td></tr>
+</tbody></table>
+<br />
+那個「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>」可加可不加，因為題目沒有強制要求輸出格式<br />
+但這不代表「加」和「不加」的效果相同，建議讀者測試看看兩種情況的差異<br />
+<br />
+好了，陣列講完了(?)<br />
+<!--more--><br />
+<br />
+現在，給你一個練習題：<br />
+給你n個介於1和10的整數，請你統計每個數字的數量<br />
+輸入：一個整數n和n個介於1到10之間的整數<br />
+輸出：10個數字，第i個數字代表數字i的數量<br />
+例如：輸入「15&nbsp;5 6 6 3 7 4 1 7 6 2 8 5 1 10 4」，要輸出「2 1 1 2 2&nbsp;3 2 1 0 1」<br />
+<br />
+警告：有個意外簡單的方法<br />
+<br />
+提示：請善用陣列<br />
+<br />
+參考解答：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span><span style="color: #0000dd;">11</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">10</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> v<span style="color: teal;">;</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>v<span style="color: green;">)</span><span style="color: teal;">;</span>
+        a<span style="color: green;">[</span>v<span style="color: green;">]</span><span style="color: navy;">=</span>a<span style="color: green;">[</span>v<span style="color: green;">]</span><span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">10</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+欲罷不能？<br />
+還是想雪恥？<br />
+再給你一個挑戰題：<br />
+給你n個整數，請你把這n個整數由小到大輸出<br />
+輸入：一個整數n和n個整數<br />
+輸出：由小到大的n個整數<br />
+例如：輸入「5 24 5 105 411 87」，要輸出「5 24 87 105 411 」<br />
+<br />
+警告：挑戰性極高，考驗邏輯能力，做得出來堪稱天才 (?)<br />
+<br />
+提示：每次找出最小的數字，然後把這個最小的數字拿掉<br />
+<br />
+參考解答：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> a<span style="color: green;">[</span>n<span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> j<span style="color: navy;">=</span>i,minimum<span style="color: navy;">=</span>i<span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>j<span style="color: navy;">&lt;</span>n<span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>a<span style="color: green;">[</span>j<span style="color: green;">]</span><span style="color: navy;">&lt;</span>a<span style="color: green;">[</span>minimum<span style="color: green;">]</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                minimum<span style="color: navy;">=</span>j<span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            j<span style="color: navy;">=</span>j<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d "</span>,a<span style="color: green;">[</span>minimum<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        a<span style="color: green;">[</span>minimum<span style="color: green;">]</span><span style="color: navy;">=</span>a<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+感覺已經可以完全掌控電腦了，對吧？<br />
+的確如此喔～ ^_^<br />
+<br />
+接下來的章節教的東西，利用這6章所學也可以弄出來<br />
+只是，它們可以把一切變的更簡單、更好寫、更好想！<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-7-simplify-code.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：uzk、栢淵<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>
+
+</div>
+</div>

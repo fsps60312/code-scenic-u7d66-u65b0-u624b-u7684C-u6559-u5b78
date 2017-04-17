@@ -1,0 +1,199 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-2.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+請注意，這裡只介紹小莫用過的型別，但應該已經非常非常夠用了！<br />
+為了方便介紹，小莫將其分為兩大類：「浮點數」和「整數」<span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(註13)</a></span><br />
+<ol>
+<li>浮點數</li>
+<ul>
+<li>特色：支援小數、有微小誤差、數字範圍大</li>
+<li>溢位會怎樣：超過最大值會變成inf，超過最小值會變成-inf</li>
+<li>除以0會怎樣：正數除以0會變成inf、負數除以0會變成-inf，0除以0會變成nan (「not a number」的縮寫)</li>
+<li>
+型別有哪些：
+<table border="1">
+<tbody>
+<tr><td align="center">名稱</td><td align="center">float</td><td align="center">double</td><td align="center">long double</td><td align="center"><i>__float128</i></td></tr>
+<tr><td align="center">占用記憶體</td><td align="center">32位元</td><td align="center">64位元</td><td align="center">96位元</td><td align="center"><i>128位元</i></td></tr>
+<tr><td align="center">誤差和數字範圍</td><td align="center" colspan="4">占用記憶體越大，誤差越小、數字範圍越大</td></tr>
+<tr><td align="center">輸入(scanf)</td><td align="center">%f</td><td align="center">%lf</td><td align="center">不支援</td><td align="center"><i>不支援</i></td></tr>
+<tr><td align="center">輸出(printf)</td><td align="center">%f</td><td align="center">%f</td><td align="center">不支援</td><td align="center"><i>不支援</i></td></tr>
+</tbody>
+</table>
+<i>斜體標示 (針對__float128)</i>：如果要使用此型別，請先參考<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-2.html">前一頁</a>並設定好編譯參數，以使用C++11的功能
+</li>
+</ul>
+<li>整數</li>
+<ul>
+<li>特色：不支援小數、沒有誤差、數字範圍小</li>
+<li>溢位會怎樣：超過最大值會變成最小值，超過最小值會變成最大值</li>
+<li>除以0會怎樣：會造成不可預知的錯誤，通常是程式出錯並停止運作</li>
+<li>
+型別有哪些：
+<table border="1">
+<tbody>
+<tr><td align="center">名稱</td><td align="center">bool</td><td align="center"><b>char</b></td><td align="center">short</td><td align="center">int</td><td align="center">long long</td><td align="center"><i>__int128</i></td></tr>
+<tr><td align="center">占用記憶體</td><td align="center">8位元</td><td align="center"><b>8位元</b></td><td align="center">16位元</td><td align="center">32位元</td><td align="center">64位元</td><td align="center"><i>128位元</i></td></tr>
+<tr><td align="center">數字範圍</td><td align="center">$0\sim 1$</td><td align="center" colspan="5">$(-2^{占用記憶體-1})\sim (2^{占用記憶體-1}-1)$</td></tr>
+<tr><td align="center">輸入(scanf)</td><td align="center">不支援</td><td align="center"><b>%c</b></td><td align="center">不支援</td><td align="center">%d</td><td align="center">%lld</td><td align="center"><i>不支援</i></td></tr>
+<tr><td align="center">輸入(scanf)</td><td align="center">不支援</td><td align="center"><b>%c</b></td><td align="center">不支援</td><td align="center">%d</td><td align="center">%lld</td><td align="center"><i>不支援</i></td></tr>
+</tbody></table>
+<b>粗體標示 (針對char)</b>：輸入輸出皆以字元的方式進行 (而不是數字)<br />
+<i>斜體標示 (針對__int128)</i>：如果要使用此型別，請先參考<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-2.html">前一頁</a>並設定好編譯參數，以使用C++11的功能
+</li>
+<li>另外，整數還可以用「unsigned」修飾而有更多玩法！意者請Google搜尋「C++ unsigned 用法」
+</li>
+</ul>
+</ol>
+對於不支援輸入輸出的型別的其中一種處理方式 (以相加兩個「long double」為例)：<br />
+<!--more--><br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">double</span> a,b<span style="color: teal;">;</span>
+    <span style="color: blue;">long</span> <span style="color: blue;">double</span> c,d,e<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%lf%lf"</span>,<span style="color: #000040;">&amp;</span>a,<span style="color: #000040;">&amp;</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+    c<span style="color: navy;">=</span>a<span style="color: teal;">;</span>
+    d<span style="color: navy;">=</span>b<span style="color: teal;">;</span>
+    e<span style="color: navy;">=</span>c<span style="color: #000040;">+</span>d<span style="color: teal;">;</span>
+    <span style="color: blue;">double</span> f<span style="color: navy;">=</span><span style="color: green;">(</span><span style="color: blue;">double</span><span style="color: green;">)</span>e<span style="color: teal;">;</span><span style="color: #666666;">//請注意，「f」的誤差是「double」等級 (而不是「long double」等級)</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,f<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+這種方式並不是最好的 (支援「long double」等級的加法運算，但不支援「long double」等級的輸入輸出)<br />
+如果要讓程式支援「long double」等級的輸入輸出，請自行處理每個位數的輸入輸出，但這會複雜許多 (真的複雜許多，別怪我沒警告你)，方法如下 (不想看的話可以直接跳過)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">bool</span> IsDigit<span style="color: green;">(</span><span style="color: blue;">char</span> c<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: red;">'0'</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: red;">'9'</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">long</span> <span style="color: blue;">double</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">char</span> c<span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>c<span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #000040;">!</span>IsDigit<span style="color: green;">(</span>c<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: blue;">break</span><span style="color: teal;">;</span>
+            a<span style="color: navy;">=</span>a<span style="color: #000040;">*</span><span style="color: #0000dd;">10</span><span style="color: #000040;">+</span><span style="color: green;">(</span>c<span style="color: #000040;">-</span><span style="color: red;">'0'</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>c<span style="color: navy;">==</span><span style="color: red;">'.'</span><span style="color: green;">)</span><span style="color: #666666;">//如果有小數點 </span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">long</span> <span style="color: blue;">double</span> digit<span style="color: navy;">=</span><span style="color: purple;">0.1</span><span style="color: teal;">;</span>
+            <span style="color: blue;">while</span><span style="color: green;">(</span>c<span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>c<span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #000040;">!</span>IsDigit<span style="color: green;">(</span>c<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: blue;">break</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">+</span>digit<span style="color: #000040;">*</span><span style="color: green;">(</span>c<span style="color: #000040;">-</span><span style="color: red;">'0'</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                digit<span style="color: navy;">=</span>digit<span style="color: #000040;">/</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> count<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>a<span style="color: #000040;">/</span><span style="color: #0000dd;">10</span><span style="color: navy;">&gt;=</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            a<span style="color: navy;">=</span>a<span style="color: #000040;">/</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+            count<span style="color: navy;">=</span>count<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">while</span><span style="color: green;">(</span>count<span style="color: navy;">&gt;=</span><span style="color: #000040;">-</span><span style="color: #0000dd;">50</span><span style="color: green;">)</span><span style="color: #666666;">//假設要輸出小數點以下50位數</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">0</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span><span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"0"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">1</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">2</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"1"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">2</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">3</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"2"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">3</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">4</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"3"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">3</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">4</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">5</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"4"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">4</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">5</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">6</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"5"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">5</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">6</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">7</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"6"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">6</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">7</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">8</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"7"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">7</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">8</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">9</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"8"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">8</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span> <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">9</span><span style="color: navy;">&lt;=</span>a<span style="color: #000040;">&amp;&amp;</span>a<span style="color: navy;">&lt;</span><span style="color: #0000dd;">10</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"9"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                a<span style="color: navy;">=</span>a<span style="color: #000040;">-</span><span style="color: #0000dd;">9</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">else</span>
+            <span style="color: green;">{</span>
+                <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"錯誤!!!不該發生這種情況的!!!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>count<span style="color: navy;">==</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span><span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"."</span><span style="color: green;">)</span><span style="color: teal;">;</span><span style="color: #666666;">//剛剛輸出的是個位數字，是時候接小數點了 </span>
+            count<span style="color: navy;">=</span>count<span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+            a<span style="color: navy;">=</span>a<span style="color: #000040;">*</span><span style="color: #0000dd;">10</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span> 
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+這樣真的可以支援輸入輸出「long double」等級的位數嗎？<br />
+把程式碼中兩個「long double」都改成「double」，輸入「123456789.0123456789」看看<br />
+你會發現「double」和「long double」之間的差異<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-AeBR6Vcnyo0/V8hukVnBQcI/AAAAAAAAGMI/fh9vifIjLHYbHQZDte8xPiBy4HZtpvlJgCLcB/s1600/13-3-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="150" src="https://1.bp.blogspot.com/-AeBR6Vcnyo0/V8hukVnBQcI/AAAAAAAAGMI/fh9vifIjLHYbHQZDte8xPiBy4HZtpvlJgCLcB/s320/13-3-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">「double」版本</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-rRFYvERFaUU/V8huaXInj4I/AAAAAAAAGME/LsLGTiyp50YOaFfVs1rPU840Q0u9_h26gCLcB/s1600/13-3-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="155" src="https://2.bp.blogspot.com/-rRFYvERFaUU/V8huaXInj4I/AAAAAAAAGME/LsLGTiyp50YOaFfVs1rPU840Q0u9_h26gCLcB/s320/13-3-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">「long double」版本</td></tr>
+</tbody></table>
+為甚麼變成Windows 10畫面了呢？因為之前用的是高雄中學電腦教室的電腦啦XDD (現在用的是家裡的電腦)<br />
+<br />
+<b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br />
+如果需要儲存更多位數怎麼辦？<br />
+抱歉，目前的方法只有自行模擬直式運算 (其中一種方法是用很大的陣列儲存一個一個的位數，這種方式比上面那個恐怖的東西複雜10倍以上)<br />
+或者，請祈禱更新版的C++ (C++17快出來了) 會提供大數型別<br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script><br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-4.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

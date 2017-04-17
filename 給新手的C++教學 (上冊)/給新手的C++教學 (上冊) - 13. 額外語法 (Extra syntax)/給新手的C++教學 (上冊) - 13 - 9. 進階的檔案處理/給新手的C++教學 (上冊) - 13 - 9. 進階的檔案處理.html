@@ -1,0 +1,165 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-8.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+讀取檔案「in.txt」並同時輸出其內容：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">FILE</span> <span style="color: #000040;">*</span>file_reader<span style="color: navy;">=</span><span style="color: #0000dd;">fopen</span><span style="color: green;">(</span><span style="color: red;">"in.txt"</span>,<span style="color: red;">"r"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">char</span> c<span style="color: teal;">;</span><span style="color: #0000dd;">fscanf</span><span style="color: green;">(</span>file_reader,<span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>c<span style="color: green;">)</span><span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,c<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-sDWZjjXk4_c/V-Ok1qDpQEI/AAAAAAAAGgo/JtCZIa3lq_UhYxHbBWzqRXWva6skm5S-ACLcB/s1600/13-9-1.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="176" src="https://2.bp.blogspot.com/-sDWZjjXk4_c/V-Ok1qDpQEI/AAAAAAAAGgo/JtCZIa3lq_UhYxHbBWzqRXWva6skm5S-ACLcB/s320/13-9-1.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸出結果：可以發現黑色視窗上輸出的內容就是「in.txt」的內容</td></tr>
+</tbody></table>
+<br />
+輸入3個檔名，依據輸入的檔名讀取那3個檔案並同時輸出其內容：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">void</span> ReadFile<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> file_name<span style="color: green;">[</span><span style="color: #0000dd;">1000</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,file_name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">FILE</span> <span style="color: #000040;">*</span>file_reader<span style="color: navy;">=</span><span style="color: #0000dd;">fopen</span><span style="color: green;">(</span>file_name,<span style="color: red;">"r"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">char</span> c<span style="color: teal;">;</span><span style="color: #0000dd;">fscanf</span><span style="color: green;">(</span>file_reader,<span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>c<span style="color: green;">)</span><span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,c<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Finish reading %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,file_name<span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    ReadFile<span style="color: green;">(</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    ReadFile<span style="color: green;">(</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    ReadFile<span style="color: green;">(</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-MbZWvs5Yluo/V-Oud-l3lII/AAAAAAAAGhI/5WrXlpUpVjYC3redAwA6L7-9DIju7JRGACLcB/s1600/13-9-5.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="182" src="https://3.bp.blogspot.com/-MbZWvs5Yluo/V-Oud-l3lII/AAAAAAAAGhI/5WrXlpUpVjYC3redAwA6L7-9DIju7JRGACLcB/s320/13-9-5.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">可以隨時決定要從哪一個檔案讀取資料 (fscanf) 或者直接從黑色視窗取得輸入 (scanf)</td></tr>
+</tbody></table>
+<br />
+將「1+2+3+......+100」的完整計算過程寫入到檔案「out.txt」：<br />
+<br />
+<!--more--><br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">FILE</span> <span style="color: #000040;">*</span>file_writer<span style="color: navy;">=</span><span style="color: #0000dd;">fopen</span><span style="color: green;">(</span><span style="color: red;">"out.txt"</span>,<span style="color: red;">"w"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> ans<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">100</span><span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">fprintf</span><span style="color: green;">(</span>file_writer,<span style="color: red;">"%d+%d=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,ans,i,ans<span style="color: #000040;">+</span>i<span style="color: green;">)</span><span style="color: teal;">;</span>
+        ans<span style="color: navy;">=</span>ans<span style="color: #000040;">+</span>i<span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-T_Lvz3DGoIQ/V-oI9U20NlI/AAAAAAAAGhw/JPhDURYpPQkrn0ewwC22AiLZk9BBDbNoQCLcB/s1600/13-9-6.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="166" src="https://2.bp.blogspot.com/-T_Lvz3DGoIQ/V-oI9U20NlI/AAAAAAAAGhw/JPhDURYpPQkrn0ewwC22AiLZk9BBDbNoQCLcB/s320/13-9-6.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">計算過程這麼多，當然請程式來幫忙產生啊XD</td></tr>
+</tbody></table>
+<br />
+將「1+2+3+......+10000」的完整計算過程寫入到檔案「process.txt」，並將結果寫入到檔案「result.txt」且輸出到黑色視窗：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">FILE</span> <span style="color: #000040;">*</span>process_file<span style="color: navy;">=</span><span style="color: #0000dd;">fopen</span><span style="color: green;">(</span><span style="color: red;">"process.txt"</span>,<span style="color: red;">"w"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> ans<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">2</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">10000</span><span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">fprintf</span><span style="color: green;">(</span>process_file,<span style="color: red;">"%d+%d=%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,ans,i,ans<span style="color: #000040;">+</span>i<span style="color: green;">)</span><span style="color: teal;">;</span>
+        ans<span style="color: navy;">=</span>ans<span style="color: #000040;">+</span>i<span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">FILE</span> <span style="color: #000040;">*</span>result_file<span style="color: navy;">=</span><span style="color: #0000dd;">fopen</span><span style="color: green;">(</span><span style="color: red;">"result.txt"</span>,<span style="color: red;">"w"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">fprintf</span><span style="color: green;">(</span>result_file,<span style="color: red;">"The result is %d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,ans<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"The result is %d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,ans<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-yAhfC2aYeNg/V-oLiRWKPoI/AAAAAAAAGh8/U5hD8Jt97wchPPHAupPrWUT_1pS7dVM9wCLcB/s1600/13-9-7.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="168" src="https://3.bp.blogspot.com/-yAhfC2aYeNg/V-oLiRWKPoI/AAAAAAAAGh8/U5hD8Jt97wchPPHAupPrWUT_1pS7dVM9wCLcB/s320/13-9-7.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">計算過程太多了，不想輸出到黑色視窗，寫入檔案是另外一種選擇～<br />
+計算完成後會同步在黑色視窗和另外一個檔案裡面顯示計算結果</td></tr>
+</tbody></table>
+<br />
+當然，檔案處理還包刮「刪除、移動或重新命名」等操作<br />
+刪除「process.txt」後將「result.txt」重新命名為「result-renamed.txt」：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">remove</span><span style="color: green;">(</span><span style="color: red;">"process.txt"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">rename</span><span style="color: green;">(</span><span style="color: red;">"result.txt"</span>,<span style="color: red;">"result-renamed.txt"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-zgqUO3g15Mo/V-oN9yZ8PgI/AAAAAAAAGiI/zg-ABI7XHeYluQ4bdlH9DprEoPL30D7GwCLcB/s1600/13-9-8.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="170" src="https://3.bp.blogspot.com/-zgqUO3g15Mo/V-oN9yZ8PgI/AAAAAAAAGiI/zg-ABI7XHeYluQ4bdlH9DprEoPL30D7GwCLcB/s320/13-9-8.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">如果程式失控產生上千個檔案，可以自己再用程式把它們刪光光</td></tr>
+</tbody></table>
+<br />
+如果需要更進階的檔案管理功能 (例如遍歷整個資料夾下有哪些檔案或資料夾)，請自行google，因為小莫自己也還沒打算研究透徹XD<br />
+<br />
+但也別失望～<br />
+<br />
+以下提供小莫之前研究的結果，目前當作小工具給自己使用，這份程式碼的功能是「遞迴刪除所在資料夾內所有副檔名為『.exe』(應用程式) 的檔案」，所以請謹慎小心地使用 (或研究)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#undef UNICODE</span>
+<span style="color: #339900;">#include&lt;windows.h&gt;</span>
+<span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: #339900;">#include&lt;iostream&gt;</span>
+<span style="color: #339900;">#include&lt;string&gt;</span>
+<span style="color: blue;">using</span> <span style="color: blue;">namespace</span> std<span style="color: teal;">;</span>
+<span style="color: blue;">int</span> CNT<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: blue;">int</span> GetAllgpxFilepathFromfolder<span style="color: green;">(</span><span style="color: blue;">char</span><span style="color: #000040;">*</span> Path<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> szFind<span style="color: green;">[</span>MAX_PATH<span style="color: green;">]</span><span style="color: teal;">;</span>
+    WIN32_FIND_DATA FindFileData<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">strcpy</span><span style="color: green;">(</span>szFind,Path<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">strcat</span><span style="color: green;">(</span>szFind,<span style="color: red;">"<span style="color: #000099; font-weight: bold;">\\</span>*.*"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    HANDLE hFind<span style="color: navy;">=</span>FindFirstFile<span style="color: green;">(</span>szFind,<span style="color: #000040;">&amp;</span>FindFileData<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>INVALID_HANDLE_VALUE <span style="color: navy;">==</span> hFind<span style="color: green;">)</span><span style="color: blue;">return</span> <span style="color: #000040;">-</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: blue;">do</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>FindFileData.<span style="color: #007788;">dwFileAttributes</span> <span style="color: #000040;">&amp;</span> FILE_ATTRIBUTE_DIRECTORY<span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #0000dd;">strcmp</span><span style="color: green;">(</span>FindFileData.<span style="color: #007788;">cFileName</span>,<span style="color: red;">"."</span><span style="color: green;">)</span><span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span> <span style="color: #000040;">&amp;&amp;</span> <span style="color: #0000dd;">strcmp</span><span style="color: green;">(</span>FindFileData.<span style="color: #007788;">cFileName</span>, <span style="color: red;">".."</span><span style="color: green;">)</span><span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: green;">)</span>
+            <span style="color: green;">{</span>
+                <span style="color: blue;">char</span> szFile<span style="color: green;">[</span>MAX_PATH<span style="color: green;">]</span> <span style="color: navy;">=</span> <span style="color: green;">{</span><span style="color: #0000dd;">0</span><span style="color: green;">}</span><span style="color: teal;">;</span>
+                <span style="color: #0000dd;">strcpy</span><span style="color: green;">(</span>szFile,Path<span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: #0000dd;">strcat</span><span style="color: green;">(</span>szFile,<span style="color: red;">"<span style="color: #000099; font-weight: bold;">\\</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                <span style="color: #0000dd;">strcat</span><span style="color: green;">(</span>szFile,FindFileData.<span style="color: #007788;">cFileName</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+                GetAllgpxFilepathFromfolder<span style="color: green;">(</span>szFile<span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: green;">}</span>
+        <span style="color: green;">}</span>
+        <span style="color: blue;">else</span>
+        <span style="color: green;">{</span>
+            string name<span style="color: navy;">=</span>FindFileData.<span style="color: #007788;">cFileName</span><span style="color: teal;">;</span>
+            <span style="color: blue;">if</span><span style="color: green;">(</span>name.<span style="color: #007788;">size</span><span style="color: green;">(</span><span style="color: green;">)</span><span style="color: navy;">&lt;</span><span style="color: #0000dd;">4</span><span style="color: #000040;">||</span>name.<span style="color: #007788;">substr</span><span style="color: green;">(</span>name.<span style="color: #007788;">size</span><span style="color: green;">(</span><span style="color: green;">)</span><span style="color: #000040;">-</span><span style="color: #0000dd;">4</span><span style="color: green;">)</span><span style="color: #000040;">!</span><span style="color: navy;">=</span>string<span style="color: green;">(</span><span style="color: red;">".exe"</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: blue;">continue</span><span style="color: teal;">;</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d: "</span>,<span style="color: #000040;">++</span>CNT<span style="color: green;">)</span><span style="color: teal;">;</span>
+            name<span style="color: navy;">=</span>string<span style="color: green;">(</span>Path<span style="color: green;">)</span><span style="color: #000040;">+</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\\</span>"</span><span style="color: #000040;">+</span>name<span style="color: teal;">;</span>
+            <span style="color: #0000dd;">remove</span><span style="color: green;">(</span>name.<span style="color: #007788;">c_str</span><span style="color: green;">(</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%s<span style="color: #000099; font-weight: bold;">\n</span>"</span>,name.<span style="color: #007788;">c_str</span><span style="color: green;">(</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+    <span style="color: green;">}</span><span style="color: blue;">while</span><span style="color: green;">(</span>FindNextFile<span style="color: green;">(</span>hFind,<span style="color: #000040;">&amp;</span>FindFileData<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    FindClose<span style="color: green;">(</span>hFind<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    GetAllgpxFilepathFromfolder<span style="color: green;">(</span><span style="color: #0000dd;">new</span> <span style="color: blue;">char</span><span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: green;">{</span><span style="color: red;">'.'</span>,<span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">}</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">system</span><span style="color: green;">(</span><span style="color: red;">"pause"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/12/c-13-10.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

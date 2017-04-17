@@ -1,0 +1,323 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-10-scope.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+在<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-9-function.html">第九章</a>，我們學到了函式<br />
+函式真的好好用耶！<br />
+<br />
+咦？真的嗎？<br />
+現在，給你三個直線方程式<br />
+請你輸出這三條直線相交所形成的三角形的三個頂點座標 (也就是直線的三個交點的座標)<br />
+<br />
+輸入格式：有三行，第$i$行包含第$i$條直線的資訊：三個數字$a_i$、$b_i$、$c_i$，代表第$i$條直線的方程式$a_i x+b_i y=c_i$ (保證三條直線可以形成一個三角形)<br />
+輸出格式：有三行，第$i$行包含第$i$個頂點 (交點) 的座標資訊：兩個數字$x_i$、$y_i$，代表第$i$個頂點座標$(x_i,y_i)$ (請輸出小數，頂點順序隨意)<br />
+<br />
+提示：兩條直線$a_{1}x+b_{1}y=c_{1}$、$a_{2}x+b_{2}y=c_{2}$的交點求法：<br />
+<br />
+$\begin{cases}<br />
+&nbsp; &nbsp; &amp;a_{1}x+b_{1}y=c_{1}\\<br />
+&nbsp; &nbsp; &amp;a_{2}x+b_{2}y=c_{2}<br />
+\end{cases}\cdots\cdots ①$<br />
+<br />
+$①\Rightarrow<br />
+\begin{cases}<br />
+&nbsp; &nbsp; &amp;a_{1}a_{2}x+b_{1}a_{2}y=c_{1}a_{2}\cdots\cdots ②\\<br />
+&nbsp; &nbsp; &amp;a_{1}a_{2}x+a_{1}b_{2}y=a_{1}c_{2}\cdots\cdots ③<br />
+\end{cases}$<br />
+<br />
+<div>
+$②-③\Rightarrow (b_{1}a_{2}-a_{1}b_{2})y=c_{1}a_{2}-a_{1}c_{2}$<br />
+<br /></div>
+<div>
+$\Rightarrow y=\frac{c_{1}a_{2}-a_{1}c_{2}}{b_{1}a_{2}-a_{1}b_{2}}$</div>
+<div>
+<br /></div>
+<div>
+$①\Rightarrow<br />
+\begin{cases}<br />
+&nbsp; &nbsp; &amp;a_{1}b_{2}x+b_{1}b_{2}y=c_{1}b_{2}\cdots\cdots ④\\<br />
+&nbsp; &nbsp; &amp;b_{1}a_{2}x+b_{1}b_{2}y=b_{1}c_{2}\cdots\cdots ⑤<br />
+\end{cases}$<br />
+<br />
+<div>
+$④-⑤\Rightarrow (a_{1}b_{2}-b_{1}a_{2})x=c_{1}b_{2}-b_{1}c_{2}$<br />
+<br /></div>
+<div>
+$\Rightarrow x=\frac{c_{1}b_{2}-b_{1}c_{2}}{a_{1}b_{2}-b_{1}a_{2}}$</div>
+</div>
+<div>
+<br />
+p.s. 以上推導過程看不懂也沒關係<br />
+<br /></div>
+<div>
+$\therefore$兩線交點為$(\frac{c_{1}b_{2}-b_{1}c_{2}}{a_{1}b_{2}-b_{1}a_{2}},\frac{c_{1}a_{2}-a_{1}c_{2}}{b_{1}a_{2}-a_{1}b_{2}})$</div>
+<div>
+<br /></div>
+<div>
+啊不就三條直線兩兩求交點就好？<br />
+懶得寫三遍同樣的東西，就弄成一個函式吧～<br />
+引數 (<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-9-function.html">甚麼是引數？</a>) 就傳遞兩條線的資訊，然後函式就可以進行計算，最後回傳交點的座標......<br />
+等等，怎麼回傳「一個座標」？<br />
+float、int、char，都不對呀<br />
+我們需要<b>一次</b>回傳「兩個float」<br />
+<!--more--><br />
+沒關係，我們退而求其次<br />
+寫出兩個函式，一個函式會回傳$x$座標，另一個函式會回傳$y$座標<br />
+注意，這題的計算需要小數，所以要用「float」哦～<br />
+範例程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">float</span> CalculateX<span style="color: green;">(</span><span style="color: blue;">float</span> a1,<span style="color: blue;">float</span> b1,<span style="color: blue;">float</span> c1,<span style="color: blue;">float</span> a2,<span style="color: blue;">float</span> b2,<span style="color: blue;">float</span> c2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>c1<span style="color: #000040;">*</span>b2<span style="color: #000040;">-</span>b1<span style="color: #000040;">*</span>c2<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>a1<span style="color: #000040;">*</span>b2<span style="color: #000040;">-</span>b1<span style="color: #000040;">*</span>a2<span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">float</span> CalculateY<span style="color: green;">(</span><span style="color: blue;">float</span> a1,<span style="color: blue;">float</span> b1,<span style="color: blue;">float</span> c1,<span style="color: blue;">float</span> a2,<span style="color: blue;">float</span> b2,<span style="color: blue;">float</span> c2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>c1<span style="color: #000040;">*</span>a2<span style="color: #000040;">-</span>a1<span style="color: #000040;">*</span>c2<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>b1<span style="color: #000040;">*</span>a2<span style="color: #000040;">-</span>a1<span style="color: #000040;">*</span>b2<span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a1,b1,c1,a2,b2,c2,a3,b3,c3<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%f%f%f%f%f%f%f%f%f"</span>,<span style="color: #000040;">&amp;</span>a1,<span style="color: #000040;">&amp;</span>b1,<span style="color: #000040;">&amp;</span>c1,<span style="color: #000040;">&amp;</span>a2,<span style="color: #000040;">&amp;</span>b2,<span style="color: #000040;">&amp;</span>c2,<span style="color: #000040;">&amp;</span>a3,<span style="color: #000040;">&amp;</span>b3,<span style="color: #000040;">&amp;</span>c3<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>a1,b1,c1,a2,b2,c2<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>a1,b1,c1,a2,b2,c2<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>a1,b1,c1,a3,b3,c3<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>a1,b1,c1,a3,b3,c3<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>a2,b2,c2,a3,b3,c3<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>a2,b2,c2,a3,b3,c3<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+你寫出來了嗎？來測試看看吧～<br />
+輸入 (表示三條直線為$1x+0y=0$、$0x+1y=0$、$1x+1y=1$)：<br />
+1 0 0<br />
+0 1 0<br />
+1 1 1<br />
+<br />
+輸出應該要是：<br />
+0.000000 0.000000<br />
+0.000000 1.000000<br />
+1.000000 0.000000<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<br />
+如果數字差一點沒關係，因為這是float本身的誤差造成的<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-LtSA4sYkxAU/V0WRdC1FlJI/AAAAAAAAD80/gBwaQZlc2qAKJSnwkujOPzRATo7r37magCLcB/s1600/11-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="320" src="https://2.bp.blogspot.com/-LtSA4sYkxAU/V0WRdC1FlJI/AAAAAAAAD80/gBwaQZlc2qAKJSnwkujOPzRATo7r37magCLcB/s320/11-4.PNG" width="303" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">三條直線$1x+0y=0$、$0x+1y=0$、$1x+1y=1$<span style="font-size: 12.8px;">會在</span><span style="font-size: 12.8px;">第一象限形成一個等腰直角三角形</span><br />
+<span style="font-size: 12.8px;">三角形會經過</span><span style="font-size: 12.8px;">原點、$x$軸、$y$軸</span></td></tr>
+</tbody></table>
+</div>
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-BFtb3RL4oK4/V0WMK7cGWuI/AAAAAAAAD8g/GLppQ_Hj-jYO31OCbrDOFVzQlzPUwS5oACLcB/s1600/11-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="159" src="https://3.bp.blogspot.com/-BFtb3RL4oK4/V0WMK7cGWuI/AAAAAAAAD8g/GLppQ_Hj-jYO31OCbrDOFVzQlzPUwS5oACLcB/s320/11-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">其中範例程式碼會把交點$(0,0)$算成$(0.000000,-0.000000)$<br />
+這是float的誤差造成的，讓接近 (或等於) 0的數字正負號不準確</td></tr>
+</tbody></table>
+對於輸入 (表示三條直線為$0x+1y=-0.5$、$2x+1y=1.5$、$-1.5x+1y=1$)：<br />
+0 1 -0.5<br />
+2 1 1.5<br />
+-1.5 1 1<br />
+<br />
+輸出應該要是：<br />
+1.000000 -0.500000<br />
+-1.000000 -0.500000<br />
+0.142857 1.214286<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-XPCmcI2qUEw/V0WXS8neiOI/AAAAAAAAD9E/hrEPqw1KZBQ94zajlDoCG-XDdqvTacVBgCLcB/s1600/11-6.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="292" src="https://4.bp.blogspot.com/-XPCmcI2qUEw/V0WXS8neiOI/AAAAAAAAD9E/hrEPqw1KZBQ94zajlDoCG-XDdqvTacVBgCLcB/s320/11-6.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div style="font-size: 12.8px;">
+三條直線$0x+1y=-0.5$、$2x+1y=1.5$、$-1.5x+1y=1$<span style="font-size: 12.8px;">會在</span><span style="font-size: 12.8px;">原點附近形成一個銳角三角形</span></div>
+<div style="font-size: 12.8px;">
+<span style="font-size: 12.8px;">三角形範圍遍及全部四大象限</span></div>
+<div style="font-size: 12.8px;">
+<span style="font-size: 12.8px;">注意有一個交點的座標為$(\frac{1}{7},\frac{17}{14})$，包含分數</span></div>
+</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-u_CsOVxDw24/V0WXorZ6VMI/AAAAAAAAD9I/hIb9iC1_z-gaJ4PSO8fT1mygOONEdM5xQCLcB/s1600/11-5.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="159" src="https://4.bp.blogspot.com/-u_CsOVxDw24/V0WXorZ6VMI/AAAAAAAAD9I/hIb9iC1_z-gaJ4PSO8fT1mygOONEdM5xQCLcB/s320/11-5.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div style="font-size: 12.8px;">
+其中範例程式碼會把交點$(\frac{1}{7},\frac{17}{14})$算成$(0.142857,1.214286)$<br />
+這是float的儲存和計算方式造成的，會用小數而不是分數的模式去計算</div>
+</td></tr>
+</tbody></table>
+<br />
+耶，過關！<br />
+但是，回想一下撰寫這份程式碼的過程<br />
+當你寫出「<span style="color: blue;">float</span> CalculateX<span style="color: green;">(</span><span style="color: blue;">float</span> a1,<span style="color: blue;">float</span> b1,<span style="color: blue;">float</span> c1,<span style="color: blue;">float</span> a2,<span style="color: blue;">float</span> b2,<span style="color: blue;">float</span> c2<span style="color: green;">)</span>」這行<br />
+或者「<span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>a1,b1,c1,a2,b2,c2<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>a1,b1,c1,a2,b2,c2<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>」這行的時候<br />
+會不會覺得有點煩呢？<br />
+引數也太多了吧！<br />
+<br />
+注意到這些引數是可以分組的<br />
+也就是<br />
+前三個引數 (「<span style="color: blue;">float</span>&nbsp;a1,<span style="color: blue;">float</span>&nbsp;b1,<span style="color: blue;">float</span>&nbsp;c1」以及「a1,b1,c1」) 屬於第1條直線的數據<br />
+後三個引數 (「<span style="color: blue;">float</span>&nbsp;a2,<span style="color: blue;">float</span>&nbsp;b2,<span style="color: blue;">float</span>&nbsp;c2」以及「a2,b2,c2」) 屬於第2條直線的數據<br />
+<br />
+那我們就將它們分組吧～<br />
+方法是<br />
+自己定義一個型別！(<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html">甚麼是型別？</a>)<br />
+我們稱這種自定義的型別為「結構 (Structure)」<br />
+定義方式如下<span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(此方法在C (而非C++) 失效，見註14)</a></span> (假設你想要將結構取名為「StructureName」，這個結構會將三個float變數a、b、c分成一組)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">struct</span> StructureName
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a,b,c<span style="color: teal;">;</span>
+<span style="color: green;">}</span><span style="color: teal;">;</span></pre>
+<br />
+「結構」定義完之後，就可以像宣告一個變數一樣，用這個「結構」宣告一個「物件 (Object)」來使用了！<br />
+宣告方式如下 (假設你想要將這個物件取名為「object_name」)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;">StructureName object_name<span style="color: teal;">;</span></pre>
+<br />
+這樣一來，假如你想要存取「『object_name』裡面的『a』變數」，可以直接寫出「object_name.a」<br />
+同理<br />
+「『object_name』裡面的『b』變數」就是「object_name.b」<br />
+「『object_name』裡面的『c』變數」就是「object_name.c」<br />
+<div>
+<br /></div>
+<div>
+所以，我們來修改一下這份程式碼吧～<br />
+我們來把類似意義的a、b、c都包進一個結構裡面，取名叫「Line」，三條線分別取名叫「L1」、「L2」、「L3」吧～</div>
+<div>
+修改前 (放在這裡供您方便比較)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">float</span> CalculateX<span style="color: green;">(</span><span style="color: blue;">float</span> a1,<span style="color: blue;">float</span> b1,<span style="color: blue;">float</span> c1,<span style="color: blue;">float</span> a2,<span style="color: blue;">float</span> b2,<span style="color: blue;">float</span> c2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>c1<span style="color: #000040;">*</span>b2<span style="color: #000040;">-</span>b1<span style="color: #000040;">*</span>c2<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>a1<span style="color: #000040;">*</span>b2<span style="color: #000040;">-</span>b1<span style="color: #000040;">*</span>a2<span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">float</span> CalculateY<span style="color: green;">(</span><span style="color: blue;">float</span> a1,<span style="color: blue;">float</span> b1,<span style="color: blue;">float</span> c1,<span style="color: blue;">float</span> a2,<span style="color: blue;">float</span> b2,<span style="color: blue;">float</span> c2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>c1<span style="color: #000040;">*</span>a2<span style="color: #000040;">-</span>a1<span style="color: #000040;">*</span>c2<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>b1<span style="color: #000040;">*</span>a2<span style="color: #000040;">-</span>a1<span style="color: #000040;">*</span>b2<span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a1,b1,c1,a2,b2,c2,a3,b3,c3<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%f%f%f%f%f%f%f%f%f"</span>,<span style="color: #000040;">&amp;</span>a1,<span style="color: #000040;">&amp;</span>b1,<span style="color: #000040;">&amp;</span>c1,<span style="color: #000040;">&amp;</span>a2,<span style="color: #000040;">&amp;</span>b2,<span style="color: #000040;">&amp;</span>c2,<span style="color: #000040;">&amp;</span>a3,<span style="color: #000040;">&amp;</span>b3,<span style="color: #000040;">&amp;</span>c3<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>a1,b1,c1,a2,b2,c2<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>a1,b1,c1,a2,b2,c2<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>a1,b1,c1,a3,b3,c3<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>a1,b1,c1,a3,b3,c3<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>a2,b2,c2,a3,b3,c3<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>a2,b2,c2,a3,b3,c3<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+修改後：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">struct</span> Line
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a,b,c<span style="color: teal;">;</span>
+<span style="color: green;">}</span><span style="color: teal;">;</span>
+<span style="color: blue;">float</span> CalculateX<span style="color: green;">(</span>Line L1,Line L2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>L1.<span style="color: #007788;">c</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">b</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">b</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">c</span><span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>L1.<span style="color: #007788;">a</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">b</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">b</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">a</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">float</span> CalculateY<span style="color: green;">(</span>Line L1,Line L2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>L1.<span style="color: #007788;">c</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">a</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">a</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">c</span><span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>L1.<span style="color: #007788;">b</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">a</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">a</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">b</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    Line L1,L2,L3<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%f%f%f%f%f%f%f%f%f"</span>,<span style="color: #000040;">&amp;</span>L1.<span style="color: #007788;">a</span>,<span style="color: #000040;">&amp;</span>L1.<span style="color: #007788;">b</span>,<span style="color: #000040;">&amp;</span>L1.<span style="color: #007788;">c</span>,<span style="color: #000040;">&amp;</span>L2.<span style="color: #007788;">a</span>,<span style="color: #000040;">&amp;</span>L2.<span style="color: #007788;">b</span>,<span style="color: #000040;">&amp;</span>L2.<span style="color: #007788;">c</span>,<span style="color: #000040;">&amp;</span>L3.<span style="color: #007788;">a</span>,<span style="color: #000040;">&amp;</span>L3.<span style="color: #007788;">b</span>,<span style="color: #000040;">&amp;</span>L3.<span style="color: #007788;">c</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>L1,L2<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>L1,L2<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>L1,L3<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>L1,L3<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>L2,L3<span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>L2,L3<span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+趕快跟著寫一遍程式碼，體驗「結構」的精隨吧！<br />
+寫出來後，測試看看，確定寫法是正確的！<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-EBnNyTpniCc/V0WhvjEcyOI/AAAAAAAAD9g/VC9ycUZTjoYJZVhV4gFwhqUFgfUby1tuQCLcB/s1600/11-7.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="156" src="https://1.bp.blogspot.com/-EBnNyTpniCc/V0WhvjEcyOI/AAAAAAAAD9g/VC9ycUZTjoYJZVhV4gFwhqUFgfUby1tuQCLcB/s320/11-7.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入1，程式成功正確輸出三個座標！</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-gr1kEIZFsnE/V0Wh6XzxelI/AAAAAAAAD9k/0pi7pT_oypIjRExb_IsBjqXmBXEpN21AACLcB/s1600/11-8.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="156" src="https://4.bp.blogspot.com/-gr1kEIZFsnE/V0Wh6XzxelI/AAAAAAAAD9k/0pi7pT_oypIjRExb_IsBjqXmBXEpN21AACLcB/s320/11-8.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">對於輸入2，程式成功正確輸出三個座標！</td></tr>
+</tbody></table>
+<br />
+如果想挑戰更進階的寫法<br />
+把「<span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%f%f%f%f%f%f%f%f%f"</span>,<span style="color: #000040;">&amp;</span>L1.<span style="color: #007788;">a</span>,<span style="color: #000040;">&amp;</span>L1.<span style="color: #007788;">b</span>,<span style="color: #000040;">&amp;</span>L1.<span style="color: #007788;">c</span>,<span style="color: #000040;">&amp;</span>L2.<span style="color: #007788;">a</span>,<span style="color: #000040;">&amp;</span>L2.<span style="color: #007788;">b</span>,<span style="color: #000040;">&amp;</span>L2.<span style="color: #007788;">c</span>,<span style="color: #000040;">&amp;</span>L3.<span style="color: #007788;">a</span>,<span style="color: #000040;">&amp;</span>L3.<span style="color: #007788;">b</span>,<span style="color: #000040;">&amp;</span>L3.<span style="color: #007788;">c</span><span style="color: green;">)</span><span style="color: teal;">;</span>」這一行精簡掉<br />
+可以套用「陣列」和「迴圈」的概念哦～<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">struct</span> Line
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a,b,c<span style="color: teal;">;</span>
+<span style="color: green;">}</span><span style="color: teal;">;</span>
+<span style="color: blue;">float</span> CalculateX<span style="color: green;">(</span>Line L1,Line L2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>L1.<span style="color: #007788;">c</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">b</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">b</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">c</span><span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>L1.<span style="color: #007788;">a</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">b</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">b</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">a</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">float</span> CalculateY<span style="color: green;">(</span>Line L1,Line L2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">return</span> <span style="color: green;">(</span>L1.<span style="color: #007788;">c</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">a</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">a</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">c</span><span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>L1.<span style="color: #007788;">b</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">a</span><span style="color: #000040;">-</span>L1.<span style="color: #007788;">a</span><span style="color: #000040;">*</span>L2.<span style="color: #007788;">b</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    Line L<span style="color: green;">[</span><span style="color: #0000dd;">3</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>i<span style="color: navy;">&lt;</span><span style="color: #0000dd;">3</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%f%f%f"</span>,<span style="color: #000040;">&amp;</span>L<span style="color: green;">[</span>i<span style="color: green;">]</span>.<span style="color: #007788;">a</span>,<span style="color: #000040;">&amp;</span>L<span style="color: green;">[</span>i<span style="color: green;">]</span>.<span style="color: #007788;">b</span>,<span style="color: #000040;">&amp;</span>L<span style="color: green;">[</span>i<span style="color: green;">]</span>.<span style="color: #007788;">c</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>L<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span>,L<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>L<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span>,L<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>L<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span>,L<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>L<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span>,L<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,CalculateX<span style="color: green;">(</span>L<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span>,L<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: green;">)</span>,CalculateY<span style="color: green;">(</span>L<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span>,L<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+還記得本章最初提到的問題嗎？<br />
+我們需要<b>一次</b>回傳「兩個float」，也就是回傳一個「座標」<br />
+這也可以用結構來解決！<br />
+聰明的你如果想到了做法，趕快自己先寫出來再對答案吧！<br />
+如果還沒想到，沒關係，以下提供解答讓你可以更了解結構的性質！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">struct</span> Coordinate
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> x,y<span style="color: teal;">;</span>
+<span style="color: green;">}</span><span style="color: teal;">;</span>
+Coordinate Calculate<span style="color: green;">(</span><span style="color: blue;">float</span> a1,<span style="color: blue;">float</span> b1,<span style="color: blue;">float</span> c1,<span style="color: blue;">float</span> a2,<span style="color: blue;">float</span> b2,<span style="color: blue;">float</span> c2<span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    Coordinate answer<span style="color: teal;">;</span>
+    answer.<span style="color: #007788;">x</span><span style="color: navy;">=</span><span style="color: green;">(</span>c1<span style="color: #000040;">*</span>b2<span style="color: #000040;">-</span>b1<span style="color: #000040;">*</span>c2<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>a1<span style="color: #000040;">*</span>b2<span style="color: #000040;">-</span>b1<span style="color: #000040;">*</span>a2<span style="color: green;">)</span><span style="color: teal;">;</span>
+    answer.<span style="color: #007788;">y</span><span style="color: navy;">=</span><span style="color: green;">(</span>c1<span style="color: #000040;">*</span>a2<span style="color: #000040;">-</span>a1<span style="color: #000040;">*</span>c2<span style="color: green;">)</span><span style="color: #000040;">/</span><span style="color: green;">(</span>b1<span style="color: #000040;">*</span>a2<span style="color: #000040;">-</span>a1<span style="color: #000040;">*</span>b2<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> answer<span style="color: teal;">;</span>
+<span style="color: green;">}</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a1,b1,c1,a2,b2,c2,a3,b3,c3<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%f%f%f%f%f%f%f%f%f"</span>,<span style="color: #000040;">&amp;</span>a1,<span style="color: #000040;">&amp;</span>b1,<span style="color: #000040;">&amp;</span>c1,<span style="color: #000040;">&amp;</span>a2,<span style="color: #000040;">&amp;</span>b2,<span style="color: #000040;">&amp;</span>c2,<span style="color: #000040;">&amp;</span>a3,<span style="color: #000040;">&amp;</span>b3,<span style="color: #000040;">&amp;</span>c3<span style="color: green;">)</span><span style="color: teal;">;</span>
+    Coordinate answer<span style="color: teal;">;</span>
+    answer<span style="color: navy;">=</span>Calculate<span style="color: green;">(</span>a1,b1,c1,a2,b2,c2<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,answer.<span style="color: #007788;">x</span>,answer.<span style="color: #007788;">y</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    answer<span style="color: navy;">=</span>Calculate<span style="color: green;">(</span>a1,b1,c1,a3,b3,c3<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,answer.<span style="color: #007788;">x</span>,answer.<span style="color: #007788;">y</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    answer<span style="color: navy;">=</span>Calculate<span style="color: green;">(</span>a2,b2,c2,a3,b3,c3<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%f %f<span style="color: #000099; font-weight: bold;">\n</span>"</span>,answer.<span style="color: #007788;">x</span>,answer.<span style="color: #007788;">y</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+其實啊，我們只是讓我們的「Calculate函式」直接回傳一個型別為「Coordinate」(「Coordinate」是我們自己定義的結構) 的變數而已<br />
+<br />
+是不是很有趣呢？<br />
+其實啊<br />
+結構遠遠不止這種玩法，之後還會介紹更多有趣的功能！<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-12-pointer.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span></div>

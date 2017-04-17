@@ -1,0 +1,55 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-1.html"><span style="color: blue;">上一頁 (這是第一頁)</span></a><br />
+<br />
+如果有一天你想不開 (X) 去看了一年前寫的程式碼，很大的機會你是無法在短時間內就看懂的 (如果不相信的話可以實驗看看^_^)<br />
+真的嗎？<br />
+那就在寫程式的當下記錄這份程式碼在幹嘛的就好啦～<br />
+可是好麻煩喔，這樣有些想解釋更清楚的地方不就要再數數看在第幾行嗎？<br />
+例如以下程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello world!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+你可能會想 (用Microsoft Word或記事本之類的) 寫個說明存成另一個檔案之類的：<br />
+<br />
+這個程式會輸出「Hello world!\n」<br />
+第1行會引入標頭檔「cstdio」<br />
+第2行的「int」是主函式的型別<br />
+第2行的「main」是主函式的名字<br />
+第4行的「printf」是用來輸出的函式名字，兩個「"」裡面是要輸出的字串，所以這一行會讓程式輸出「Hello world!\n」<br />
+第5行是讓程式回傳0來正常結束<br />
+<br />
+但是這樣的說明不論修改或閱讀都很麻煩 (因為還要指定或找到第幾行)<br />
+而且說明檔和程式碼是分開的，很不好管理<br />
+這時，「註解」就很好用了，它可以讓你直接把說明寫在程式碼裡面<br />
+用法如下：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #666666;">/*灰色的字都是註解
+它們可以讓你輕易地看出這份程式碼在幹嘛
+例如這份程式碼會讓程式輸出「Hello world!\n」*/</span>
+<span style="color: #339900;">#include&lt;cstdio&gt;</span><span style="color: #666666;">//引入標頭檔「cstdio」</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span><span style="color: #666666;">//int是主函式的型別，main是主函式的名字</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello world!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: #666666;">;//輸出「Hello world!\n」</span>
+    <span style="color: #666666;">/*「printf」是用來輸出的函式名字
+      兩個「"」裡面是要輸出的字串*/</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span><span style="color: #666666;">//讓程式回傳0來正常結束</span>
+<span style="color: green;">}</span></pre>
+<br />
+這樣就可以很清楚的知道程式的每個地方在做甚麼事了！<br />
+當然，註解並不會對原本程式碼的功能產生任何影響，你想寫甚麼就寫甚麼、想寫多少就寫多少！<br />
+<br />
+甚麼，你說你還是覺得另外開檔案存說明比較好？<br />
+<!--more-->沒關係，我相信你到最後還是會回來用註解的 ;)<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-2.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

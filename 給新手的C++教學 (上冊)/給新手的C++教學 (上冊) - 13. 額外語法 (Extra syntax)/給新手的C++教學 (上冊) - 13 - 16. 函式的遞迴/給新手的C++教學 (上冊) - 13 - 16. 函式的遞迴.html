@@ -1,0 +1,1018 @@
+﻿<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/10/cpp-for-beginner-article-of-future.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+<span style="font-size: xx-small;"><b>註: 小莫使用的<a href="http://highlight.hohli.com/">程式碼上色網站</a>掛掉了，因此本頁的程式碼都沒有顏色，等<a href="http://highlight.hohli.com/">該網站</a>恢復之後會再進行程式碼上色的動作，暫時造成不便敬請見諒。若您發現<a href="http://highlight.hohli.com/">該網站</a>已經恢復運作，本頁程式碼卻還沒更新，也歡迎以各種方式提醒小莫哦~ ^_^</b></span><br />
+<br />
+遞迴？甚麼是遞迴呢？<br />
+其實數學也有遞迴哦～<br />
+不知道也沒關係，因為小莫高一學程式的時候也完全沒聽過「遞迴」這個字眼XD<br />
+反正就是個專有名詞嘛XD，概念其實不難～<br />
+<br />
+舉個例子，現在小莫創造一個函式$f$，當$n=1$時會回傳$1$，$n=2$時也會回傳$1$：<br />
+<br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">#include&lt;cstdio&gt;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">int f(int n)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">{</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; if(n==1||n==2) return 1;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; printf("無法處理這個n\n");</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; return -1;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">}</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">int main()</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">{</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; printf("f(1)=%d\n",f(1));</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; printf("f(2)=%d\n",f(2));</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; return 0;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">}</span><br />
+<br />
+那$n=3$呢？小莫想要讓它回傳「$f(1)+f(2)$」<br />
+甚麼意思？<br />
+$f(1)=1$，$f(2)=1$，所以$f(3)=f(1)+f(2)=1+1=2$啦<br />
+也就是當$n=3$時會回傳$2$，只是這個$2$是被計算出來的<br />
+<br />
+那$n=4$呢？小莫想要讓它回傳「$f(2)+f(3)$」<br />
+$f(2)=1$，$f(3)=2$，所以$f(4)=f(2)+f(3)=1+2=3$啦<br />
+也就是當$n=4$時會回傳$3$，只是這個$3$是被計算出來的<br />
+<br />
+那$n&gt;4$呢？相信您已經猜到了，只要$n&gt;2$，小莫想要讓它回傳的就是$f(n-2)+f(n-1)$！<br />
+<br />
+那$f$這個函式的程式碼要怎麼寫呢？不用怕，電腦學過C++，很聰明的，直接寫出來，看看電腦能不能看懂！<br />
+<!--more--><br />
+<br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">#include&lt;cstdio&gt;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">int f(int n)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">{</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; if(n==1||n==2) return 1;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; if(n&gt;2) return f(n-2)+f(n-1);</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; printf("無法處理這個n\n");</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; return -1;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">}</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">int main()</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">{</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; printf("f(1)=%d\n",f(1));</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; printf("f(2)=%d\n",f(2));</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; for(int i=3;i&lt;=10;i++) printf("f(%d)=%d\n",i,f(i));</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;&nbsp;&nbsp; return 0;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">}</span><br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-s41IUlk2EkA/WLfgqKQZ_JI/AAAAAAAAG-Y/EXsO6NVCTf05MHuj9R3YFxo5hZnLDxGvwCLcB/s1600/13-16-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="165" src="https://3.bp.blogspot.com/-s41IUlk2EkA/WLfgqKQZ_JI/AAAAAAAAG-Y/EXsO6NVCTf05MHuj9R3YFxo5hZnLDxGvwCLcB/s320/13-16-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">成功執行且結果符合預期！</td></tr>
+</tbody></table>
+<br />
+<br />
+哈哈，程式執行成功了耶～<br />
+驗證一下：<br />
+$f(3)=f(1)+f(2)=1+1=2$<br />
+$f(4)=f(2)+f(3)=1+2=3$<br />
+$f(5)=f(3)+f(4)=2+3=5$<br />
+$f(6)=f(4)+f(5)=3+5=8$<br />
+$f(7)=f(5)+f(6)=5+8=13$<br />
+$f(8)=f(6)+f(7)=8+13=21$<br />
+$f(9)=f(7)+f(8)=13+21=34$<br />
+$f(10)=f(8)+f(9)=21+34=55$<br />
+耶～電腦果然沒讓我們失望！<br />
+<br />
+這就是傳說中的遞迴函式<br />
+咦？所以哪裡是遞迴呀？<br />
+注意到，在$f$這個函式內，我們呼叫了$f$ (<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-9-function.html">甚麼是呼叫？</a>)<br />
+咦？好像哪裡怪怪的，怎麼$f$都還沒執行完就想要再執行$f$呢？<br />
+這就是初學者們對遞迴函式常常百思不解的原因<br />
+廢話不多說，用動畫解釋最清楚！<br />
+<br />
+<div id="animation2">
+Animation
+</div>
+<script type="text/javascript">
+    (function () {
+        let transitionTime = 1.0;
+        let basic = document.getElementById("animation2");
+        let basic_heights = [0];
+        function basicHeightNow() { return basic_heights[basic_heights.length - 1]; }
+        function addBasicHeight(h) {
+            h += basicHeightNow();
+            basic_heights.push(h);
+            basic.style.height = h.toString() + "px";
+        }
+        function popBasicHeight()
+        {
+            basic_heights.pop();
+            basic.style.height = basicHeightNow().toString() + "px";
+        }
+        addBasicHeight(30);
+        basic.style.position = "relative";
+        basic.style.display="block";
+        {
+            let s = document.createElement("div");
+            //let nr = newRecursion(1);
+            //basic.appendChild(nr);
+            //nr.style.width = nr.defaultWidth().toString()+"px";
+            //nr.style.height = nr.defaultHeight().toString()+"px";
+            let b1 = newElement("b1", "button");
+            {
+                b1.style.top = "0px";
+                b1.style.left = "0px";
+                b1.style.width = "150px";
+                b1.style.height = "30px";
+                b1.style.fontSize = "20px";
+                b1.style.fontFamily = "微軟正黑體";
+                b1.innerHTML = "啟動動畫";
+                basic.appendChild(b1);
+            };
+            let b2 = newElement("b2", "button");
+            {
+                b2.style.top = "0px";
+                b2.style.left = "150px";
+                b2.style.width = "150px";
+                b2.style.height = "30px";
+                b2.style.fontSize = "20px";
+                b2.style.fontFamily = "微軟正黑體";
+                b2.innerHTML = "關閉動畫";
+                b2.disabled = true;
+                basic.appendChild(b2);
+            };
+            s.style.top = "0px";
+            let b1Click = function (event) {
+                let n;
+                {
+                    while (true) {
+                        let a;
+                        a = prompt("請輸入v的數值", "3");
+                        if (a === null) return;
+                        if (isNaN(a)) {
+                            alert("請輸入數字");
+                        }
+                        else {
+                            n = parseInt(a);
+                            if (n < 1) alert(/*n要大於等於1，不能是負數或0哦～*/"n\u8981\u5927\u65bc\u7b49\u65bc1\uff0c\u4e0d\u80fd\u662f\u8ca0\u6578\u62160\u54e6\uff5e");
+                            else if (n > 10) {
+                                if (confirm(/*您確定要使用這麼大的n嗎？後果請自行負責XD*/"\u60a8\u78ba\u5b9a\u8981\u4f7f\u7528\u9019\u9ebc\u5927\u7684n\u55ce\uff1f\u5f8c\u679c\u8acb\u81ea\u884c\u8ca0\u8cacXD")) break;
+                            }
+                            else break;
+                        }
+                    }
+                }
+                b1.disabled = true;
+                s = newPanel(n);
+                //console.log(s.id);
+                s.style.top = "0px";
+                basic.appendChild(s);
+                window.requestAnimationFrame(function () {
+                    s.style.width = s.defaultWidth().toString()+"px";
+                    s.style.height = s.defaultHeight().toString()+"px";
+                    s.style.top = basicHeightNow().toString() + "px";
+                    s.style.opacity = "1.0";
+                    addBasicHeight(s.defaultHeight());
+                    b2.disabled = false;
+                });
+            }
+            let b2Click = function (event) {
+                //console.log("a");
+                //console.log(basic.lastElementChild);
+                //console.log(basic.getElementsByClassName("stage"));
+                //console.log(basic.children.length);
+                //console.log(basic);
+                b2.disabled = true;
+                for (let i = 0; i < basic.children.length; i++) {
+                    let c = basic.children[i];
+                    //console.log(c);
+                    if (c.id == "stage") {
+                        console.log(c);
+                        c.style.width = "0px";
+                        c.style.height = c.defaultHeight().toString()+"px";
+                        c.style.top = "0px";
+                        c.style.opacity = "0.0";
+                        setTimeout(function () {
+                            c.outerHTML = "";
+                        }, transitionTime * 1000.0);
+                    }
+                }
+                setTimeout(function () {
+                    b1.disabled = false;
+                    while (basic_heights.length > 2)
+                    {
+                        popBasicHeight();
+                    }
+                }, transitionTime * 1000.0);
+            }
+            b1.addEventListener("click", b1Click, false);
+            b2.addEventListener("click", b2Click, false);
+        }
+        function newRecursion(n,previousN) {
+            let code =
+            [
+             "2.  int f(int n)",
+             "3.  {",
+             "4.      if(n==1||n==2) return 1;",
+             "5.      if(n>2) return f(n-2)+f(n-1);",
+             "6.      printf(\"無法處理這個n\\n\");",
+             "7.      return -1;",
+             "8.  }"
+            ];
+            /*empty: normal, [1,"v"]: input variable "v"'s value*/
+            let instructions =
+            [
+                [[1, 0], [], /*請按「>」開始模擬執行新一層的函式*/"\u8acb\u6309\u300c>\u300d\u958b\u59cb\u6a21\u64ec\u57f7\u884c\u65b0\u4e00\u5c64\u7684\u51fd\u5f0f"],
+             [[1, 1], [["n", true, n.toString()]],/*宣告變數n=(之前的n)-${previousN-n}=${n}，注意之前的n和這裡的n是不互相影響的，可以看到這裡的n是${n}，但↑上面那層↑裡面的n還是維持數值${previousN}*/"\u5ba3\u544a\u8b8a\u6578n=(\u4e4b\u524d\u7684n)-"+(previousN-n).toString()+"="+n.toString()+"\uff0c\u6ce8\u610f\u4e4b\u524d\u7684n\u548c\u9019\u88e1\u7684n\u662f\u4e0d\u4e92\u76f8\u5f71\u97ff\u7684\uff0c\u53ef\u4ee5\u770b\u5230\u9019\u88e1\u7684n\u662f"+n.toString()+"\uff0c\u4f46\u2191\u4e0a\u9762\u90a3\u5c64\u2191\u88e1\u9762\u7684n\u9084\u662f\u7dad\u6301\u6578\u503c"+previousN.toString()]
+            ];
+            if (n == 1 || n == 2) {
+                instructions = instructions.concat(
+                    [
+                     [[3, 1], [], /*n==${n}成立，回傳1*/"n==" + n.toString() + "\u6210\u7acb\uff0c\u56de\u50b31"]
+                    ]);
+            }
+            else if (n > 2) {
+                instructions = instructions.concat(
+                    [
+                     [[3, 1], [], /*n==1和n==2都不成立*/"n==1\u548cn==2\u90fd\u4e0d\u6210\u7acb"],
+                     [[4, 1], [["f(n-2)", true, "?"], ["f(n-1)", true, "?"]], /*n>2成立，回傳f(n-2)+f(n-1)，可是得先把f(n-2)和f(n-1)的數值算出來*/"n>2\u6210\u7acb\uff0c\u56de\u50b3f(n-2)+f(n-1)\uff0c\u53ef\u662f\u5f97\u5148\u628af(n-2)\u548cf(n-1)\u7684\u6578\u503c\u7b97\u51fa\u4f86", setRecursionPanel(n - 2,n)],
+                     [[4, 1], [["f(n-2)", true, f(n - 2).toString()]], /*欲回傳f(n-2)+f(n-1)，現在已經算出f(n-2)=${f(n-2)}，還得算出f(n-1)的數值才能知道要回傳的「f(n-2)+f(n-1)」的數值*/"\u6b32\u56de\u50b3f(n-2)+f(n-1)\uff0c\u73fe\u5728\u5df2\u7d93\u7b97\u51faf(n-2)=" + f(n - 2).toString() + "\uff0c\u9084\u5f97\u7b97\u51faf(n-1)\u7684\u6578\u503c\u624d\u80fd\u77e5\u9053\u8981\u56de\u50b3\u7684\u300cf(n-2)+f(n-1)\u300d\u7684\u6578\u503c", setRecursionPanel(n - 1,n)],
+                     [[4, 1], [["f(n-1)", true, f(n - 1).toString()]], /*算出f(n-2)+f(n-1)=${f(n-2)}+${f(n-1)}=${f(n-2)+f(n-1)}，回傳${f(n-2)+f(n-1)}*/"\u7b97\u51faf(n-2)+f(n-1)=" + f(n - 2).toString() + "+" + f(n - 1).toString() + "=" + f(n).toString() + "\uff0c\u56de\u50b3" + f(n).toString()]
+                    ]);
+                //throw new Error("");
+            }
+            else {
+                throw new Error("Invalid n: " + n.toString());
+            }
+            instructions = instructions.concat(
+                [
+                    [[n > 2 ? 4 : 3, 1], [["n", false], ["f(n-2)", false], ["f(n-1)", false]], /*這一層函式已執行完畢，請再按一次「>」將計算結果${f(n)}回傳到上一層函式*/"\u9019\u4e00\u5c64\u51fd\u5f0f\u5df2\u57f7\u884c\u5b8c\u7562\uff0c\u8acb\u518d\u6309\u4e00\u6b21\u300c>\u300d\u5c07\u8a08\u7b97\u7d50\u679c" + f(n).toString() + "\u56de\u50b3\u5230\u4e0a\u4e00\u5c64\u51fd\u5f0f"]
+                ]);
+            let variableNames =
+            [
+             "n",
+             "f(n-2)",
+             "f(n-1)"
+            ];
+            let codeHeight = 15;
+            let codeWidth = 300;
+            let variableHeight = 20;
+            let variableWidth = 150;
+            let titleHeight = 20;
+            let bottomHeight = 50;
+            let buttonRatio = 0.7;
+            let borderWidth = 7;
+            let variables = {};
+            let codeLines = [];
+            let contentHeight = Math.max(codeHeight * code.length, variableHeight * variableNames.length);
+            let contentWidth = codeWidth + variableWidth + borderWidth * 3;
+            function f(nn) {
+                let a = 1;
+                let b = 1;
+                for (let i = 3; i <= nn; i++) {
+                    let t = a;
+                    a = b;
+                    b = t + a;
+                }
+                return b;
+            }
+            function setRecursionPanel(n, previousN) {
+                return function () {
+                    let recursion = newRecursion(n, previousN);
+                    function resetp() {
+                        recursion.style.width = "0px";
+                        recursion.style.height = recursion.defaultHeight().toString()+"px";
+                        recursion.style.opacity = "0.0";
+                        recursion.style.top = stage.offsetTop.toString() + "px";
+                    }
+                    recursion.startReached = function () { resetp(); setTimeout(function () { setIndex(index); recursion.outerHTML = ""; popBasicHeight(); }, transitionTime * 1000.0); }
+                    recursion.endReached = function () { resetp(); setTimeout(function () { setIndex(index + 1); recursion.outerHTML = ""; popBasicHeight(); }, transitionTime * 1000.0); }
+                    resetp();
+                    basic.appendChild(recursion);
+                    buttonNext.disabled = buttonPrev.disabled = true;
+                    window.requestAnimationFrame(function () {
+                        recursion.style.width = recursion.defaultWidth().toString()+"px";
+                        recursion.style.height = recursion.defaultHeight().toString()+"px";
+                        recursion.style.opacity = "1.0";
+                        recursion.style.top = (stage.offsetTop + stage.offsetHeight).toString() + "px";
+                        addBasicHeight(recursion.defaultHeight());
+                    });
+                    //console.log(recursion.style.width.toString() + "," + recursion.style.height.toString());
+                }
+            }
+            let states = [];
+            {
+                let state = ["codePointerPosition", {}, "", []];
+                for (let i = 0; i < variableNames.length; i++) {
+                    state[1][variableNames[i]] = ["hide", ""];
+                }
+                for (let i = 0; i < code.length; i++) {
+                    state[3].push(false);
+                }
+                let stack = [];
+                for (let i = 0; i < instructions.length; i++) {
+                    let inst = instructions[i];
+                    state[0] = inst[0];
+                    for (let j = 0; j < inst[1].length; j++) {
+                        let name = inst[1][j][0];
+                        if (!name in state[1]) throw new Error("can't find " + name);
+                        let vari = state[1][name];
+                        for (let k = 1; k < inst[1][j].length; k++) {
+                            let v = inst[1][j][k];
+                            if (typeof (v) === "boolean") {
+                                if (v) vari[0] = "show";
+                                else vari[0] = "hide";
+                            }
+                            else if (typeof (v) === "string") {
+                                vari[1] = v;
+                            }
+                            else throw new Error("error: not boolean nor string: " + v);
+                        }
+                    }
+                    state[2] = inst[2];
+                    if (state[0].length >= 3) {
+                        if (typeof (state[0][2]) !== "boolean") throw new Error("error: must be boolean: " + state[0][2]);
+                        if (state[0][2]) {
+                            //console.log("hi"+i.toString()+"," + instructions[0].length.toString());
+                            let last = instructions[i - 1][0].slice(0, 2);
+                            for (let j = 0; j < last[1]; j++) state[3][last[0] - 1 + j] = true;
+                            stack.push(last); console.log(stack.toString() + " " + last);
+                        }
+                        else {
+                            if (stack.length === 0) throw new Error("error: stack can't be empty: " + stack);
+                            let last = stack[stack.length - 1];
+                            for (let j = 0; j < last[1]; j++) state[3][last[0] - 1 + j] = false;
+                            stack.splice(-1, 1);
+                        }
+                    }
+                    states.push(Clone(state));
+                }
+                if (stack.length !== 0) throw new Error("error: stack must be empty after execution: " + stack);
+            }
+            let setInnerHTML = function (e, text) {
+                e.innerHTML = function (t) {
+                    let a = "";
+                    for (let i = 0; i < t.length; i++) {
+                        if (t[i] === ' ') a += "&nbsp;";
+                        else a += new Option(t[i].toString()).innerHTML;
+                    }
+                    return a;
+                }(text);
+            };
+            let stage = newElement("stage", "div");
+            {
+                stage.defaultWidth = function () { return contentWidth; }
+                stage.defaultHeight = function () { return borderWidth + titleHeight + borderWidth + contentHeight + borderWidth + bottomHeight + borderWidth; }
+                stage.style.width = stage.defaultWidth().toString()+"px";
+                stage.style.height = stage.defaultHeight().toString()+"px";
+                stage.style.opacity = "0.0";
+                stage.style.backgroundColor = "rgb(255,255,128)";
+                stage.style.transition = "height " + transitionTime + "s ease-out 0s, width " + transitionTime + "s ease-out 0s, top " + transitionTime + "s ease-out 0s, left " + transitionTime + "s ease-out 0s, opacity " + transitionTime + "s ease-out 0s";
+                //stage.style.width = contentWidth.toString() + "px";
+                //stage.style.height = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth + bottomHeight + borderWidth).toString() + "px";
+                stage.startReached = function () { };
+                stage.endReached = function () { };
+            }
+            {
+                let t = newElement();
+                t.style.fontFamily = "微軟正黑體";
+                t.style.fontSize = Math.floor(titleHeight * 0.8).toString() + "px";
+                t.style.textAlign = "center";
+                t.style.backgroundColor = "rgb(255,255,192)";
+                t.style.top = borderWidth.toString() + "px";
+                t.style.left = borderWidth.toString() + "px";
+                t.style.width = codeWidth.toString() + "px";
+                t.style.height = titleHeight.toString() + "px";
+                setInnerHTML(t, "\u7a0b\u5f0f\u78bc");
+                stage.appendChild(t);
+            }
+            {
+                let t = newElement();
+                t.style.fontFamily = "微軟正黑體";
+                t.style.fontSize = Math.floor(titleHeight * 0.8).toString() + "px";
+                t.style.textAlign = "center";
+                t.style.backgroundColor = "rgb(255,255,192)";
+                t.style.top = borderWidth.toString() + "px";
+                t.style.left = (borderWidth + codeWidth + borderWidth).toString() + "px";
+                t.style.width = variableWidth.toString() + "px";
+                t.style.height = titleHeight.toString() + "px";
+                setInnerHTML(t, "\u8b8a\u6578");
+                stage.appendChild(t);
+            }
+            let codeBlock = newElement("codeBlock");
+            function newCodePointer() {
+                let answer = newElement("codePointer");
+                answer.style.left = "0px";
+                answer.style.width = codeWidth.toString() + "px";
+                answer.style.height = codeHeight.toString() + "px";
+                answer.style.backgroundColor = "rgb(192,192,192)";
+                answer.style.transition = "height 0.5s ease-out 0s, top 0.5s ease-out 0s";
+                codeBlock.appendChild(answer);
+                answer.setPosition = function (y, h) {
+                    answer.style.top = (y * codeHeight).toString() + "px";
+                    answer.style.height = (h * codeHeight).toString() + "px";
+                }
+                answer.setPosition(0, 1);
+                return answer;
+            }
+            let codePointer = newCodePointer();
+            {
+                codeBlock.style.top = (borderWidth + titleHeight + borderWidth).toString() + "px";
+                codeBlock.style.left = borderWidth.toString() + "px";
+                codeBlock.style.width = codeWidth.toString() + "px";
+                codeBlock.style.height = contentHeight.toString() + "px";
+                codeBlock.style.backgroundColor = "rgb(255,255,192)";
+                let lineNumber = 0;
+                let appendNewLine = function (text) {
+                    let line = newCodePointer();
+                    line.style.backgroundColor = "rgb(230,230,192)";
+                    line.style.transition = "opacity 0.5s ease-out 0s";
+                    line.setPosition(lineNumber, 1);
+                    codeLines.push(line);
+                    let answer = newElement("line" + lineNumber.toString());
+                    setInnerHTML(answer, text);
+                    answer.style.top = (lineNumber * codeHeight).toString() + "px";
+                    answer.style.fontFamily = "Consolas";
+                    //answer.style.fontWeight="900";
+                    answer.style.fontSize = Math.floor(codeHeight * 0.8).toString() + "px";
+                    codeBlock.appendChild(answer);
+                    lineNumber++;
+                };
+                for (let i = 0; i < code.length; i++) {
+                    appendNewLine(code[i]);
+                }
+                stage.appendChild(codeBlock);
+            }
+            let variableBlock = newElement("variableBlock");
+            {
+                variableBlock.style.top = (borderWidth + titleHeight + borderWidth).toString() + "px";
+                variableBlock.style.left = (borderWidth + codeWidth + borderWidth).toString() + "px";
+                variableBlock.style.width = variableWidth.toString() + "px";
+                variableBlock.style.height = contentHeight.toString() + "px";
+                variableBlock.style.backgroundColor = "rgb(255,255,192)";
+                let newVariable = function (id) {
+                    let answer = newElement(id);
+                    answer.style.left = "0px";
+                    answer.style.width = variableWidth.toString() + "px";
+                    answer.style.height = variableHeight.toString() + "px";
+                    answer.style.backgroundColor = "rgb(224,256,192)";
+                    answer.style.fontFamily = "Consolas";
+                    answer.style.fontSize = Math.floor(variableHeight * 0.8).toString() + "px";
+                    answer.style.transition = "left 0.5s ease-out 0s, opacity 0.5s ease-out 0s";
+                    answer.name = id;
+                    answer.setValue = function (v) {
+                        answer.innerHTML = answer.name + " = " + v;
+                    };
+                    answer.hide = function () {
+                        answer.style.opacity = 0;
+                        answer.style.left = "20px";
+                    };
+                    answer.show = function () {
+                        answer.style.opacity = 1;
+                        answer.style.left = "0px";
+                    };
+                    return answer;
+                };
+                for (let i = 0; i < variableNames.length; i++) {
+                    let v = newVariable(variableNames[i]);
+                    v.style.top = (i * variableHeight).toString() + "px";
+                    v.setValue("");
+                    v.hide();
+                    variableBlock.appendChild(v);
+                    variables[variableNames[i]] = v;
+                }
+                stage.appendChild(variableBlock);
+            }
+            let textBlock = newElement("textBlock");
+            {
+                textBlock.style.top = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth).toString() + "px";
+                textBlock.style.left = borderWidth.toString() + "px";
+                textBlock.style.width = (contentWidth - borderWidth * 3 - bottomHeight * buttonRatio * 2).toString() + "px";
+                textBlock.style.height = bottomHeight.toString() + "px";
+                textBlock.style.backgroundColor = "rgb(256,256,192)";
+                textBlock.style.fontSize = Math.floor(bottomHeight * 0.25).toString() + "px";
+                textBlock.style.fontFamily = "微軟正黑體";
+                textBlock.innerHTML = "正在初始化...";
+                stage.appendChild(textBlock);
+            }
+            let buttonNext = newElement("next", "button");
+            {
+                buttonNext.style.top = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth).toString() + "px";
+                buttonNext.style.left = (contentWidth - borderWidth - bottomHeight * buttonRatio).toString() + "px";
+                buttonNext.style.width = (bottomHeight * buttonRatio).toString() + "px";
+                buttonNext.style.height = bottomHeight.toString() + "px";
+                buttonNext.style.fontSize = Math.floor(bottomHeight * 0.8).toString() + "px";
+                buttonNext.style.fontFamily = "Consolas";
+                buttonNext.innerHTML = ">";
+                stage.appendChild(buttonNext);
+            };
+            let buttonPrev = newElement("previous", "button");
+            {
+                buttonPrev.style.top = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth).toString() + "px";
+                buttonPrev.style.left = (contentWidth - borderWidth - bottomHeight * buttonRatio * 2).toString() + "px";
+                buttonPrev.style.width = (bottomHeight * buttonRatio).toString() + "px";
+                buttonPrev.style.height = bottomHeight.toString() + "px";
+                buttonPrev.style.fontSize = Math.floor(bottomHeight * 0.8).toString() + "px";
+                buttonPrev.style.fontFamily = "Consolas";
+                buttonPrev.innerHTML = "<";
+                stage.appendChild(buttonPrev);
+            };
+            let index = 0;
+            let setIndex = function (i) {
+                index = i;
+                buttonPrev.disabled = (index === -1);
+                buttonNext.disabled = (index === states.length);
+                if (index == -1) stage.startReached();
+                else if (index == states.length) stage.endReached();
+                else {
+                    let state = states[i];
+                    codePointer.setPosition(state[0][0] - 1, state[0][1]);
+                    for (v in state[1]) {
+                        if (state[1][v][0] === "show") variables[v].show();
+                        else if (state[1][v][0] === "hide") variables[v].hide();
+                        else throw new Error("error: " + v);
+                        variables[v].setValue(state[1][v][1]);
+                    }
+                    setInnerHTML(textBlock, state[2]);
+                    for (let i = 0; i < code.length; i++) {
+                        codeLines[i].style.opacity = (state[3][i] ? 1 : 0);
+                    }
+                }
+            };
+            setIndex(0);
+            let buttonPrevClick = function (event) {
+                index--;
+                setIndex(index);
+            }
+            let buttonNextClick = function (event) {
+                if (instructions[index].length >= 4) {
+                    instructions[index][3]();
+                }
+                else {
+                    index++;
+                    setIndex(index);
+                }
+            }
+            buttonPrev.addEventListener("click", buttonPrevClick, false);
+            buttonNext.addEventListener("click", buttonNextClick, false);
+            return stage;
+        }
+        function newPanel(n) {
+            let code =
+            [
+             "1.  #include<cstdio>",
+             "2.  int f(int n)",
+             "3.  {",
+             "4.      if(n==1||n==2) return 1;",
+             "5.      if(n>2) return f(n-2)+f(n-1);",
+             "6.      printf(\"無法處理這個n\\n\");",
+             "7.      return -1;",
+             "8.  }",
+             "9.  int main()",
+             "10. {",
+             "11.     int v;",
+             "12.     scanf(\"%d\",&v);",
+             "13.     printf(\"f(%d)=%d\\n\",v,f(v));",
+             "14.     return 0;",
+             "15. }"
+            ];
+            /*empty: normal, [1,"v"]: input variable "v"'s value*/
+            let instructions =
+            [
+             [[1, 0], [], /*請按「>」開始模擬執行程式*/"\u8acb\u6309\u300c>\u300d\u958b\u59cb\u6a21\u64ec\u57f7\u884c\u7a0b\u5f0f"],
+             [[11, 1], [["v", true, "?"]], /*宣告變數v*/"\u5ba3\u544a\u8b8a\u6578v"],
+             [[12, 1], [["v", true, n.toString()]], /*輸入v=${v}*/"\u8f38\u5165v=" + n.toString()],
+             [[13, 1], [["f(v)", true, "?"]], /*呼叫函式printf，可是f(v)作為printf的引數，得先把f(v)的數值算出來*/"\u547c\u53eb\u51fd\u5f0fprintf\uff0c\u53ef\u662ff(v)\u4f5c\u70baprintf\u7684\u5f15\u6578\uff0c\u5f97\u5148\u628af(v)\u7684\u6578\u503c\u7b97\u51fa\u4f86"],
+             [[2, 1, true], [["n", true, n.toString()]],/*宣告變數n=v*/"\u5ba3\u544a\u8b8a\u6578n=v"]
+            ];
+            if (n == 1 || n == 2) {
+                instructions = instructions.concat(
+                    [
+                     [[4, 1], [], /*n==${n}成立，回傳1*/"n==" + n.toString() + "\u6210\u7acb\uff0c\u56de\u50b31"]
+                    ]);
+            }
+            else if (n > 2) {
+                instructions = instructions.concat(
+                    [
+                     [[4, 1], [], /*n==1和n==2都不成立*/"n==1\u548cn==2\u90fd\u4e0d\u6210\u7acb"],
+                     [[5, 1], [["f(n-2)", true, "?"], ["f(n-1)", true, "?"]], /*n>2成立，回傳f(n-2)+f(n-1)，可是得先把f(n-2)和f(n-1)的數值算出來*/"n>2\u6210\u7acb\uff0c\u56de\u50b3f(n-2)+f(n-1)\uff0c\u53ef\u662f\u5f97\u5148\u628af(n-2)\u548cf(n-1)\u7684\u6578\u503c\u7b97\u51fa\u4f86", setRecursionPanel(n - 2,n)],
+                     [[5, 1], [["f(n-2)", true, f(n - 2).toString()]], /*欲回傳f(n-2)+f(n-1)，現在已經算出f(n-2)=${f(n-2)}，還得算出f(n-1)的數值才能知道要回傳的「f(n-2)+f(n-1)」的數值*/"\u6b32\u56de\u50b3f(n-2)+f(n-1)\uff0c\u73fe\u5728\u5df2\u7d93\u7b97\u51faf(n-2)=" + f(n - 2).toString() + "\uff0c\u9084\u5f97\u7b97\u51faf(n-1)\u7684\u6578\u503c\u624d\u80fd\u77e5\u9053\u8981\u56de\u50b3\u7684\u300cf(n-2)+f(n-1)\u300d\u7684\u6578\u503c", setRecursionPanel(n - 1,n)],
+                     [[5, 1], [["f(n-1)", true, f(n - 1).toString()]], /*算出f(n-2)+f(n-1)=${f(n-2)}+${f(n-1)}=${f(n-2)+f(n-1)}，回傳${f(n-2)+f(n-1)}*/"\u7b97\u51faf(n-2)+f(n-1)=" + f(n - 2).toString() + "+" + f(n - 1).toString() + "=" + f(n).toString() + "\uff0c\u56de\u50b3" + f(n).toString()]
+                    ]);
+                //throw new Error("");
+            }
+            else {
+                throw new Error("Invalid n: " + n.toString());
+            }
+            instructions = instructions.concat(
+                [
+                 [[13, 1, false], [["n", false], ["f(v)", true, f(n).toString()], ["f(n-2)", false], ["f(n-1)", false]], /*算出f(v)=${f(v)}，輸出「f(${v})=${f(v)}\n」*/"\u7b97\u51faf(v)=" + f(n).toString() + "\uff0c\u8f38\u51fa\u300cf(" + n.toString() + ")=" + f(n).toString() + "\\n\u300d"],
+                 [[14, 1], [["v", false], ["f(v)", false]], /*main函式回傳0，程式正常結束*/"main\u51fd\u5f0f\u56de\u50b30\uff0c\u7a0b\u5f0f\u6b63\u5e38\u7d50\u675f"]
+                ]);
+            let variableNames =
+            [
+             "v",
+             "f(v)",
+             "n",
+             "f(n-2)",
+             "f(n-1)"
+            ];
+            let codeHeight = 15;
+            let codeWidth = 300;
+            let variableHeight = 20;
+            let variableWidth = 150;
+            let titleHeight = 20;
+            let bottomHeight = 50;
+            let buttonRatio = 0.7;
+            let borderWidth = 7;
+            let variables = {};
+            let codeLines = [];
+            let contentHeight = Math.max(codeHeight * code.length, variableHeight * variableNames.length);
+            let contentWidth = codeWidth + variableWidth + borderWidth * 3;
+            function f(nn) {
+                let a = 1;
+                let b = 1;
+                for (let i = 3; i <= nn; i++) {
+                    let t = a;
+                    a = b;
+                    b = t + a;
+                }
+                return b;
+            }
+            function setRecursionPanel(n, previousN) {
+                return function () {
+                    let recursion = newRecursion(n, previousN);
+                    function resetp() {
+                        recursion.style.width = "0px";
+                        recursion.style.height = recursion.defaultHeight().toString() + "px";
+                        recursion.style.opacity = "0.0";
+                        recursion.style.top = stage.offsetTop.toString() + "px";
+                    }
+                    recursion.startReached = function () { resetp(); setTimeout(function () { setIndex(index); recursion.outerHTML = ""; popBasicHeight(); }, transitionTime * 1000.0); }
+                    recursion.endReached = function () { resetp(); setTimeout(function () { setIndex(index + 1); recursion.outerHTML = ""; popBasicHeight(); }, transitionTime * 1000.0); }
+                    resetp();
+                    basic.appendChild(recursion);
+                    buttonNext.disabled = buttonPrev.disabled = true;
+                    window.requestAnimationFrame(function () {
+                        recursion.style.width = recursion.defaultWidth().toString() + "px";
+                        recursion.style.height = recursion.defaultHeight().toString() + "px";
+                        recursion.style.opacity = "1.0";
+                        recursion.style.top = (stage.offsetTop + stage.offsetHeight).toString() + "px";
+                        addBasicHeight(recursion.defaultHeight());
+                    });
+                    //console.log(recursion.style.width.toString() + "," + recursion.style.height.toString());
+                }
+            }
+            let states = [];
+            {
+                let state = ["codePointerPosition", {}, "", []];
+                for (let i = 0; i < variableNames.length; i++) {
+                    state[1][variableNames[i]] = ["hide", ""];
+                }
+                for (let i = 0; i < code.length; i++) {
+                    state[3].push(false);
+                }
+                let stack = [];
+                for (let i = 0; i < instructions.length; i++) {
+                    let inst = instructions[i];
+                    state[0] = inst[0];
+                    for (let j = 0; j < inst[1].length; j++) {
+                        let name = inst[1][j][0];
+                        if (!name in state[1]) throw new Error("can't find " + name);
+                        let vari = state[1][name];
+                        for (let k = 1; k < inst[1][j].length; k++) {
+                            let v = inst[1][j][k];
+                            if (typeof (v) === "boolean") {
+                                if (v) vari[0] = "show";
+                                else vari[0] = "hide";
+                            }
+                            else if (typeof (v) === "string") {
+                                vari[1] = v;
+                            }
+                            else throw new Error("error: not boolean nor string: " + v);
+                        }
+                    }
+                    state[2] = inst[2];
+                    if (state[0].length >= 3) {
+                        if (typeof (state[0][2]) !== "boolean") throw new Error("error: must be boolean: " + state[0][2]);
+                        if (state[0][2]) {
+                            let last = instructions[i - 1][0].slice(0, 2);
+                            for (let j = 0; j < last[1]; j++) state[3][last[0] - 1 + j] = true;
+                            stack.push(last); console.log(stack.toString() + " " + last);
+                        }
+                        else {
+                            if (stack.length === 0) throw new Error("error: stack can't be empty: " + stack);
+                            let last = stack[stack.length - 1];
+                            for (let j = 0; j < last[1]; j++) state[3][last[0] - 1 + j] = false;
+                            stack.splice(-1, 1);
+                        }
+                    }
+                    states.push(Clone(state));
+                }
+                if (stack.length !== 0) throw new Error("error: stack must be empty after execution: " + stack);
+            }
+            let setInnerHTML = function (e, text) {
+                e.innerHTML = function (t) {
+                    let a = "";
+                    for (let i = 0; i < t.length; i++) {
+                        if (t[i] === ' ') a += "&nbsp;";
+                        else a += new Option(t[i].toString()).innerHTML;
+                    }
+                    return a;
+                }(text);
+            };
+            let stage = newElement("stage", "div");
+            {
+                stage.defaultWidth = function () { return contentWidth; }
+                stage.defaultHeight = function () { return borderWidth + titleHeight + borderWidth + contentHeight + borderWidth + bottomHeight + borderWidth; }
+                stage.style.width = "0px";//stage.defaultWidth().toString()+"px";
+                stage.style.height = stage.defaultHeight().toString()+"px";
+                stage.style.opacity = "0.0";
+                stage.style.backgroundColor = "rgb(255,255,128)";
+                stage.style.transition = "height " + transitionTime + "s ease-out 0s, width " + transitionTime + "s ease-out 0s, top " + transitionTime + "s ease-out 0s, left " + transitionTime + "s ease-out 0s, opacity " + transitionTime + "s ease-out 0s";
+                //stage.style.width = contentWidth.toString() + "px";
+                //stage.style.height = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth + bottomHeight + borderWidth).toString() + "px";
+            }
+            {
+                let t = newElement();
+                t.style.fontFamily = "微軟正黑體";
+                t.style.fontSize = Math.floor(titleHeight * 0.8).toString() + "px";
+                t.style.textAlign = "center";
+                t.style.backgroundColor = "rgb(255,255,192)";
+                t.style.top = borderWidth.toString() + "px";
+                t.style.left = borderWidth.toString() + "px";
+                t.style.width = codeWidth.toString() + "px";
+                t.style.height = titleHeight.toString() + "px";
+                setInnerHTML(t, "\u7a0b\u5f0f\u78bc");
+                stage.appendChild(t);
+            }
+            {
+                let t = newElement();
+                t.style.fontFamily = "微軟正黑體";
+                t.style.fontSize = Math.floor(titleHeight * 0.8).toString() + "px";
+                t.style.textAlign = "center";
+                t.style.backgroundColor = "rgb(255,255,192)";
+                t.style.top = borderWidth.toString() + "px";
+                t.style.left = (borderWidth + codeWidth + borderWidth).toString() + "px";
+                t.style.width = variableWidth.toString() + "px";
+                t.style.height = titleHeight.toString() + "px";
+                setInnerHTML(t, "\u8b8a\u6578");
+                stage.appendChild(t);
+            }
+            let codeBlock = newElement("codeBlock");
+            function newCodePointer() {
+                let answer = newElement("codePointer");
+                answer.style.left = "0px";
+                answer.style.width = codeWidth.toString() + "px";
+                answer.style.height = codeHeight.toString() + "px";
+                answer.style.backgroundColor = "rgb(192,192,192)";
+                answer.style.transition = "height 0.5s ease-out 0s, top 0.5s ease-out 0s";
+                codeBlock.appendChild(answer);
+                answer.setPosition = function (y, h) {
+                    answer.style.top = (y * codeHeight).toString() + "px";
+                    answer.style.height = (h * codeHeight).toString() + "px";
+                }
+                answer.setPosition(0, 1);
+                return answer;
+            }
+            let codePointer = newCodePointer();
+            {
+                codeBlock.style.top = (borderWidth + titleHeight + borderWidth).toString() + "px";
+                codeBlock.style.left = borderWidth.toString() + "px";
+                codeBlock.style.width = codeWidth.toString() + "px";
+                codeBlock.style.height = contentHeight.toString() + "px";
+                codeBlock.style.backgroundColor = "rgb(255,255,192)";
+                let lineNumber = 0;
+                let appendNewLine = function (text) {
+                    let line = newCodePointer();
+                    line.style.backgroundColor = "rgb(230,230,192)";
+                    line.style.transition = "opacity 0.5s ease-out 0s";
+                    line.setPosition(lineNumber, 1);
+                    codeLines.push(line);
+                    let answer = newElement("line" + lineNumber.toString());
+                    setInnerHTML(answer, text);
+                    answer.style.top = (lineNumber * codeHeight).toString() + "px";
+                    answer.style.fontFamily = "Consolas";
+                    //answer.style.fontWeight="900";
+                    answer.style.fontSize = Math.floor(codeHeight * 0.8).toString() + "px";
+                    codeBlock.appendChild(answer);
+                    lineNumber++;
+                };
+                for (let i = 0; i < code.length; i++) {
+                    appendNewLine(code[i]);
+                }
+                stage.appendChild(codeBlock);
+            }
+            let variableBlock = newElement("variableBlock");
+            {
+                variableBlock.style.top = (borderWidth + titleHeight + borderWidth).toString() + "px";
+                variableBlock.style.left = (borderWidth + codeWidth + borderWidth).toString() + "px";
+                variableBlock.style.width = variableWidth.toString() + "px";
+                variableBlock.style.height = contentHeight.toString() + "px";
+                variableBlock.style.backgroundColor = "rgb(255,255,192)";
+                let newVariable = function (id) {
+                    let answer = newElement(id);
+                    answer.style.left = "0px";
+                    answer.style.width = variableWidth.toString() + "px";
+                    answer.style.height = variableHeight.toString() + "px";
+                    answer.style.backgroundColor = "rgb(224,256,192)";
+                    answer.style.fontFamily = "Consolas";
+                    answer.style.fontSize = Math.floor(variableHeight * 0.8).toString() + "px";
+                    answer.style.transition = "left 0.5s ease-out 0s, opacity 0.5s ease-out 0s";
+                    answer.name = id;
+                    answer.setValue = function (v) {
+                        answer.innerHTML = answer.name + " = " + v;
+                    };
+                    answer.hide = function () {
+                        answer.style.opacity = 0;
+                        answer.style.left = "20px";
+                    };
+                    answer.show = function () {
+                        answer.style.opacity = 1;
+                        answer.style.left = "0px";
+                    };
+                    return answer;
+                };
+                for (let i = 0; i < variableNames.length; i++) {
+                    let v = newVariable(variableNames[i]);
+                    v.style.top = (i * variableHeight).toString() + "px";
+                    v.setValue("");
+                    v.hide();
+                    variableBlock.appendChild(v);
+                    variables[variableNames[i]] = v;
+                }
+                stage.appendChild(variableBlock);
+            }
+            let textBlock = newElement("textBlock");
+            {
+                textBlock.style.top = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth).toString() + "px";
+                textBlock.style.left = borderWidth.toString() + "px";
+                textBlock.style.width = (contentWidth - borderWidth * 3 - bottomHeight * buttonRatio * 2).toString() + "px";
+                textBlock.style.height = bottomHeight.toString() + "px";
+                textBlock.style.backgroundColor = "rgb(256,256,192)";
+                textBlock.style.fontSize = Math.floor(bottomHeight * 0.25).toString() + "px";
+                textBlock.style.fontFamily = "微軟正黑體";
+                textBlock.innerHTML = "正在初始化...";
+                stage.appendChild(textBlock);
+            }
+            let buttonNext = newElement("next", "button");
+            {
+                buttonNext.style.top = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth).toString() + "px";
+                buttonNext.style.left = (contentWidth - borderWidth - bottomHeight * buttonRatio).toString() + "px";
+                buttonNext.style.width = (bottomHeight * buttonRatio).toString() + "px";
+                buttonNext.style.height = bottomHeight.toString() + "px";
+                buttonNext.style.fontSize = Math.floor(bottomHeight * 0.8).toString() + "px";
+                buttonNext.style.fontFamily = "Consolas";
+                buttonNext.innerHTML = ">";
+                stage.appendChild(buttonNext);
+            };
+            let buttonPrev = newElement("previous", "button");
+            {
+                buttonPrev.style.top = (borderWidth + titleHeight + borderWidth + contentHeight + borderWidth).toString() + "px";
+                buttonPrev.style.left = (contentWidth - borderWidth - bottomHeight * buttonRatio * 2).toString() + "px";
+                buttonPrev.style.width = (bottomHeight * buttonRatio).toString() + "px";
+                buttonPrev.style.height = bottomHeight.toString() + "px";
+                buttonPrev.style.fontSize = Math.floor(bottomHeight * 0.8).toString() + "px";
+                buttonPrev.style.fontFamily = "Consolas";
+                buttonPrev.innerHTML = "<";
+                stage.appendChild(buttonPrev);
+            };
+            let index = 0;
+            let setIndex = function (i) {
+                index = i;
+                buttonPrev.disabled = (index === 0);
+                buttonNext.disabled = (index === states.length - 1);
+                let state = states[i];
+                codePointer.setPosition(state[0][0] - 1, state[0][1]);
+                for (v in state[1]) {
+                    if (state[1][v][0] === "show") variables[v].show();
+                    else if (state[1][v][0] === "hide") variables[v].hide();
+                    else throw new Error("error: " + v);
+                    variables[v].setValue(state[1][v][1]);
+                }
+                setInnerHTML(textBlock, state[2]);
+                for (let i = 0; i < code.length; i++) {
+                    codeLines[i].style.opacity = (state[3][i] ? 1 : 0);
+                }
+            };
+            setIndex(0);
+            let buttonPrevClick = function (event) {
+                index--;
+                setIndex(index);
+            }
+            let buttonNextClick = function (event) {
+                if (instructions[index].length >= 4) {
+                    instructions[index][3]();
+                }
+                else {
+                    index++;
+                    setIndex(index);
+                }
+            }
+            buttonPrev.addEventListener("click", buttonPrevClick, false);
+            buttonNext.addEventListener("click", buttonNextClick, false);
+            return stage;
+        }
+        function newElement(id, type) {
+            if (typeof (type) === "undefined") type = "div";
+            let answer = document.createElement(type);
+            if (typeof (id) === "string") {
+                answer.id = id;
+                //console.log(answer.id);
+            }
+            answer.style.display = "block";
+            answer.style.position = "absolute";
+            return answer;
+        };
+        function Clone(obj) {
+            if (null == obj || "object" != typeof obj) return obj;
+            if (obj instanceof Date) {
+                let copy = new Date();
+                copy.setTime(obj.getTime());
+                return copy;
+            }
+            if (obj instanceof Array) {
+                let copy = [];
+                let i = 0;
+                let len = obj.length;
+                for (; i < len; ++i) copy[i] = Clone(obj[i]);
+                return copy;
+            }
+            if (obj instanceof Object) {
+                let copy = {};
+                for (let attr in obj) if (obj.hasOwnProperty(attr)) copy[attr] = Clone(obj[attr]);
+                return copy;
+            }
+            throw new Error("Unable to copy obj! Its type isn't supported.");
+        }
+    }());
+  </script><br />
+<br />
+可以發現，雖然程式碼中寫的是「在$f$中呼叫$f$」，但對電腦來說則是「在$f1$中呼叫$f2$」，也就是$f1$和$f2$雖然有一模一樣的邏輯，但執行時是獨立互不影響的兩個函式。當然可以是$f2$依據$f1$的執行結果來設定其內部的變數，但是當$f1$執行時，不管$f1$怎麼修改在它內部宣告的變數，都不會影響到$f2$內部的變數 (可參考動畫中對$n$的說明)，除非您利用某些巧妙的技巧硬是要兩個函式之間互相溝通，或是程式出錯XD<br />
+當有「函式呼叫函式」的情況發生時，會出現一種「上下函式層層堆疊」的神奇結構，專業上我們用「stack (堆疊)」來稱呼類似這種的神奇結構。如果您有玩過上面的動畫，您應該會發現有時候會出現「函式上下堆疊起來」的現象，然而，只有當下面的函式都執行完畢之後，某函式才會繼續執行<br />
+很神奇吧！上面的動畫小莫花了整整兩天的時間製作，儘管玩吧！<br />
+(發現bug一定要講哦，不然就前功盡棄了XD)<br />
+<br />
+順帶一提，相信很多讀者也早就知道，小莫剛剛創造的函式$f$其實就是大名鼎鼎的「費波那契數列」啦www<br />
+聰明的您可能也會想到，$f$不是用迴圈就能計算出來了嗎？如果想得更仔細的話，使用迴圈的效率甚至比遞迴高很多很多！<br />
+<br />
+那麼，遞迴有甚麼用呢？<br />
+遞迴的用處可多著呢！有些事情不使用遞迴就會很麻煩，非常麻煩！<br />
+舉個例子：給你$N$，請枚舉$N$階排列！<br />
+<br />
+舉例來說，如果$N=4$，那麼您的答案應該長這樣：<br />
+1 2 3 4<br />
+1 2 4 3<br />
+1 3 2 4<br />
+1 3 4 2<br />
+1 4 2 3<br />
+1 4 3 2<br />
+2 1 3 4<br />
+2 1 4 3<br />
+2 3 1 4<br />
+2 3 4 1<br />
+2 4 1 3<br />
+2 4 3 1<br />
+3 1 2 4<br />
+3 1 4 2<br />
+3 2 1 4<br />
+3 2 4 1<br />
+3 4 1 2<br />
+3 4 2 1<br />
+4 1 2 3<br />
+4 1 3 2<br />
+4 2 1 3<br />
+4 2 3 1<br />
+4 3 1 2<br />
+4 3 2 1<br />
+<br />
+恩，雖然麻煩，但寫個4層迴圈可以做到！第$i$層迴圈做的事就是枚舉出還沒用過的數字並放在第$i$個位置<br />
+那，如果$n=100$呢？難道要寫$100$層迴圈嗎？<br />
+哈哈哈，遞迴登場的時刻到了！<br />
+請您想想看要怎麼寫吧 ^_^<br />
+<br />
+參考解答：<br />
+<br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">#include&lt;cstdio&gt;<br />void f(int n,int i,int *answer,bool *number_used)<br />{<br />&nbsp;&nbsp;&nbsp; if(i==n+1)//已經使用n個數字組出一個長度為n的排列了！ <br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(int j=1;j&lt;=n;j++)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(j==1) printf("%d",answer[j]);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else&nbsp;&nbsp;&nbsp;&nbsp; printf(" %d",answer[j]);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("\n");<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; for(int j=1;j&lt;=n;j++)<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!number_used[j])<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; answer[i]=j;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; number_used[j]=true;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(n,i+1,answer,number_used);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; number_used[j]=false;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; }<br />}<br />int main()<br />{<br />&nbsp;&nbsp;&nbsp; int n;<br />&nbsp;&nbsp;&nbsp; scanf("%d",&amp;n);<br />&nbsp;&nbsp;&nbsp; int answer[n+1];<br />&nbsp;&nbsp;&nbsp; bool number_used[n+1];<br />&nbsp;&nbsp;&nbsp; for(int i=1;i&lt;=n;i++)number_used[i]=false;<br />&nbsp;&nbsp;&nbsp; f(n,1,answer,number_used);<br />&nbsp;&nbsp;&nbsp; return 0;<br />}</span><br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-Ie0xyBykPo0/WLfxK7m_o8I/AAAAAAAAG-w/qQp9nD8WKrM7aSz2pkSxWkfnD2OqCHv3gCLcB/s1600/13-16-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="150" src="https://2.bp.blogspot.com/-Ie0xyBykPo0/WLfxK7m_o8I/AAAAAAAAG-w/qQp9nD8WKrM7aSz2pkSxWkfnD2OqCHv3gCLcB/s320/13-16-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">$N=3$時程式的執行結果</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-pzzaL-h6zAU/WLfwncIyHVI/AAAAAAAAG-o/QeD32gEINzUwWb43meZQbL83AAQ9MqbSQCEw/s1600/13-16-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="196" src="https://2.bp.blogspot.com/-pzzaL-h6zAU/WLfwncIyHVI/AAAAAAAAG-o/QeD32gEINzUwWb43meZQbL83AAQ9MqbSQCEw/s320/13-16-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">$N=4$時程式的執行結果</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-uU84qJ1XL6c/WLfw7AnoYLI/AAAAAAAAG-s/xWxjr-isCoketfp8YfxdCn8Sb-zmM9iQgCEw/s1600/13-16-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="150" src="https://3.bp.blogspot.com/-uU84qJ1XL6c/WLfw7AnoYLI/AAAAAAAAG-s/xWxjr-isCoketfp8YfxdCn8Sb-zmM9iQgCEw/s320/13-16-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">$N=5$時程式的執行結果</td></tr>
+</tbody></table>
+<br />
+遞迴還可以做到很多事情，例如從質因數分解式枚舉因數，在搜尋資料、圖論上的應用更是不勝枚舉<br />
+發揮您的巧思，甚麼事情也可以用遞迴做到呢？:D<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/10/cpp-for-beginner-article-of-future.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

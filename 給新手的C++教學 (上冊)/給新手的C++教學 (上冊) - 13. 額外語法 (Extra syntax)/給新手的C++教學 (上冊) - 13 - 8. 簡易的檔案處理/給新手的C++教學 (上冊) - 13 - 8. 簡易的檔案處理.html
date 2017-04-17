@@ -1,0 +1,194 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-7.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+您是否有想過要用C++來讀取和寫入檔案呢？<br />
+真的可以嗎？需不需要解析磁碟機NTFS、FAT32之類的格式啊？<br />
+當然不需要！<br />
+<br />
+放心，這件事連小莫都不知道怎麼做<br />
+所謂「站在巨人的肩膀上」，這種事情不用再由我們自己處理了！<br />
+在先人的努力之下，「C++」這個偉大的程式語言，已經讓電腦可以只依據簡單的幾行程式碼，就可以執行許多複雜卻需要經常執行的工作<br />
+<br />
+事實上，C++讀寫檔案的方法比你想的任何方式都簡單！<br />
+更具體地來講<br />
+我們在撰寫C++程式碼的時候，只需要告訴電腦「讀取哪個檔案」和 (或)「寫入哪個檔案」就好了！<br />
+<br />
+要怎麼告訴電腦「恩，我要從這個檔案名稱為『in.txt』的檔案讀取」呢？<br />
+(<a href="https://blog.gtwang.org/windows/windows-10-show-filename-extension-tutorial/">請先到檔案總管設定顯示附檔名以取得完整的檔案名稱 (點我查看教學)</a>)<br />
+寫下一行程式碼就夠了：<br />
+<!--more--><br /><br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #0000dd;">freopen</span><span style="color: green;">(</span><span style="color: red;">"in.txt"</span>,<span style="color: red;">"r"</span>,<span style="color: blue;">stdin</span><span style="color: green;">)</span><span style="color: teal;">;</span></pre>
+<br />
+這樣一來，之後的「輸入」都會從「in.txt」這個檔案讀取<br />
+甚麼意思呢？<br />
+我們來看一個例子：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">int</span> n<span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>n<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>i<span style="color: navy;">&lt;</span>n<span style="color: teal;">;</span>i<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">int</span> v<span style="color: teal;">;</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%d"</span>,<span style="color: #000040;">&amp;</span>v<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,v<span style="color: #000040;">*</span>v<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-W8VqxX2S0k8/V99LQ2ezCSI/AAAAAAAAGeA/jCJROGNigxc1EaGKaec8AKfp08eGIEv5QCLcB/s1600/13-8-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="183" src="https://4.bp.blogspot.com/-W8VqxX2S0k8/V99LQ2ezCSI/AAAAAAAAGeA/jCJROGNigxc1EaGKaec8AKfp08eGIEv5QCLcB/s320/13-8-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入「10 1 2 3 4 5 6&nbsp;7 8 9 10」的情況</td></tr>
+</tbody></table>
+<br />
+每次執行都要手動輸入「10 1 2 3 4 5 6 7 8 9 10」好煩喔 (不管是一個字一個字慢慢打還是直接「Ctrl+V」貼上)<br />
+<br />
+當然，本頁的解決方案是「用檔案代替手動輸入」<br />
+只要在執行檔所在的資料夾建立一個內容為「輸入」的檔案，然後在main函式開頭加入「<span style="color: #0000dd;">freopen</span><span style="color: green;">(</span><span style="color: red;">"檔名"</span>,<span style="color: red;">"r"</span>,<span style="color: blue;">stdin</span><span style="color: green;">)</span><span style="color: teal;">;</span>」就好了！<br />
+這樣講你可能不懂，用截圖來解釋最清楚！<br />
+<br />
+步驟如下：<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-XZlq69fBKDk/V99TU6acykI/AAAAAAAAGeQ/uh07w36hjwUXMJupiKMwusxCKm5y6FkKACLcB/s1600/13-8-2.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://2.bp.blogspot.com/-XZlq69fBKDk/V99TU6acykI/AAAAAAAAGeQ/uh07w36hjwUXMJupiKMwusxCKm5y6FkKACLcB/s320/13-8-2.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">這是原本的程式碼</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-FflG6LnGWyE/V99Tb5qqgtI/AAAAAAAAGeU/nYqtK7LOKzo9kf5X6iV94DOJpMxS1y8xQCLcB/s1600/13-8-3.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-FflG6LnGWyE/V99Tb5qqgtI/AAAAAAAAGeU/nYqtK7LOKzo9kf5X6iV94DOJpMxS1y8xQCLcB/s320/13-8-3.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">按下鍵盤上的「Ctrl+B」(開啟檔案所在的資料夾)</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-bXDF4ULmLAk/V99TrP3YKLI/AAAAAAAAGeY/jARrtdXjiJYZBoFVgg1xKu-ofRbLcOhegCLcB/s1600/13-8-4.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://1.bp.blogspot.com/-bXDF4ULmLAk/V99TrP3YKLI/AAAAAAAAGeY/jARrtdXjiJYZBoFVgg1xKu-ofRbLcOhegCLcB/s320/13-8-4.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">在資料夾中點一下滑鼠右鍵</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-3fLTrqcy9fQ/V99UC73L54I/AAAAAAAAGec/S7DnrqeDyxUYfAdvpavvEW0qElwmE1wsACLcB/s1600/13-8-5.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://1.bp.blogspot.com/-3fLTrqcy9fQ/V99UC73L54I/AAAAAAAAGec/S7DnrqeDyxUYfAdvpavvEW0qElwmE1wsACLcB/s320/13-8-5.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">「新增 (New)」→「文字文件 (Text Document)」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-qlDN17oSE_M/V99UfIoGVvI/AAAAAAAAGek/mgM8fXl3jUsy-14GOPHMVlY6fNKMSIgeACLcB/s1600/13-8-6.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://1.bp.blogspot.com/-qlDN17oSE_M/V99UfIoGVvI/AAAAAAAAGek/mgM8fXl3jUsy-14GOPHMVlY6fNKMSIgeACLcB/s320/13-8-6.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">出現一個文字文件</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-H1sXOU91a4s/V99Ur4h2KDI/AAAAAAAAGeo/U_14znNQY8Ugz21EoQ9hBvRCOdBXxhg_gCLcB/s1600/13-8-7.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-H1sXOU91a4s/V99Ur4h2KDI/AAAAAAAAGeo/U_14znNQY8Ugz21EoQ9hBvRCOdBXxhg_gCLcB/s320/13-8-7.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div>
+命名為「in.txt」</div>
+</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-OzPeKTP_pyk/V99U5-ivvwI/AAAAAAAAGes/LdOaZZVDrOkMkDHpSZMkZPWar9lgd_HrQCLcB/s1600/13-8-8.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-OzPeKTP_pyk/V99U5-ivvwI/AAAAAAAAGes/LdOaZZVDrOkMkDHpSZMkZPWar9lgd_HrQCLcB/s320/13-8-8.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">按「Enter」完成命名</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-tJfu5PCW4wk/V99VCCidGSI/AAAAAAAAGe0/TNkiQCy09-oWT-iccx8kGUL4Ij9dYwwbgCLcB/s1600/13-8-9.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://4.bp.blogspot.com/-tJfu5PCW4wk/V99VCCidGSI/AAAAAAAAGe0/TNkiQCy09-oWT-iccx8kGUL4Ij9dYwwbgCLcB/s320/13-8-9.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">按「Enter」開啟檔案以編輯內容</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-p-yc0DXWLUc/V99VOTs_StI/AAAAAAAAGe4/G4uynk8BlvUBTsIDLYSBvgR4RI-Dk8RFACLcB/s1600/13-8-10.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-p-yc0DXWLUc/V99VOTs_StI/AAAAAAAAGe4/G4uynk8BlvUBTsIDLYSBvgR4RI-Dk8RFACLcB/s320/13-8-10.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">將輸入「10 1 2 3 4 5 6 7 8 9 10」打進去並存檔</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-fVIQgtDHu78/V99ViX11-tI/AAAAAAAAGe8/14wcFrnuZXso49f997SrN5PcJ__ZVL0RgCLcB/s1600/13-8-11.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-fVIQgtDHu78/V99ViX11-tI/AAAAAAAAGe8/14wcFrnuZXso49f997SrN5PcJ__ZVL0RgCLcB/s320/13-8-11.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">回到「Dev-C++」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-rzVahO3x7eg/V99Vo6XdVGI/AAAAAAAAGfA/A7jdk7bh6fIy8eA6qTlvNMa8Y0n8q9KQgCLcB/s1600/13-8-12.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://4.bp.blogspot.com/-rzVahO3x7eg/V99Vo6XdVGI/AAAAAAAAGfA/A7jdk7bh6fIy8eA6qTlvNMa8Y0n8q9KQgCLcB/s320/13-8-12.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">在main函式的開頭插入「<span style="color: #0000dd;">freopen</span><span style="color: green;">(</span><span style="color: red;">"in.txt"</span>,<span style="color: red;">"r"</span>,<span style="color: blue;">stdin</span><span style="color: green;">)</span><span style="color: teal;">;</span>」這一行程式碼</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-kPIAIbg0B1Y/V99V4T0hi_I/AAAAAAAAGfE/5LVEJGDGmAMqa8TYumx4LGLvF-qzY2I5ACLcB/s1600/13-8-13.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://4.bp.blogspot.com/-kPIAIbg0B1Y/V99V4T0hi_I/AAAAAAAAGfE/5LVEJGDGmAMqa8TYumx4LGLvF-qzY2I5ACLcB/s320/13-8-13.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">按下鍵盤上的「F11」，即可直接看到用「in.txt」的內容來輸入的執行結果</td></tr>
+</tbody></table>
+<br />
+耶，我們成功讓程式自動使用「in.txt」的內容來當作輸入了！<br />
+這就是C++「讀取檔案」的方式<br />
+<br />
+那麼，要怎麼用C++「寫入檔案」呢？<br />
+一樣，一行程式碼搞定：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #0000dd;">freopen</span><span style="color: green;">(</span><span style="color: red;">"out.txt"</span>,<span style="color: red;">"w"</span>,<span style="color: blue;">stdout</span><span style="color: green;">)</span><span style="color: teal;">;</span></pre>
+<br />
+這樣一來，之後的「輸出」都會寫入到「out.txt」這個檔案<br />
+甚麼意思呢？<br />
+我們來看一個例子：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> a<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>a<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">99</span><span style="color: teal;">;</span>a<span style="color: #000040;">++</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: blue;">for</span><span style="color: green;">(</span><span style="color: blue;">int</span> b<span style="color: navy;">=</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>b<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">99</span><span style="color: teal;">;</span>b<span style="color: #000040;">++</span><span style="color: green;">)</span>
+        <span style="color: green;">{</span>
+            <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%5d"</span>,a<span style="color: #000040;">*</span>b<span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: green;">}</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-J0bYlWr0Xxo/V9-KrvIyDhI/AAAAAAAAGfY/CVJlgyi4JSUN4jB5GjuFOLLkqG70pOdqwCLcB/s1600/13-8-14.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="168" src="https://2.bp.blogspot.com/-J0bYlWr0Xxo/V9-KrvIyDhI/AAAAAAAAGfY/CVJlgyi4JSUN4jB5GjuFOLLkqG70pOdqwCLcB/s320/13-8-14.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">傳說中的「九九九九乘法表」，輸出好龐大<br />
+電腦沒有很好，所以跑了整整6秒多XD</td></tr>
+</tbody></table>
+<br />
+可以發現，輸出時在大巨大了，以致於原本應該顯示在同一行的文字，硬生生地被切成好幾段並分行顯示<br />
+看起來好痛苦 &gt;_&lt;<br />
+<br />
+當然，本頁的解決方案是「『輸出到檔案再用別的軟體開啟檢視』代替『原始的黑色視窗顯示方式』」<br />
+<br />
+只要在main函式開頭加入「<span style="color: #0000dd;">freopen</span><span style="color: green;">(</span><span style="color: red;">"檔名"</span>,<span style="color: red;">"w"</span>,<span style="color: blue;">stdout</span><span style="color: green;">)</span><span style="color: teal;">;</span>」就好了！<br />
+這樣講你可能不懂，用截圖來解釋最清楚！<br />
+<br />
+步驟如下：<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/--ZxDzUDeUhw/V9-OIsGps8I/AAAAAAAAGfk/GNem0CeVLPIrCaFju5bp-X4TLg-RneHQACLcB/s1600/13-8-15.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://2.bp.blogspot.com/--ZxDzUDeUhw/V9-OIsGps8I/AAAAAAAAGfk/GNem0CeVLPIrCaFju5bp-X4TLg-RneHQACLcB/s320/13-8-15.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">這是原本的程式碼</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-PdjYk2n4Rc4/V9-OTXFhoII/AAAAAAAAGfs/nDdR7EfQLF4P7c1ynTc49-kU_xXIMSSFQCLcB/s1600/13-8-16.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-PdjYk2n4Rc4/V9-OTXFhoII/AAAAAAAAGfs/nDdR7EfQLF4P7c1ynTc49-kU_xXIMSSFQCLcB/s320/13-8-16.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">在main函式的開頭插入「<span style="color: #0000dd;">freopen</span><span style="color: green;">(</span><span style="color: red;">"out.txt"</span>,<span style="color: red;">"w"</span>,<span style="color: blue;">stdout</span><span style="color: green;">)</span><span style="color: teal;">;</span>」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-_AQkLQk43zY/V9-Om4-Z0HI/AAAAAAAAGfw/qeXB-27DAXAtw69Rl65O6HYh51iH7LgEACLcB/s1600/13-8-17.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-_AQkLQk43zY/V9-Om4-Z0HI/AAAAAAAAGfw/qeXB-27DAXAtw69Rl65O6HYh51iH7LgEACLcB/s320/13-8-17.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">按下鍵盤上的「F11」執行程式，很快就執行完了！</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-_HAzLCWo18w/V9-PSZzGpTI/AAAAAAAAGf8/9zQkVlRmUSMrc-E1g2fIsPxxUD4b4xmdACLcB/s1600/13-8-18.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://4.bp.blogspot.com/-_HAzLCWo18w/V9-PSZzGpTI/AAAAAAAAGf8/9zQkVlRmUSMrc-E1g2fIsPxxUD4b4xmdACLcB/s320/13-8-18.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">回到「Dev-C++」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-O99uIFkz0QU/V9-PdbIpXAI/AAAAAAAAGgA/RrW9ujKnKOcpSb_DyxxkzSY3beIgVCjPwCLcB/s1600/13-8-19.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://4.bp.blogspot.com/-O99uIFkz0QU/V9-PdbIpXAI/AAAAAAAAGgA/RrW9ujKnKOcpSb_DyxxkzSY3beIgVCjPwCLcB/s320/13-8-19.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div>
+按下鍵盤上的「Ctrl+B」開啟檔案所在的資料夾</div>
+<div>
+在開起的資料夾中找到剛剛程式輸出的檔案「out.txt」</div>
+</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-WHZDC0-EjVU/V9-PtOU0RsI/AAAAAAAAGgE/h4tZe8OdyZYnjg-5YjfTJWP1UaiVfYRygCLcB/s1600/13-8-20.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://3.bp.blogspot.com/-WHZDC0-EjVU/V9-PtOU0RsI/AAAAAAAAGgE/h4tZe8OdyZYnjg-5YjfTJWP1UaiVfYRygCLcB/s320/13-8-20.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><div>
+按「Enter」或滑鼠連點兩下開啟「out.txt」</div>
+<div>
+Wow～這是我們漂亮的輸出！</div>
+</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-mMieuYSMomc/V9-P8i_DKWI/AAAAAAAAGgI/N6O8-HxKt3sCoXsMzyW4I5rhCeJUh_2owCLcB/s1600/13-8-21.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="180" src="https://4.bp.blogspot.com/-mMieuYSMomc/V9-P8i_DKWI/AAAAAAAAGgI/N6O8-HxKt3sCoXsMzyW4I5rhCeJUh_2owCLcB/s320/13-8-21.png" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">檔案的右下角，還是一樣整齊～</td></tr>
+</tbody></table>
+<br />
+耶，我們成功讓程式自動將輸出儲存成「out.txt」了！<br />
+這就是C++「寫入檔案」的方式<br />
+<br />
+可以看到，不管是「輸出」還是「輸入」，我們都使用到了一個名字叫做「freopen」的函式<br />
+它可以很幫便快速地使用，但是也有一個很明顯的缺點：<br />
+<span style="font-size: large;"><b>一旦使用後，就無法再回去使用黑色視窗輸入或輸出了！</b></span><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-9.html">下一頁</a>將簡單地介紹功能更完整的檔案讀寫方法！<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-9.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

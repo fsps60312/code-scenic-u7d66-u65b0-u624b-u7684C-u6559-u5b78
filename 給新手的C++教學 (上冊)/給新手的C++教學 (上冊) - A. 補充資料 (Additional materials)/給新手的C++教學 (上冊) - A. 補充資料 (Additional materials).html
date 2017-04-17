@@ -1,0 +1,158 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html"><span style="color: blue;">上一章 (這要怎麼定義上一章啦喂)</span></a><br />
+<br />
+本教學以「容易理解」為目標，因此對某些觀念進行了簡化<br />
+以下提供更正確、更詳細的資訊供讀者們參考<br />
+但還是建議新手們先看懂教學內文的解說<br />
+(我們學物理時也是先學錯誤但簡單的牛頓力學，沒有一開始就在教量子力學的對吧？)<br />
+<br />
+<span style="font-size: x-small;">(注意：註釋的編號並<b>不代表</b>在教學中出現的順序)</span><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html">註1</a>：(感謝pr3pony)<br />
+int 在<a href="http://en.cppreference.com/w/cpp/language/types">標準中</a>只規定至少要 2 bytes<br />
+雖然幾乎所有編譯器實作依據的標準都是&nbsp;<a href="https://www.ibm.com/support/knowledgecenter/SSLTBW_2.1.0/com.ibm.zos.v2r1.cbcpx01/datatypesize64.htm">ILP32 或 LP64</a><br />
+也就是常見的 4 bytes<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html">註2</a>：(感謝pr3pony)<br />
+float 的底數其實是 2 不是 10<br />
+因此事實上在儲存 float 前，並沒有「轉成二進位」的這個操作<br />
+一切都是直接以「二進位」的模式處理<br />
+並沒有牽涉到任何「二進位和十進位互相轉換」的操作 (除非要輸出給我們看)<br />
+因此，「24005」應該會被轉換成「$(1.01110111000101)_2*2^{14}$」(二進位版的科學記號)<br />
+其中「$(1.01110111000101)_2=(1.46514892578125)_{10}=1.46514892578125=\frac{24005}{2^{14}}$」<br />
+<a href="https://en.wikipedia.org/wiki/Single-precision_floating-point_format#IEEE_754_single-precision_binary_floating-point_format:_binary32">詳細資料</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html">註3</a>：(感謝pr3pony)<br />
+其實 C++ 並無規定負數的實作方法<br />
+常見的方法有三種：<a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E8%A3%9C%E6%95%B8">two's complement</a>、<a href="https://en.wikipedia.org/wiki/Ones%27_complement">one's-complement</a>、<a href="https://chortle.ccsu.edu/AssemblyTutorial/Chapter-08/ass08_12.html">sign-magnitude</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html">第三篇</a>提到的方法屬於「<a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E8%A3%9C%E6%95%B8">two's complement</a>」(感覺也是最常見的方法(?) )<br />
+<div>
+<a href="http://www.csie.nuk.edu.tw/~lhyen/intro_CS/pu_ch16_new.pdf">完整資料+解說 (第17頁)</a></div>
+<div>
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-8-charactor-string.html">註4</a>：<br />
+電腦學過C++，很聰明地解決了這個問題<br />
+電腦會在字串的後面補上一個特殊字元「'\0'」，這個特殊字元我們稱作「結束字元」，對應到的數字是「0」<br />
+這樣就可以知道這個字串的結尾在哪裡了<br />
+p.s. 「結束字元 ('\0')」也是一種「隱藏字元」</div>
+<a href="https://zh.wikipedia.org/wiki/%E7%A9%BA%E5%AD%97%E7%AC%A6">關於結束字元的中文資料(維基百科)</a><br />
+<a href="https://tools.ietf.org/html/rfc20#section-5.2">原文詳細資料</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-10-scope.html">註5</a>：(感謝李旺陽學長)<br />
+這個規則是C++被定義明確的標準規範<br />
+<a href="http://en.cppreference.com/w/cpp/language/scope">詳細資料</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html">註6</a>：<br />
+事實上，以現代的觀點來看，<b>「float」的誤差太大</b><br />
+因此一般計算我們會習慣使用增強版float－－<b>「double」</b><br />
+除非記憶體不足或使用到GPU運算，不然float很少會被用到<br />
+但是因float的輸出入單純許多，本教學以「float」作為新手們學習浮點數的進入管道<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-6-array.html">註7</a>：(感謝uzk)<br />
+實際上，在C++的標準裡面<br />
+「int a[n];」裡面的「n」<b>只能是常數 (而非變數)</b><br />
+這裡我們能夠使用一個變數來當作陣列的長度<br />
+是因為<b>我們的編譯器是GCC</b><br />
+當使用的編譯器非GCC時 (雖然這種情況較少見)，<b>宣告陣列時不能使用變數當作長度</b><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-12-pointer.html">註8</a>：(感謝李旺陽學長)<br />
+宣告的部分跟語法解析有關<br />
+有逗點的用的是這條<br />
+decl-specifier-seq init-declarator-list;<br />
+重點在 * (or &amp; &amp;&amp; etc) 是一個 Declarators 不是 Specifiers<br />
+&nbsp;int * p ;<br />
+被解析為<br />
+Specifiers : int<br />
+Declarators : *p (Pointer declaration)<br />
+int * p , q;<br />
+被解析為<br />
+Specifiers : int<br />
+Declarators : *p (Pointer declaration) , q ((int var) Names declaration)<br />
+<a href="http://www.stroustrup.com/bs_faq2.html#whitespace">以哲學觀點</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html">註9 (全範圍)</a>：<br />
+其實，C++在「#include&lt;cstdio&gt;」之後<br />
+一定會將「printf」放入「std」命名空間<br />
+卻不一定會將「printf」放入全域命名空間<br />
+(C則是完全相反)<br />
+因此，最好的寫法是把全部的「printf」改成「std::printf」<br />
+或者每次include完之後加上一行「using namespace std;」<br />
+<a href="http://stackoverflow.com/questions/10460250/cstdio-stdio-h-namespace">資料來源</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-3-acquaintance-to-operators.html">註10</a>：(感謝李旺陽學長)<br />
+C++小數的捨去有更精確的定義是「Round towards zero (向0靠攏)」<br />
+<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/n4594.pdf">超級超級超級詳細的資料 (第99頁 (頁碼85)，Floating-integral conversions)</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-simplest-program.html?showComment=1470628149144#c8700519721533544660&quot;">註11</a>：(感謝奕均的留言)<br />
+「\」後面接甚麼會發生甚麼事<br />
+來解答囉～<br />
+「\a」聲音 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"123<span style="color: #000099; font-weight: bold;">\a</span>456"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\b」退格鍵 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"123<span style="color: #000099; font-weight: bold;">\b</span>456"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\e」ASCII碼是27 (16進位：1b)，在黑色視窗會顯示一個向左的箭頭，我也不知道為甚麼XD<br />
+「\f」ASCII碼是12 (16進位：0c)，在黑色視窗會顯示一個女生的符號，我也不知道為甚麼XD<br />
+「\n」你知道的<br />
+「\r」類似鍵盤上的「Home」鍵 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"1234<span style="color: #000099; font-weight: bold;">\r</span>56"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\t」類似鍵盤上的「Tab」鍵 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"123<span style="color: #000099; font-weight: bold;">\t</span>456"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\u」後面加4位數的<b>16進位</b>數字，會變成該Unicode碼對應到的字元 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"<span style="color: #660099; font-weight: bold;">\u001b</span>"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\v」ASCII碼是11 (16進位：0b)，在黑色視窗會顯示一個男生的符號，我也不知道為甚麼XD<br />
+<div>
+「\x」後面加2位數的<b>16進位</b>數字，會變成該ASCII碼 (或Unicode碼) 對應到的字元 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"<span style="color: #660099; font-weight: bold;">\x1b</span>"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\E」和「\e」的效果一樣<br />
+「\U」後面加8位數的<b>16進位</b>數字，會變成該Unicode碼對應到的字元 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"<span style="color: #660099; font-weight: bold;">\U0000001b</span>"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\%」和「%」的效果一樣<br />
+「\(」和「(」的效果一樣<br />
+「\[」和「[」的效果一樣<br />
+「\{」和「{」的效果一樣</div>
+<div>
+「\\」會輸出「\」 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"123<span style="color: #000099; font-weight: bold;">\\</span>456"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+「\'」和「'」的效果一樣</div>
+<div>
+「\"」會輸出「"」 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"123<span style="color: #000099; font-weight: bold;">\"</span>456"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)</div>
+「\?」和「?」的效果一樣<br />
+<div>
+<br />
+注意：<br />
+「\n」雖然說類似鍵盤上的「Enter」鍵，但其實在非常非常特殊的情況下，「\n」並<b>不等於</b>鍵盤上的「Enter」鍵，反而比較像「↓」方向鍵 (例如：<span style="color: #0000dd; font-family: monospace;">printf</span><span style="color: green; font-family: monospace;">(</span><span style="color: red; font-family: monospace;">"123<span style="color: #000099; font-weight: bold;">\r</span>78<span style="color: #000099; font-weight: bold;">\n</span>56"</span><span style="color: green; font-family: monospace;">)</span><span style="color: teal; font-family: monospace;">;</span>)<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-10-scope.html">註12</a>：<br />
+這裡介紹的for迴圈功能僅限C++<br />
+C語言也有for迴圈，但功能受限，並不像C++的for迴圈這麼好用<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-3.html">註13</a>：<br />
+可能會有人覺得奇怪，「char」不是用來表示「一個字元」的嗎？為甚麼會被歸類在「整數」呢？<br />
+事實上，「char」的儲存和運作方式跟其他整數型別一模一樣<br />
+只是「char」的「數字範圍」很適合用來表示英文字母、數字和一些符號等等的字元而已，所以「char」就莫名其妙被用來「表示字元」了XD<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-11-structure.html">註14</a>：<br />
+這樣的struct定義方式無法在 C (而不是C++) 使用<br />
+C的struct必須使用更迂迴的方式來定義：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">typedef</span> <span style="color: blue;">struct</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a,b,c<span style="color: teal;">;</span>
+<span style="color: green;">}</span>Line<span style="color: teal;">;</span></pre>
+<br />
+這相當於C++這種定義struct的方式：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: blue;">struct</span> Line
+<span style="color: green;">{</span>
+    <span style="color: blue;">float</span> a,b,c<span style="color: teal;">;</span>
+<span style="color: green;">}</span><span style="color: teal;">;</span></pre>
+<br />
+<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html"><span style="color: blue;">下一章 (這要怎麼定義下一章啦喂)</span></a><br />
+<br />
+感謝：pr3pony、李旺陽學長、uzk、奕均的留言<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script></div>

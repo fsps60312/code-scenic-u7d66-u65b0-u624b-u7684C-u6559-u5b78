@@ -1,0 +1,146 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-13-extra-syntax.html"><span style="color: orange;">回到「13. 額外語法 (Extra syntax)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-6.html"><span style="color: blue;">上一頁</span></a><br />
+<br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+先前有<a href="http://codingsimplifylife.blogspot.com/2016/06/c-b-there-are-troubles.html?showComment=1472566228913#c5975846544863415715">網友提問</a>，他想寫一個程式：<br />
+輸入「是」會輸出「真是識相!\n」<br />
+輸入「不是」會輸出「你眼光有問題!\n」<br />
+<br />
+我們先來看看這個程式的英文版本怎麼寫：<br />
+輸入「YES」會輸出「真是識相!\n」<br />
+輸入「NO」會輸出「你眼光有問題!\n」<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"我是天才? YES or NO<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">char</span> answer<span style="color: green;">[</span><span style="color: #0000dd;">4</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,answer<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'Y'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'E'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'S'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">3</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"真是識相!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'N'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'O'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"你眼光有問題!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://1.bp.blogspot.com/-SnrdIUVAJSQ/V9tu84QEWsI/AAAAAAAAGbQ/NP4sAmrCS1Ex7gElIqcN1SSqk5ge2WtrgCLcB/s1600/13-7-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="187" src="https://1.bp.blogspot.com/-SnrdIUVAJSQ/V9tu84QEWsI/AAAAAAAAGbQ/NP4sAmrCS1Ex7gElIqcN1SSqk5ge2WtrgCLcB/s320/13-7-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入「YES」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-X8pIaJap6Ss/V9tvEn6I9XI/AAAAAAAAGbU/n5Ldm1JeAPUkxdxBvGzeCoVIcOJHxi28wCLcB/s1600/13-7-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="185" src="https://2.bp.blogspot.com/-X8pIaJap6Ss/V9tvEn6I9XI/AAAAAAAAGbU/n5Ldm1JeAPUkxdxBvGzeCoVIcOJHxi28wCLcB/s320/13-7-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入「NO」</td></tr>
+</tbody></table>
+<br />
+請注意，「answer」的長度只有4，因此一旦輸入的長度超過3&nbsp;(注意，還有一個表示字串結尾的「'\0'」) 就有可能導致程式出錯<br />
+<br />
+那麼，要怎麼改成中文版本呢？是這樣嗎？<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"我是天才? YES or NO<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">char</span> answer<span style="color: green;">[</span><span style="color: #0000dd;">3</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,answer<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'是'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"真是識相!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'不'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'是'</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"你眼光有問題!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+很遺憾的，事情並沒有這麼簡單<br />
+<!--more--><br />
+中文字有一個問題：字母集合太龐大了 ($\geq 20000$種字)<br />
+單靠一個8位元的「char」(只能儲存$2^{8}=256$種資訊) 根本無法表示一個中文字！<br />
+因此實際上一個中文字會用「2個char」來表示 (2個char結合在一起可以表示$256^2=65536$種資訊)<br />
+<br />
+也就是說，我們的程式架構應該改成這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"我是天才? YES or NO<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">char</span> answer<span style="color: green;">[</span><span style="color: #0000dd;">5</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,answer<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red; font-style: italic;">/*「是」的第1個char*/</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red; font-style: italic;">/*「是」的第2個char*/</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"真是識相!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red; font-style: italic;">/*「不」的第1個char*/</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red; font-style: italic;">/*「不」的第2個char*/</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red; font-style: italic;">/*「是」的第1個char*/</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">3</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red; font-style: italic;">/*「是」的第2個char*/</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">4</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"你眼光有問題!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+(請注意，上面的程式碼只是用來表示想法，並不能拿來執行)<br />
+要怎麼表示「『是』的第1個char」呢？<br />
+有個簡單的方法：<br />
+"是"[0]<br />
+<br />
+用兩個「"」框起來的東西是一個「字串」，也就是「char陣列」，我們在「scanf」和「printf」裡面曾偷偷用過這個東西<br />
+因此，「"是"」就是一個長度為3的char陣列 (「是」這個中文字占2個char，還要加上一個「'\0'」來表示「字串結尾」)<br />
+於是<br />
+『「是」的第1個char』可以用「"是"[0]」來表示<br />
+『「是」的第2個char』可以用「"是"[1]」來表示<b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br />
+<br />
+知道怎麼解決了嗎？<br />
+快來試試看吧！<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"我是天才? YES or NO<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">char</span> answer<span style="color: green;">[</span><span style="color: #0000dd;">5</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,answer<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">"是"</span><span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">"是"</span><span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"真是識相!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">"不"</span><span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">"不"</span><span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">2</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">"是"</span><span style="color: green;">[</span><span style="color: #0000dd;">0</span><span style="color: green;">]</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">3</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">"是"</span><span style="color: green;">[</span><span style="color: #0000dd;">1</span><span style="color: green;">]</span><span style="color: #000040;">&amp;&amp;</span>answer<span style="color: green;">[</span><span style="color: #0000dd;">4</span><span style="color: green;">]</span><span style="color: navy;">==</span><span style="color: red;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"你眼光有問題!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://3.bp.blogspot.com/-HL_aafITqUA/V9t2hiwlWGI/AAAAAAAAGbg/cFzrkmbmzL05iE5RLcicYryZyr-cUpADQCLcB/s1600/13-7-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="169" src="https://3.bp.blogspot.com/-HL_aafITqUA/V9t2hiwlWGI/AAAAAAAAGbg/cFzrkmbmzL05iE5RLcicYryZyr-cUpADQCLcB/s320/13-7-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入「是」</td></tr>
+</tbody></table>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-pYvCOO1OkCE/V9t22F04BrI/AAAAAAAAGbk/SIYC4vb0_9YDtzkHJy6CTZeQ4BnhPhz6QCLcB/s1600/13-7-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="182" src="https://2.bp.blogspot.com/-pYvCOO1OkCE/V9t22F04BrI/AAAAAAAAGbk/SIYC4vb0_9YDtzkHJy6CTZeQ4BnhPhz6QCLcB/s320/13-7-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入「不是」</td></tr>
+</tbody></table>
+<br />
+沒錯，問題解決了！<br />
+<br />
+不過，有一件事想提醒「追求完美，近乎苛求」的同學們：<br />
+「<span style="color: blue;">if</span><span style="color: green;">(</span>answer<span style="color: navy;">==</span><span style="color: red;">"是"</span><span style="color: green;">)</span> <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"真是識相!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>」這種寫法，可能不是您想要的效果 (比較兩個字串有沒有相同)<br />
+這樣的程式碼，代表「判斷兩個char指標 (<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-5.html">之前的頁面有提到『陣列就是指標』</a>) 儲存的『記憶體位址』有沒有相等」<br />
+毫無意外，「answer<span style="color: navy;">==</span><span style="color: red;">"是"</span>」這樣的判斷結果永遠是「不成立」 (它們的記憶體位址怎麼可能相同嘛www)<b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/09/c-13-8.html"><span style="color: blue;">下一頁</span></a><br />
+<br />
+感謝：<a href="http://codingsimplifylife.blogspot.com/2016/06/c-b-there-are-troubles.html?showComment=1472566228913#c5975846544863415715">匿名網友</a><br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

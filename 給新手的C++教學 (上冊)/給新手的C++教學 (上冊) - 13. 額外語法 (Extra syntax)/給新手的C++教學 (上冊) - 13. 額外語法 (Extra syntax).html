@@ -1,0 +1,48 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<!--more--><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/06/c-12-pointer.html"><span style="color: blue;">上一章</span></a><br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://3.bp.blogspot.com/--6jFnL5tN84/VygWF10g4TI/AAAAAAAADPg/eSspcDQv0iIYUK5jUl9KqxR6LasbKVNywCLcB/s1600/%25E4%25B8%25BB%25E9%25A1%258C%25E5%259C%2596%25E7%2589%2587.bmp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" height="139" src="https://3.bp.blogspot.com/--6jFnL5tN84/VygWF10g4TI/AAAAAAAADPg/eSspcDQv0iIYUK5jUl9KqxR6LasbKVNywCLcB/s200/%25E4%25B8%25BB%25E9%25A1%258C%25E5%259C%2596%25E7%2589%2587.bmp" width="200" /></a></div>
+(本章為計劃外熱情追加，預計在資訊奧林匹亞國際賽結束後 (8/26) 開始撰寫 (但仍不確定當天是否立即有空)，但仍然隨時接受讀者的任何建議)<br />
+本章將補足前面的教學為了簡化觀念而省略的知識和用法<br />
+雖然不一定必要，但是在某些情況下對寫程式的我們來說會帶來驚人的便利性！<br />
+基本上，如果前面的章節都看完了，相信對於本章的學習會有很大的加速效果！<br />
+<span style="font-size: x-large;"><b>公告：上大學後突然變得很忙，不得已將暫緩教學撰寫 <span style="font-size: small;">(還是會寫的，只是進度會很慢很慢......)</span>，請有意學習某語法 <span style="font-size: small;">(有標星號的篇章為主</span></b></span><span style="font-size: x-large;"><b><span style="font-size: small;">)</span> 的讀者在本文下方留言，小莫將優先撰寫該篇教學</b></span><br />
+<b><span style="font-size: x-large;">另外，有任何問題或建議也要提出哦，這個小莫就有空處理了XD</span></b><br />
+<br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-1.html">1. 「註解」的使用</a><br />
+<a href="http://codingsimplifylife.blogspot.com/2016/08/c-13-2.html">2. 編譯參數的建議設定</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-3.html">3. 進階型別的介紹</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-4.html">4. 指定輸出格式</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-5.html">5. 陣列就是指標，指標就是陣列</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-6.html">6. 更彈性的取得和釋放記憶體</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-7.html">7. 中文字元字串的處理</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-8.html">8. 簡易的檔案處理</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/09/c-13-9.html">9. 進階的檔案處理</a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/12/c-13-10.html">10. 轉型</a><br />
+*. 內建常數和自訂常數 (防止某些bug不小心產生)<br />
+*. 全域變數 (壞習慣(?))<br />
+*. 靜態變數 (使用static記憶體的變數)<br />
+*. 進階運算子 (++、--、三元運算子、位元運算子、......之類的)<br />
+*. 用逗號代替煩煩的大括號 (覺得大括號很煩的時候特別好用(?))<br />
+<a href="http://codingsimplifylife.blogspot.tw/2017/03/c-13-16.html">16. 函式的遞迴</a><br />
+*. 「switch」的用法 (覺得if很煩的時候特別好用(?))<br />
+*. 「continue」的用法 (好像絕大部份都可以用if來取代continue(?))<br />
+*. 建構子和解構子 (某種出生和死亡的概念)<br />
+*. 結構的方法 (就是「結構裡面的函式」啦)<br />
+*. 「class」的用法 (指標化的升級版struct)<br />
+*. 當指標碰上結構 (就是「-&gt;」啦)<br />
+*. 函式引數的「&amp;」用法 (參照)<br />
+*. 「namespace」的用法 (如果你的struct或class只需要使用一次的話......)<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/10/c-13-25-cc11.html">25. 「新版C++」－－「C++11」的好用功能</a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.com/2016/06/c-13-extra-syntax.html"><span style="color: blue;">下一章 (這是最後一章)</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

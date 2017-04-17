@@ -1,0 +1,258 @@
+﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-7-simplify-code.html"><span style="color: blue;">上一章</span></a><br />
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
+MathJax.Hub.Config({
+ extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+ jax: ["input/TeX", "output/HTML-CSS"],
+ tex2jax: {
+     inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+     displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+ },
+ "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script><br />
+不知你是否嘗試過讓程式做到以下事情：<br />
+輸入一個名字 (大小寫字母組成)，輸出「Hello, 名字!」<br />
+<br />
+<span style="background-color: white; color: #38761d; font-size: large;"><b>1. 土法煉鋼法</b></span><br />
+<br />
+我們已經學過怎麼輸入一個字元 (<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html">甚麼是字元？</a>)，也知道怎麼用直接的方式 (用兩個「'」框起來) 表示一個字元<br />
+所以，我們可以一個一個的輸入字元，然後一一判斷是不是大小寫字母，當輸入的字元不是大小寫字母時，我們就知道一個「名字」已經輸入完了 (因為名字只能由大小寫字母組成)<br />
+<br />
+套用<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-7-simplify-code.html">上一章</a>所學的簡化方式，我們就可以實現這個輸入名字的功能 (以下程式碼已經假設名字的長度$\leq$一百萬)：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span><span style="color: #0000dd;">1</span><span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">char</span> c<span style="color: navy;">=</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'a'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'b'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'c'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'d'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'e'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'f'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'g'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'h'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'i'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'j'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'k'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'l'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'m'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'n'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'o'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'p'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'q'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'r'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'s'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'t'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'u'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'v'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'w'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'x'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'y'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'z'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'A'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'B'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'C'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'D'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'E'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'F'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'G'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'H'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'I'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'J'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'K'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'L'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'M'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'N'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'O'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'P'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'Q'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'R'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'S'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'T'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'U'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'V'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'W'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'X'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'Y'</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: red;">'Z'</span><span style="color: green;">)</span><span style="color: blue;">break</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, "</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> j<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>j<span style="color: navy;">&lt;</span>i<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,name<span style="color: green;">[</span>j<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        j<span style="color: navy;">=</span>j<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+我才不信你會想這樣搞咧，對吧？<br />
+52個字母一一判斷實在是太累了，而且容易打錯<br />
+<br />
+很幸運地，對電腦來說，「一個字元」其實就是「一個數字」<br />
+例如：「M」對應到「77」、「o」對應到「111」<br />
+如果你硬要把這些字元用整數的「%d」輸出 (而不是字元的「%c」)，你看到的就是這些字元所對應到的數字<br />
+我用以下程式碼做示範：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%d %d<span style="color: #000099; font-weight: bold;">\n</span>"</span>,<span style="color: red;">'M'</span>,<span style="color: red;">'o'</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+沒意外的話，程式會輸出「77 111」<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-0wynPviAmuM/VzG1i46URDI/AAAAAAAADfg/Ym7VWWKJ0i8SORDmXc6hNLyexntWu5F5gCLcB/s1600/8-1.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="219" src="https://2.bp.blogspot.com/-0wynPviAmuM/VzG1i46URDI/AAAAAAAADfg/Ym7VWWKJ0i8SORDmXc6hNLyexntWu5F5gCLcB/s320/8-1.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">程式輸出「77 111」了！</td></tr>
+</tbody></table>
+<br />
+因此，你甚至可以把每個直接表示的字元用數字來取代<br />
+把上面輸入一個名字的程式改寫成這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span><span style="color: #0000dd;">1</span><span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">char</span> c<span style="color: navy;">=</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">97</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">98</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">99</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">100</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">101</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">102</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">103</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">104</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">105</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">106</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">107</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">108</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">109</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">110</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">111</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">112</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">113</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">114</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">115</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">116</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">117</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">118</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">119</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">120</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">121</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">122</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">65</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">66</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">67</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">68</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">69</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">70</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">71</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">72</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">73</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">74</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">75</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">76</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">77</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">78</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">79</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">80</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">81</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">82</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">83</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">84</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">85</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">86</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">87</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">88</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">89</span><span style="color: #000040;">&amp;&amp;</span>c<span style="color: #000040;">!</span><span style="color: navy;">=</span><span style="color: #0000dd;">90</span><span style="color: green;">)</span><span style="color: blue;">break</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, "</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> j<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>j<span style="color: navy;">&lt;</span>i<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,name<span style="color: green;">[</span>j<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        j<span style="color: navy;">=</span>j<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+測試看看，程式依然是同樣的邏輯！<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://4.bp.blogspot.com/-thuqYZBmJPE/VzG3sPFVoQI/AAAAAAAADfs/gHfi_xHWYMk9FmEcgaz73UI1d2obALn1gCLcB/s1600/8-2.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="202" src="https://4.bp.blogspot.com/-thuqYZBmJPE/VzG3sPFVoQI/AAAAAAAADfs/gHfi_xHWYMk9FmEcgaz73UI1d2obALn1gCLcB/s320/8-2.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">輸入「Mobius」，程式依然是輸出「Hello, Mobius!」<br />
+(順帶一提，「Mobius」是我們「<a href="https://www.facebook.com/KSHS105.Mobius/">105級高雄中學科學班成果發表會</a><span style="font-size: 12.8px;">」</span><span style="font-size: 12.8px;">的名稱，歡迎大家前去看看~~~)</span></td></tr>
+</tbody></table>
+<br />
+<!--more--><br />
+<br />
+<b><span style="color: #38761d; font-size: large;">2. 邏輯判斷法</span></b><br />
+<br />
+聰明的你一定發現了<br />
+「'a'~'z'」對應到數字「97~122」<br />
+「'A'~'Z'」對應到數字「65~90」<br />
+<br />
+那麼，我們只要和這些數字比大小，判斷有沒有在區間「97~122」或區間「65~90」就好啦！<br />
+<br />
+所以我們輸入名字的程式碼就可以大幅精簡一個量級：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span><span style="color: #0000dd;">1</span><span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">char</span> c<span style="color: navy;">=</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: green;">(</span><span style="color: #0000dd;">97</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">122</span><span style="color: green;">)</span><span style="color: #000040;">||</span><span style="color: green;">(</span><span style="color: #0000dd;">65</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">90</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">else</span> <span style="color: blue;">break</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, "</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> j<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>j<span style="color: navy;">&lt;</span>i<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,name<span style="color: green;">[</span>j<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        j<span style="color: navy;">=</span>j<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+注意到程式碼中的「c」這個變數<br />
+「判斷c是字母」比「判斷c不是字母」還要來得容易<br />
+因此先判斷「判斷c是字母」<br />
+條件成立時代表甚麼事都不用做<br />
+條件不成立時就執行「else」裡面的程式碼 (<span style="color: blue;">break</span><span style="color: teal;">;</span>) 跳出迴圈<br />
+<br />
+此外，要判斷一個邏輯是不是「不成立」，有個簡單的方法<br />
+在前面加一個「!」：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span><span style="color: #0000dd;">1</span><span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">char</span> c<span style="color: navy;">=</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #000040;">!</span><span style="color: green;">(</span><span style="color: green;">(</span><span style="color: #0000dd;">97</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">122</span><span style="color: green;">)</span><span style="color: #000040;">||</span><span style="color: green;">(</span><span style="color: #0000dd;">65</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">90</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: green;">)</span> <span style="color: blue;">break</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, "</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> j<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>j<span style="color: navy;">&lt;</span>i<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,name<span style="color: green;">[</span>j<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        j<span style="color: navy;">=</span>j<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+注意到，我們要的是「判斷『<span style="color: green;">(</span><span style="color: #0000dd;">97</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">122</span><span style="color: green;">)</span><span style="color: #000040;">||</span><span style="color: green;">(</span><span style="color: #0000dd;">65</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">90</span><span style="color: green;">)</span>』是不是『不成立』」，而不是「判斷『<span style="color: green;">(</span><span style="color: #0000dd;">97</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">122</span><span style="color: green;">)</span>』是不是『不成立』」<br />
+因此，我們需要用小括號將「<span style="color: green;">(</span><span style="color: #0000dd;">97</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">122</span><span style="color: green;">)</span><span style="color: #000040;">||</span><span style="color: green;">(</span><span style="color: #0000dd;">65</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: #0000dd;">90</span><span style="color: green;">)</span>」包起來變成一體，才能放心的在前面加上「!」<br />
+<br />
+此外，如果你不想記住「『a』對應到哪個數字」之類的<br />
+你大可直接把程式碼寫成這樣：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> i<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span><span style="color: #0000dd;">1</span><span style="color: navy;">==</span><span style="color: #0000dd;">1</span><span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,<span style="color: #000040;">&amp;</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        <span style="color: blue;">char</span> c<span style="color: navy;">=</span>name<span style="color: green;">[</span>i<span style="color: green;">]</span><span style="color: teal;">;</span>
+        <span style="color: blue;">if</span><span style="color: green;">(</span><span style="color: #000040;">!</span><span style="color: green;">(</span><span style="color: green;">(</span><span style="color: red;">'a'</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: red;">'z'</span><span style="color: green;">)</span><span style="color: #000040;">||</span><span style="color: green;">(</span><span style="color: red;">'A'</span><span style="color: navy;">&lt;=</span>c<span style="color: #000040;">&amp;&amp;</span>c<span style="color: navy;">&lt;=</span><span style="color: red;">'Z'</span><span style="color: green;">)</span><span style="color: green;">)</span><span style="color: green;">)</span> <span style="color: blue;">break</span><span style="color: teal;">;</span>
+        i<span style="color: navy;">=</span>i<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, "</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">int</span> j<span style="color: navy;">=</span><span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+    <span style="color: blue;">while</span><span style="color: green;">(</span>j<span style="color: navy;">&lt;</span>i<span style="color: green;">)</span>
+    <span style="color: green;">{</span>
+        <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%c"</span>,name<span style="color: green;">[</span>j<span style="color: green;">]</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+        j<span style="color: navy;">=</span>j<span style="color: #000040;">+</span><span style="color: #0000dd;">1</span><span style="color: teal;">;</span>
+    <span style="color: green;">}</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-LfpruonZnWw/VzG78jPWaxI/AAAAAAAADf4/p9xc4RHVdmkk86pAgQBCNYrsdzcPogKfACLcB/s1600/8-3.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="176" src="https://2.bp.blogspot.com/-LfpruonZnWw/VzG78jPWaxI/AAAAAAAADf4/p9xc4RHVdmkk86pAgQBCNYrsdzcPogKfACLcB/s320/8-3.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">趕快驗證一下，程式還是在做同樣一件事情，對吧？</td></tr>
+</tbody></table>
+<br />
+<b><span style="color: #38761d; font-size: large;">3. 投機取巧法</span></b><br />
+<br />
+咦？其實我們剛剛在做的事可以直接用兩行程式碼解決哦～ (遭踢飛)<br />
+在<a href="http://codingsimplifylife.blogspot.tw/2016/04/c-2-variable.html">第二章</a>時我們學過：「int」要用「%d」，「char」要用「%c」，「float」要用「%f」<br />
+而在這一章，我們會學到：「字串」要用「%s」<br />
+<br />
+甚麼是「字串」？就是一串字元<br />
+比較標準的說法，只要是一個或多個字元 (不一定要大小寫字母，甚至「' '」、「'\n'」也是可以接受的) 連在一起，我們就稱之為「字串」<br />
+<br />
+當你用「scanf」來輸入一個「%s」時，程式得到的輸入會是一個「不含隱藏字元的字串」<br />
+「隱藏字元」泛指「無法直接顯示出來」的字元，例如：空白「' '」、Tab「'\t'」、換行「'\n'」<br />
+<br />
+剛好，「大小寫字母」都不是隱藏字元 (大小寫字母顯示出來時你是看得到黑色部分的)<br />
+因此，不妨直接使用「%s」來輸入一個名字<br />
+<br />
+剛剛說到，「%s」代表「不含隱藏字元的字串」，也就是「一串字元」，因此要用「char陣列」來儲存這「一串字元」<br />
+用法請參考以下程式碼：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, "</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"!<span style="color: #000099; font-weight: bold;">\n</span>"</span><span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+注意，用「scanf」輸入「%s」時，<b>不需要在「char陣列名稱</b><b>」</b><b>前面加「&amp;」</b><br />
+然後，如果你想要達到「兩行程式碼」的目標，把三個「printf」寫成一個也無妨：<br />
+<br />
+<pre class="cpp" style="font-family: monospace;"><span style="color: #339900;">#include&lt;cstdio&gt;</span>
+<span style="color: blue;">int</span> main<span style="color: green;">(</span><span style="color: green;">)</span>
+<span style="color: green;">{</span>
+    <span style="color: blue;">char</span> name<span style="color: green;">[</span><span style="color: #0000dd;">1000001</span><span style="color: green;">]</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">scanf</span><span style="color: green;">(</span><span style="color: red;">"%s"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: #0000dd;">printf</span><span style="color: green;">(</span><span style="color: red;">"Hello, %s!<span style="color: #000099; font-weight: bold;">\n</span>"</span>,name<span style="color: green;">)</span><span style="color: teal;">;</span>
+    <span style="color: blue;">return</span> <span style="color: #0000dd;">0</span><span style="color: teal;">;</span>
+<span style="color: green;">}</span></pre>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://2.bp.blogspot.com/-sLznBPAnFPQ/VzHC9j4gdeI/AAAAAAAADgI/Paj6BDH165ItcQAs0m0uVB0U0YvHsvScwCLcB/s1600/8-4.PNG" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="214" src="https://2.bp.blogspot.com/-sLznBPAnFPQ/VzHC9j4gdeI/AAAAAAAADgI/Paj6BDH165ItcQAs0m0uVB0U0YvHsvScwCLcB/s320/8-4.PNG" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><span style="font-size: 12.8px;">趕快驗證一下，程式還是在做同樣一件事情，對吧？</span></td></tr>
+</tbody></table>
+至此，你應該熟悉「%s」、字元、字串的處理和用法了<br />
+希望你程式的功能可以越來越強！<br />
+<br />
+題外話：原本「土法煉鋼法」的程式碼裡面的那個「i」怎麼可以省略？<span style="font-size: xx-small;"><a href="http://codingsimplifylife.blogspot.tw/2016/05/c-additional-materials.html">(註4)</a></span><br />
+<br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/05/c-9-function.html"><span style="color: blue;">下一章</span></a><br />
+<br />
+感謝：<br />
+<span style="font-size: x-small;">(版權所有 All copyright reserved)</span>

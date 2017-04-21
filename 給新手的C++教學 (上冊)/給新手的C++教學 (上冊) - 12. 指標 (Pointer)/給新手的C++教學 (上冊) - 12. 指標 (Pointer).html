@@ -1,4 +1,4 @@
-﻿<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
+<a href="http://codingsimplifylife.blogspot.tw/2016/04/c.html"><span style="color: orange;">回到「給新手的C++教學 (上冊)」</span></a><br />
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">
 MathJax.Hub.Config({
  extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
@@ -252,8 +252,9 @@ y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
 可是當我們交換了$x$和$y$之後，原本真正想要交換的$a$和$b$根本不受影響啊！<br />
 我們交換了$x$和$y$後，$a$和$b$還是不變，形同做白工<br />
 <br />
-  <div id="animation1"></div>
-  <script type="text/javascript">
+<div id="animation1">
+</div>
+<script type="text/javascript">
    (function(){
     var instructions=
     [
@@ -446,7 +447,7 @@ y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
      answer.style.width=codeWidth.toString()+"px";
      answer.style.height=codeHeight.toString()+"px";
      answer.style.backgroundColor="rgb(192,192,192)";
-     answer.style.transition="height 0.5s ease-out 0s, top 0.5s ease-out 0s;";
+     answer.style.transition="height 0.5s ease-out 0s, top 0.5s ease-out 0s";
      codeBlock.appendChild(answer);
      answer.setPosition=function(y,h)
      {
@@ -502,7 +503,7 @@ y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
       answer.style.backgroundColor="rgb(224,256,192)";
       answer.style.fontFamily="Consolas";
       answer.style.fontSize=Math.floor(variableHeight*0.8).toString()+"px";
-      answer.style.transition="left 0.5s ease-out 0s, opacity 0.5s ease-out 0s;";
+      answer.style.transition="left 0.5s ease-out 0s, opacity 0.5s ease-out 0s";
       answer.name=id;
       answer.setValue=function(v)
       {
@@ -717,8 +718,9 @@ y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
 <span style="color: green;">}</span></pre>
 <br />
 <br />
-  <div id="animation2"></div>
-  <script type="text/javascript">
+<div id="animation2">
+</div>
+<script type="text/javascript">
    (function(){
     var instructions=
     [
@@ -915,7 +917,7 @@ y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
      answer.style.width=codeWidth.toString()+"px";
      answer.style.height=codeHeight.toString()+"px";
      answer.style.backgroundColor="rgb(192,192,192)";
-     answer.style.transition="height 0.5s ease-out 0s, top 0.5s ease-out 0s;";
+     answer.style.transition="height 0.5s ease-out 0s, top 0.5s ease-out 0s";
      codeBlock.appendChild(answer);
      answer.setPosition=function(y,h)
      {
@@ -971,7 +973,7 @@ y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
       answer.style.backgroundColor="rgb(224,256,192)";
       answer.style.fontFamily="Consolas";
       answer.style.fontSize=Math.floor(variableHeight*0.8).toString()+"px";
-      answer.style.transition="left 0.5s ease-out 0s, opacity 0.5s ease-out 0s;";
+      answer.style.transition="left 0.5s ease-out 0s, opacity 0.5s ease-out 0s";
       answer.name=id;
       answer.setValue=function(v)
       {
@@ -1070,7 +1072,7 @@ y<span style="color: navy;">=</span>t<span style="color: teal;">;</span></pre>
     buttonNext.addEventListener("click",buttonNextClick,false);
    }());
   </script>
-<br />
+
 <br />
 現在，我們來嘗試寫一個「函式版」的「猜球遊戲模擬程式」吧！<br />
 <br />
